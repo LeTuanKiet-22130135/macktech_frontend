@@ -1,0 +1,258 @@
+import 'package:flutter/material.dart';
+import 'password_recovery_email_screen.dart';
+import 'password_recovery_phone_screen.dart';
+import 'package:app_frontend/theme/app_colors.dart';
+
+/// Password Recovery - Method selection screen matching designs 166/167/198/199.
+/// Shows avatar, "Password Recovery" heading, SMS/Email radio options,
+/// Next button and Cancel link. Wave pattern header.
+class PasswordRecoveryMethodsScreen extends StatefulWidget {
+  final String? initialEmail;
+
+  const PasswordRecoveryMethodsScreen({super.key, this.initialEmail});
+
+  @override
+  State<PasswordRecoveryMethodsScreen> createState() =>
+      _PasswordRecoveryMethodsScreenState();
+}
+
+class _PasswordRecoveryMethodsScreenState
+    extends State<PasswordRecoveryMethodsScreen> {
+  String? _selectedMethod;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          // Wave header
+          _buildWaveHeader(),
+
+          // Content
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                children: [
+                  const SizedBox(height: 32),
+
+                  // Avatar
+                  Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.grey.shade200, width: 3),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/Placeholder_01.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (c, e, s) => Container(
+                          color: Colors.pink.shade100,
+                          child: const Icon(
+                            Icons.person,
+                            size: 60,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Title
+                  const Text(
+                    "Password Recovery",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.tertiaryDarker,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Subtitle
+                  Text(
+                    "How you would like to restore\nyour password?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey.shade600,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 36),
+
+                  // SMS option
+                  _buildMethodOption("SMS"),
+                  const SizedBox(height: 12),
+
+                  // Email option
+                  _buildMethodOption("Email"),
+
+                  const Spacer(),
+
+                  // Next button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _selectedMethod != null
+                          ? () {
+                              if (_selectedMethod == "Email") {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PasswordRecoveryEmailScreen(
+                                      initialEmail: widget.initialEmail ?? '',
+                                    ),
+                                  ),
+                                );
+                              } else if (_selectedMethod == "SMS") {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const PasswordRecoveryPhoneScreen(),
+                                  ),
+                                );
+                              }
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.tertiaryDarker,
+                        disabledBackgroundColor: AppColors.tertiaryDarker
+                            .withValues(alpha: 0.5),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        "Next",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Cancel
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWaveHeader() {
+    return SizedBox(
+      height: 200,
+      child: Stack(
+        children: [
+          // Dark navy background
+          Positioned(
+            top: -80,
+            right: -60,
+            child: Container(
+              width: 400,
+              height: 280,
+              decoration: const BoxDecoration(
+                color: AppColors.tertiaryDarker,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(200),
+                ),
+              ),
+            ),
+          ),
+          // Light blue accent wave
+          Positioned(
+            top: 40,
+            left: -30,
+            child: Container(
+              width: 500,
+              height: 180,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.5),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(200),
+                  bottomLeft: Radius.circular(100),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMethodOption(String method, {bool locked = false}) {
+    final isSelected = _selectedMethod == method;
+    return GestureDetector(
+      onTap: locked ? null : () => setState(() => _selectedMethod = method),
+      child: Opacity(
+        opacity: locked ? 0.5 : 1.0,
+        child: Container(
+          width: 280,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          decoration: BoxDecoration(
+            color: AppColors.tertiaryLight,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  locked ? "$method (Unavailable)" : method,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: isSelected
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                    color: AppColors.tertiaryDarker,
+                  ),
+                ),
+              ),
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isSelected ? AppColors.tertiaryDarker : Colors.white,
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.tertiaryDarker
+                        : Colors.grey.shade400,
+                    width: 2,
+                  ),
+                ),
+                child: isSelected
+                    ? const Icon(Icons.check, size: 16, color: Colors.white)
+                    : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

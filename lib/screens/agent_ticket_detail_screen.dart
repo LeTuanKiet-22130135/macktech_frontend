@@ -1,0 +1,216 @@
+import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../models/ticket.dart';
+import '../services/ticket_service.dart';
+import 'chatbot_screen.dart';
+
+class AgentTicketDetailScreen extends StatefulWidget {
+  final Ticket ticket;
+  final Color statusColor;
+
+  const AgentTicketDetailScreen({
+    super.key,
+    required this.ticket,
+    required this.statusColor,
+  });
+
+  @override
+  State<AgentTicketDetailScreen> createState() => _AgentTicketDetailScreenState();
+}
+
+class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
+  late String _currentStatus;
+  bool _isUpdating = false;
+
+  final List<String> _statuses = [
+    "Open",
+    "Pending",
+    "Closed",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentStatus = widget.ticket.status;
+    if (!_statuses.contains(_currentStatus)) {
+      _statuses.add(_currentStatus);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          "Ticket no.${widget.ticket.ticketNumber.substring(widget.ticket.ticketNumber.length - 4)}",
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: AppColors.tertiaryDarker,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Customer Information",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.tertiaryDarker,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildFieldLabel("Customer Name"),
+            const SizedBox(height: 4),
+            _buildFieldValue("Unknown"), // No customer data in basic Ticket model
+            const SizedBox(height: 16),
+            _buildFieldLabel("Email Address"),
+            const SizedBox(height: 4),
+            _buildFieldValue("Unknown"), // No customer data in basic Ticket model
+            const SizedBox(height: 24),
+            const Text(
+              "Ticket Type / Category",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.tertiaryDarker,
+              ),
+            ),
+            const SizedBox(height: 8),
+            _buildFieldValue(widget.ticket.type),
+            const SizedBox(height: 24),
+            const Text(
+              "Issue",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.tertiaryDarker,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              widget.ticket.issueDescription,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade500,
+                height: 1.6,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              "Update Status",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.tertiaryDarker,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: _isUpdating
+                  ? const Center(child: CircularProgressIndicator(strokeWidth: 2))
+                  : DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _currentStatus,
+                        isExpanded: true,
+                        icon: const Icon(Icons.arrow_drop_down, color: AppColors.textPrimary),
+                        items: _statuses.map((s) {
+                          return DropdownMenuItem<String>(
+                            value: s,
+                            child: Text(s, style: const TextStyle(fontWeight: FontWeight.w500)),
+                          );
+                        }).toList(),
+                        onChanged: (val) async {
+                          if (val != null && val != _currentStatus) {
+                            setState(() => _isUpdating = true);
+                            try {
+                              final updatedTicket = await TicketService.updateTicketStatus(widget.ticket.id, val);
+                              if (updatedTicket != null && mounted) {
+                                setState(() => _currentStatus = val);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Status updated to $_currentStatus')),
+                                );
+                              } else {
+                                throw Exception("Failed to update status");
+                              }
+                            } catch (e) {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Error updating status')),
+                                );
+                              }
+                            } finally {
+                              if (mounted) {
+                                setState(() => _isUpdating = false);
+                              }
+                            }
+                          }
+                        },
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 48),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ChatbotScreen(
+                ticketId: widget.ticket.id,
+                activeRole: 'agent', // Agent enters chat as agent
+                targetName: 'Customer', // No customer name available in model
+              ),
+            ),
+          );
+        },
+        backgroundColor: AppColors.tertiaryDarkHover,
+        icon: const Icon(Icons.chat_bubble_outline, color: Colors.white),
+        label: const Text(
+          "Chat with Customer",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFieldLabel(String label) {
+    return Text(
+      label,
+      style: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: AppColors.tertiaryDarker,
+      ),
+    );
+  }
+
+  Widget _buildFieldValue(String value) {
+    return Text(
+      value,
+      style: TextStyle(
+        fontSize: 15,
+        color: Colors.grey.shade500,
+      ),
+    );
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">1245751890504928</string>
+    <string name="facebook_client_token">4cc79827573f1be3c6edc4aae5fb9b8c</string>
+    <string name="fb_login_protocol_scheme">fb1245751890504928</string>
+    <string name="firebase_auth_redirect_url">https://macktech-mobiles.firebaseapp.com/__/auth/handler</string>
+</resources>
