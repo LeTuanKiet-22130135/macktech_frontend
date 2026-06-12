@@ -54,6 +54,10 @@ android/key.properties
 ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
 
+# Environment-specific / Local developer config
+local.properties
+android/local.properties
+
 # Build & cache (regenerated on every flutter run)
 build/
 .dart_tool/
@@ -72,3 +76,5 @@ web/
 # Markdown files (except README)
 *.md
 !README.md
+
+firebase.json
