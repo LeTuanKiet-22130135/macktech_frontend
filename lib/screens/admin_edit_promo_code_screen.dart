@@ -1,28 +1,47 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../models/promo_code.dart';
 import '../services/promo_code_service.dart';
 
-class AdminAddPromoCodeScreen extends StatefulWidget {
-  const AdminAddPromoCodeScreen({super.key});
+class AdminEditPromoCodeScreen extends StatefulWidget {
+  final PromoCode promoCode;
+
+  const AdminEditPromoCodeScreen({super.key, required this.promoCode});
 
   @override
-  State<AdminAddPromoCodeScreen> createState() => _AdminAddPromoCodeScreenState();
+  State<AdminEditPromoCodeScreen> createState() => _AdminEditPromoCodeScreenState();
 }
 
-class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
+class _AdminEditPromoCodeScreenState extends State<AdminEditPromoCodeScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _discountType = 'percentage';
-  bool _isActive = true;
+  late String _discountType;
+  late bool _isActive;
   bool _isSaving = false;
+  bool _isDeleting = false;
 
-  final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _valueController = TextEditingController();
-  final TextEditingController _minOrderController = TextEditingController();
-  final TextEditingController _usageLimitController = TextEditingController();
+  late TextEditingController _codeController;
+  late TextEditingController _valueController;
+  late TextEditingController _minOrderController;
+  late TextEditingController _usageLimitController;
   
   DateTime? _validFrom;
   DateTime? _validUntil;
+
+  @override
+  void initState() {
+    super.initState();
+    _discountType = widget.promoCode.discountType;
+    _isActive = widget.promoCode.isActive;
+    
+    _codeController = TextEditingController(text: widget.promoCode.code);
+    _valueController = TextEditingController(text: widget.promoCode.discountValue.toStringAsFixed(0));
+    _minOrderController = TextEditingController(text: widget.promoCode.minimumOrderValue.toStringAsFixed(0));
+    _usageLimitController = TextEditingController(text: widget.promoCode.usageLimit?.toString() ?? '');
+    
+    _validFrom = widget.promoCode.validFrom;
+    _validUntil = widget.promoCode.validUntil;
+  }
 
   @override
   void dispose() {
@@ -36,7 +55,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
   Future<void> _selectDate(BuildContext context, bool isFrom) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: (isFrom ? _validFrom : _validUntil) ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
@@ -68,18 +87,48 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
     };
 
     try {
-      await PromoCodeService.createPromoCode(data);
+      await PromoCodeService.updatePromoCode(widget.promoCode.id, data);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Promo Code Created')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Promo Code Updated')));
         Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error creating promo code: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating promo code: $e')));
       }
     } finally {
       if (mounted) {
         setState(() => _isSaving = false);
+      }
+    }
+  }
+
+  Future<void> _delete() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Delete Promo Code?"),
+        content: const Text("Are you sure you want to permanently delete this promo code?"),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("CANCEL")),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text("DELETE", style: TextStyle(color: Colors.red))),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      setState(() => _isDeleting = true);
+      try {
+        await PromoCodeService.deletePromoCode(widget.promoCode.id);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Promo Code Deleted')));
+          Navigator.pop(context, true);
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error deleting promo code: $e')));
+          setState(() => _isDeleting = false);
+        }
       }
     }
   }
@@ -89,7 +138,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Create Promo Code", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+        title: const Text("Edit Promo Code", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -103,8 +152,14 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: _isSaving || _isDeleting ? null : _delete,
+          )
+        ],
       ),
-      body: _isSaving
+      body: _isSaving || _isDeleting
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: SingleChildScrollView(
@@ -114,12 +169,35 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColors.tertiaryLight.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColors.secondary.withValues(alpha: 0.2)),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.analytics_outlined, color: AppColors.secondary),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                widget.promoCode.usageLimit != null
+                                    ? "This promo code has been used ${widget.promoCode.usedCount} out of ${widget.promoCode.usageLimit} times."
+                                    : "This promo code has been used ${widget.promoCode.usedCount} times.",
+                                style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
                       const Text("Code String", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _codeController,
                         validator: (val) => val == null || val.isEmpty ? "Required" : null,
-                        decoration: _inputDecoration(hint: "e.g. SUMMER26"),
+                        decoration: _inputDecoration(),
                       ),
                       const SizedBox(height: 24),
                       Row(
@@ -155,7 +233,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                                   controller: _valueController,
                                   keyboardType: TextInputType.number,
                                   validator: (val) => val == null || val.isEmpty ? "Required" : null,
-                                  decoration: _inputDecoration(hint: "e.g. 15"),
+                                  decoration: _inputDecoration(),
                                 ),
                               ],
                             ),
@@ -168,7 +246,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                       TextFormField(
                         controller: _minOrderController,
                         keyboardType: TextInputType.number,
-                        decoration: _inputDecoration(hint: "e.g. 500.00"),
+                        decoration: _inputDecoration(),
                       ),
                       const SizedBox(height: 24),
                       Row(
@@ -257,7 +335,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
                           child: const Text(
-                            "SAVE PROMO CODE",
+                            "SAVE CHANGES",
                             style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                           ),
                         ),

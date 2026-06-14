@@ -1,8 +1,49 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../services/order_service.dart';
 
-class AdminOrderListScreen extends StatelessWidget {
+class AdminOrderListScreen extends StatefulWidget {
   const AdminOrderListScreen({super.key});
+
+  @override
+  State<AdminOrderListScreen> createState() => _AdminOrderListScreenState();
+}
+
+class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
+  bool _isLoading = true;
+  List<dynamic> _orders = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchOrders();
+  }
+
+  Future<void> _fetchOrders() async {
+    setState(() => _isLoading = true);
+    final orders = await OrderService.getAllOrdersAdmin();
+    if (mounted) {
+      setState(() {
+        _orders = orders;
+        // Sort by date descending (newest first)
+        _orders.sort((a, b) {
+          final dateA = DateTime.tryParse(a['createdAt'] ?? '') ?? DateTime(2000);
+          final dateB = DateTime.tryParse(b['createdAt'] ?? '') ?? DateTime(2000);
+          return dateB.compareTo(dateA);
+        });
+        _isLoading = false;
+      });
+    }
+  }
+
+  String _formatDate(String isoDate) {
+    try {
+      final date = DateTime.parse(isoDate).toLocal();
+      return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+    } catch (_) {
+      return isoDate;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,60 +62,41 @@ class AdminOrderListScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-              itemCount: 4, // Simulated static data
-              itemBuilder: (context, index) {
-                return _buildOrderCard(context, index);
-              },
-            ),
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _orders.isEmpty
+                    ? const Center(child: Text("No orders found."))
+                    : ListView.builder(
+                        itemCount: _orders.length,
+                        itemBuilder: (context, index) {
+                          return _buildOrderCard(context, _orders[index]);
+                        },
+                      ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildOrderCard(BuildContext context, int index) {
-    final Map<String, dynamic> sampleCustomer = [
-      {
-        "name": "Alex Taylor",
-        "email": "alex.taylor@example.com",
-        "total": "₫199,900.00",
-        "status": "Pending",
-        "productCount": 2,
-        "date": "Oct 24, 2026",
-      },
-      {
-        "name": "Mark Anthony",
-        "email": "markanthony@gmail.com",
-        "total": "₫389,900.00",
-        "status": "Shipped",
-        "productCount": 1,
-        "date": "Oct 22, 2026",
-      },
-      {
-        "name": "Samantha Green",
-        "email": "sam.green@mail.co",
-        "total": "₫18,900.00",
-        "status": "Delivered",
-        "productCount": 1,
-        "date": "Oct 20, 2026",
-      },
-      {
-        "name": "Alex Taylor",
-        "email": "alex.taylor@example.com",
-        "total": "₫14,900.00",
-        "status": "Cancelled",
-        "productCount": 1,
-        "date": "Oct 19, 2026",
-      },
-    ][index];
+  Widget _buildOrderCard(BuildContext context, Map<String, dynamic> order) {
+    final status = order['status'] ?? 'Unknown';
+    final total = order['total'] ?? 0.0;
+    final date = _formatDate(order['createdAt'] ?? '');
+    
+    // items count
+    final items = order['items'] as List<dynamic>? ?? [];
+    final productCount = items.fold<int>(0, (sum, item) => sum + ((item['quantity'] as int?) ?? 1));
+
+    // For admin, the response includes a 'user' object or uses the shipping details if 'user' isn't available
+    final userName = order['user']?['name'] ?? order['shippingName'] ?? 'Unknown Customer';
+    final userEmail = order['user']?['email'] ?? order['shippingEmail'] ?? '';
 
     Color statusColor;
-    if (sampleCustomer['status'] == 'Pending') {
+    if (status == 'Pending') {
       statusColor = Colors.orange;
-    } else if (sampleCustomer['status'] == 'Shipped') {
+    } else if (status == 'Shipped') {
       statusColor = Colors.blue;
-    } else if (sampleCustomer['status'] == 'Delivered') {
+    } else if (status == 'Delivered' || status == 'Completed') {
       statusColor = AppColors.success;
     } else {
       statusColor = Colors.red;
@@ -103,7 +125,7 @@ class AdminOrderListScreen extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: AppColors.backgroundLight,
                 child: Text(
-                  sampleCustomer['name'][0],
+                  userName.isNotEmpty ? userName[0].toUpperCase() : '?',
                   style: const TextStyle(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.bold,
@@ -116,19 +138,20 @@ class AdminOrderListScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      sampleCustomer['name'],
+                      userName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      sampleCustomer['email'],
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
+                    if (userEmail.isNotEmpty)
+                      Text(
+                        userEmail,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -139,7 +162,7 @@ class AdminOrderListScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  sampleCustomer['status'],
+                  status.toString(),
                   style: TextStyle(
                     color: statusColor,
                     fontSize: 12,
@@ -166,7 +189,7 @@ class AdminOrderListScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    sampleCustomer['date'],
+                    date,
                     style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),
                 ],
@@ -175,12 +198,12 @@ class AdminOrderListScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "Items: ${sampleCustomer['productCount']}",
+                    "Items: $productCount",
                     style: const TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    sampleCustomer['total'],
+                    "₫${total.toStringAsFixed(0)}",
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],

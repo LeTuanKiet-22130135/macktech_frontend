@@ -1,9 +1,62 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../models/promo_code.dart';
+import '../services/promo_code_service.dart';
 import 'admin_add_promo_code_screen.dart';
+import 'admin_edit_promo_code_screen.dart';
 
-class AdminPromoCodesScreen extends StatelessWidget {
+class AdminPromoCodesScreen extends StatefulWidget {
   const AdminPromoCodesScreen({super.key});
+
+  @override
+  State<AdminPromoCodesScreen> createState() => _AdminPromoCodesScreenState();
+}
+
+class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
+  bool _isLoading = true;
+  List<PromoCode> _promoCodes = [];
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPromoCodes();
+  }
+
+  Future<void> _fetchPromoCodes() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final codes = await PromoCodeService.getAllPromoCodes();
+      setState(() {
+        _promoCodes = codes;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = "Failed to load promo codes: $e";
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _toggleStatus(PromoCode promo) async {
+    try {
+      // Just toggle isActive, send whole object
+      final data = promo.toJson();
+      data['isActive'] = !promo.isActive;
+      
+      await PromoCodeService.updatePromoCode(promo.id, data);
+      await _fetchPromoCodes(); // Refresh
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating status: $e')));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,47 +79,49 @@ class AdminPromoCodesScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Expanded(
-                child: ListView(
-                  children: [
-                    _buildPromoCard(
-                      code: "SUMMER26",
-                      value: "15% OFF",
-                      target: "Storewide",
-                      timesUsed: 42,
-                      usageLimit: 100,
-                      isActive: true,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPromoCard(
-                      code: "IPHONE15",
-                      value: "₫50.00 OFF",
-                      target: "Apply to: iPhone 15 Pro",
-                      timesUsed: 12,
-                      usageLimit: 50,
-                      isActive: true,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPromoCard(
-                      code: "WELCOME10",
-                      value: "10% OFF",
-                      target: "Storewide",
-                      timesUsed: 315,
-                      usageLimit: null,
-                      isActive: false,
-                    ),
-                  ],
-                ),
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : _error != null
+                        ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+                        : _promoCodes.isEmpty
+                            ? const Center(child: Text("No promo codes found."))
+                            : ListView.builder(
+                                itemCount: _promoCodes.length,
+                                itemBuilder: (context, index) {
+                                  final promo = _promoCodes[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 12.0),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => AdminEditPromoCodeScreen(promoCode: promo),
+                                          ),
+                                        );
+                                        if (result == true) {
+                                          _fetchPromoCodes();
+                                        }
+                                      },
+                                      child: _buildPromoCard(promo),
+                                    ),
+                                  );
+                                },
+                              ),
               ),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const AdminAddPromoCodeScreen()),
           );
+          if (result == true) {
+            _fetchPromoCodes();
+          }
         },
         backgroundColor: AppColors.primary,
         icon: const Icon(Icons.add, color: Colors.white),
@@ -75,14 +130,15 @@ class AdminPromoCodesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPromoCard({
-    required String code,
-    required String value,
-    required String target,
-    required int timesUsed,
-    required int? usageLimit,
-    required bool isActive,
-  }) {
+  Widget _buildPromoCard(PromoCode promo) {
+    String valueText = promo.discountType == 'percentage' 
+        ? "${promo.discountValue.toStringAsFixed(0)}% OFF" 
+        : "₫${promo.discountValue.toStringAsFixed(0)} OFF";
+        
+    String target = promo.minimumOrderValue > 0 
+        ? "Min order ₫${promo.minimumOrderValue.toStringAsFixed(0)}" 
+        : "Storewide";
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -109,31 +165,40 @@ class AdminPromoCodesScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  code,
+                  promo.code,
                   style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary, fontSize: 16),
                 ),
               ),
               Switch(
-                value: isActive,
-                onChanged: (val) {},
+                value: promo.isActive,
+                onChanged: (val) {
+                  _toggleStatus(promo);
+                },
                 activeThumbColor: AppColors.primary,
               ),
             ],
           ),
           const SizedBox(height: 12),
           Text(
-            "$value • $target",
+            "$valueText • $target",
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary),
           ),
           const SizedBox(height: 8),
           Text(
-            usageLimit != null ? "Used $timesUsed / $usageLimit times" : "Used $timesUsed times (No Limit)",
+            promo.usageLimit != null 
+                ? "Used ${promo.usedCount} / ${promo.usageLimit} times" 
+                : "Used ${promo.usedCount} times (No Limit)",
             style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
           ),
+          if (promo.validUntil != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              "Expires: ${promo.validUntil!.toLocal().toString().split(' ')[0]}",
+              style: TextStyle(color: Colors.red.shade400, fontSize: 12),
+            ),
+          ]
         ],
       ),
     );
   }
 }
-
-

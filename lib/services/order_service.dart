@@ -48,6 +48,20 @@ class OrderService {
     }
   }
 
+  /// Get all orders in the system (Admin Only).
+  static Future<List<dynamic>> getAllOrdersAdmin() async {
+    try {
+      final response = await DioClient.instance.get('/api/admin/orders');
+      if (response.statusCode == 200) {
+        return response.data as List<dynamic>;
+      }
+      return [];
+    } catch (e) {
+      debugPrint('Error fetching admin orders: $e');
+      return [];
+    }
+  }
+
   /// Get details for a specific order.
   static Future<Map<String, dynamic>?> getOrderDetails(String orderId) async {
     try {

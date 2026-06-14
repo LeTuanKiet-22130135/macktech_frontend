@@ -6,6 +6,7 @@ import 'admin_dashboard_screen.dart';
 import 'admin_all_products_screen.dart';
 import 'admin_order_list_screen.dart';
 import 'admin_promo_codes_screen.dart';
+import 'admin_users_screen.dart';
 import 'login_screen.dart';
 import 'change_password_screen.dart';
 
@@ -139,6 +140,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
           AdminAllProductsScreen(),
           AdminOrderListScreen(),
           AdminPromoCodesScreen(),
+          AdminUsersScreen(),
         ],
       ),
     );
@@ -189,6 +191,16 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                 isSelected: _selectedIndex == 3,
                 onTap: () {
                   setState(() => _selectedIndex = 3);
+                  Navigator.pop(context); // Close drawer
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildDrawerItem(
+                icon: Icons.people_outline,
+                title: "USER MANAGEMENT",
+                isSelected: _selectedIndex == 4,
+                onTap: () {
+                  setState(() => _selectedIndex = 4);
                   Navigator.pop(context); // Close drawer
                 },
               ),
