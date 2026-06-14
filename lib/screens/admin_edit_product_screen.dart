@@ -4,14 +4,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../theme/app_colors.dart';
 import '../models/product.dart';
-import '../models/product_detail.dart';
 import '../models/category.dart';
 import '../services/category_service.dart';
 import '../services/product_service.dart';
 
 class AdminEditProductScreen extends StatefulWidget {
   final Product product;
-  
+
   const AdminEditProductScreen({super.key, required this.product});
 
   @override
@@ -46,7 +45,9 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     // Pre-fill with what we have from Product
     _nameController = TextEditingController(text: widget.product.title);
     _brandController = TextEditingController(text: widget.product.brand);
-    _priceController = TextEditingController(text: widget.product.price.toStringAsFixed(2));
+    _priceController = TextEditingController(
+      text: widget.product.price.toStringAsFixed(2),
+    );
     _skuController = TextEditingController();
     _subTextController = TextEditingController();
     _stockController = TextEditingController();
@@ -65,10 +66,10 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     try {
       final categories = await CategoryService.getAllCategories();
       final detail = await ProductService.fetchProductDetail(widget.product.id);
-      
+
       setState(() {
         _categories = categories;
-        
+
         // Use details
         _skuController.text = detail.sku;
         _subTextController.text = detail.subText;
@@ -76,10 +77,10 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
         _colorsController.text = detail.colors.join(', ');
         _featuresController.text = detail.keyFeatures;
         _descController.text = detail.description;
-        
-        // We don't have categoryId returned in ProductDetail per guide, 
+
+        // We don't have categoryId returned in ProductDetail per guide,
         // but if it's there we can set it. If it's not, we have to let the user pick it.
-        // guide.md for GET /api/products/{id} does not show categoryId in the response json, 
+        // guide.md for GET /api/products/{id} does not show categoryId in the response json,
         // but we can try to find it or just leave it blank.
         _isLoading = false;
       });
@@ -119,7 +120,10 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     if (_newImageFile == null) return _existingImageUrl;
     try {
       final fileName = 'product_${DateTime.now().millisecondsSinceEpoch}.jpg';
-      final ref = FirebaseStorage.instance.ref().child('product_images').child(fileName);
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('product_images')
+          .child(fileName);
       await ref.putFile(_newImageFile!);
       return await ref.getDownloadURL();
     } catch (e) {
@@ -131,7 +135,9 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCategoryId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a category')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please select a category')));
       return;
     }
 
@@ -139,7 +145,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
 
     String? imageUrl = await _uploadImage();
 
-    final colorsList = _colorsController.text.split(',')
+    final colorsList = _colorsController.text
+        .split(',')
         .map((e) => e.trim())
         .where((e) => e.isNotEmpty)
         .toList();
@@ -161,12 +168,16 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     try {
       await ProductService.updateProduct(widget.product.id, productData);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product updated successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Product updated successfully')),
+        );
         Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error updating product: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error updating product: $e')));
       }
     } finally {
       if (mounted) {
@@ -199,12 +210,16 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
       try {
         await ProductService.deleteProduct(widget.product.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product deleted')));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Product deleted')));
           Navigator.pop(context, true);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error deleting product: $e')));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Error deleting product: $e')));
         }
       } finally {
         if (mounted) {
@@ -268,13 +283,19 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     const SizedBox(height: 8),
                     DropdownButtonFormField<int>(
                       value: _selectedCategoryId,
-                      hint: Text("Select Category", style: TextStyle(color: Colors.grey.shade400)),
+                      hint: Text(
+                        "Select Category",
+                        style: TextStyle(color: Colors.grey.shade400),
+                      ),
                       icon: const Icon(Icons.keyboard_arrow_down),
                       decoration: _inputDecoration(),
                       items: _categories.map((cat) {
                         return DropdownMenuItem<int>(
                           value: cat.id,
-                          child: Text(cat.name, style: const TextStyle(fontSize: 16)),
+                          child: Text(
+                            cat.name,
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         );
                       }).toList(),
                       onChanged: (val) {
@@ -290,7 +311,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _skuController,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. MK-PHONE-001"),
                     ),
                     const SizedBox(height: 16),
@@ -300,7 +322,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _nameController,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "Type Here"),
                     ),
                     const SizedBox(height: 16),
@@ -310,7 +333,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _brandController,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. Apple, Samsung"),
                     ),
                     const SizedBox(height: 16),
@@ -336,12 +360,19 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                           color: const Color(0xFFF1F5F9), // Light blueish grey
                           borderRadius: BorderRadius.circular(16),
                           image: _newImageFile != null
-                              ? DecorationImage(image: FileImage(_newImageFile!), fit: BoxFit.cover)
+                              ? DecorationImage(
+                                  image: FileImage(_newImageFile!),
+                                  fit: BoxFit.cover,
+                                )
                               : _existingImageUrl != null
-                                  ? DecorationImage(image: NetworkImage(_existingImageUrl!), fit: BoxFit.cover)
-                                  : null,
+                              ? DecorationImage(
+                                  image: NetworkImage(_existingImageUrl!),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
                         ),
-                        child: (_newImageFile == null && _existingImageUrl == null)
+                        child:
+                            (_newImageFile == null && _existingImageUrl == null)
                             ? Center(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -374,7 +405,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     TextFormField(
                       controller: _priceController,
                       keyboardType: TextInputType.number,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "R S . "),
                     ),
                     const SizedBox(height: 16),
@@ -385,7 +417,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     TextFormField(
                       controller: _stockController,
                       keyboardType: TextInputType.number,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. 100"),
                     ),
                     const SizedBox(height: 16),

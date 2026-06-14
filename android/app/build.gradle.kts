@@ -52,6 +52,9 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+        resValue("string", "facebook_app_id", envMap["FACEBOOK_APP_ID"] ?: "")
+        resValue("string", "facebook_client_token", envMap["FACEBOOK_CLIENT_TOKEN"] ?: "")
+        resValue("string", "fb_login_protocol_scheme", "fb${envMap["FACEBOOK_APP_ID"] ?: ""}")
     }
 
     buildTypes {
