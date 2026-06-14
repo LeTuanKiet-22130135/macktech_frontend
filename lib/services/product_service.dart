@@ -81,4 +81,27 @@ class ProductService {
       maxPrice: respMaxPrice,
     );
   }
+
+  /// Create a new product (Admin Only)
+  static Future<ProductDetail> createProduct(Map<String, dynamic> productData) async {
+    final response = await DioClient.instance.post(
+      '/api/products',
+      data: productData,
+    );
+    return ProductDetail.fromJson(response.data as Map<String, dynamic>);
+  }
+
+  /// Update an existing product (Admin Only)
+  static Future<ProductDetail> updateProduct(String productId, Map<String, dynamic> productData) async {
+    final response = await DioClient.instance.put(
+      '/api/products/$productId',
+      data: productData,
+    );
+    return ProductDetail.fromJson(response.data as Map<String, dynamic>);
+  }
+
+  /// Delete a product (Admin Only)
+  static Future<void> deleteProduct(String productId) async {
+    await DioClient.instance.delete('/api/products/$productId');
+  }
 }

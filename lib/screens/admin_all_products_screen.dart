@@ -1,10 +1,83 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'admin_add_product_screen.dart';
 import 'admin_edit_product_screen.dart';
+import '../models/product.dart';
+import '../services/product_service.dart';
 
-class AdminAllProductsScreen extends StatelessWidget {
+class AdminAllProductsScreen extends StatefulWidget {
   const AdminAllProductsScreen({super.key});
+
+  @override
+  State<AdminAllProductsScreen> createState() => _AdminAllProductsScreenState();
+}
+
+class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
+  bool _isLoading = true;
+  List<Product> _products = [];
+  String? _error;
+  
+  int _currentPage = 0;
+  int _totalPages = 0;
+  final int _pageSize = 20;
+
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProducts();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _fetchProducts() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      List<Product> fetchedProducts;
+      int fetchedTotalPages;
+      
+      if (_searchQuery.isNotEmpty) {
+        final result = await ProductService.searchProducts(query: _searchQuery, page: _currentPage, size: _pageSize);
+        fetchedProducts = result.products;
+        fetchedTotalPages = result.totalPages;
+      } else {
+        final result = await ProductService.fetchAllProducts(page: _currentPage, size: _pageSize);
+        fetchedProducts = result.products;
+        fetchedTotalPages = result.totalPages;
+      }
+          
+      setState(() {
+        _products = fetchedProducts;
+        _totalPages = fetchedTotalPages;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = "Failed to load products: $e";
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _goToPage(int page) {
+    if (page >= 0 && page < _totalPages && page != _currentPage) {
+      setState(() {
+        _currentPage = page;
+      });
+      _fetchProducts();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,68 +86,169 @@ class AdminAllProductsScreen extends StatelessWidget {
         // Top action bar
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AdminAddProductScreen()),
-                );
-              },
-              icon: const Icon(Icons.add, size: 18),
-              label: const Text("Add new product", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.overlayDark, // Dark navy blue matching 022 button
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AdminAddProductScreen()),
+                    );
+                    if (result == true) {
+                      _fetchProducts();
+                    }
+                  },
+                  icon: const Icon(Icons.add, size: 18),
+                  label: const Text("Add new product", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.overlayDark, // Dark navy blue matching 022 button
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-            ),
+              const SizedBox(height: 16),
+              // Search Bar
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: "Search products...",
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear, color: Colors.grey),
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(() {
+                              _searchQuery = '';
+                              _currentPage = 0;
+                            });
+                            _fetchProducts();
+                          },
+                        )
+                      : null,
+                  filled: true,
+                  fillColor: const Color(0xFFF5F6F8),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                onSubmitted: (value) {
+                  setState(() {
+                    _searchQuery = value.trim();
+                    _currentPage = 0; // Reset to first page on new search
+                  });
+                  _fetchProducts();
+                },
+              ),
+            ],
           ),
         ),
 
         // Product Grid
         Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.65, // Adjust to fit image and text comfortably
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            itemCount: 4, // Mocking 4 items as seen in 022
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const AdminEditProductScreen()),
-                  );
-                },
-                child: _buildAdminProductCard(index),
-              );
-            },
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _error != null
+                  ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+                  : _products.isEmpty
+                      ? const Center(child: Text("No products found."))
+                      : GridView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.65, // Adjust to fit image and text comfortably
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: _products.length,
+                          itemBuilder: (context, index) {
+                            final product = _products[index];
+                            return InkWell(
+                              onTap: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => AdminEditProductScreen(product: product)),
+                                );
+                                if (result == true) {
+                                  _fetchProducts();
+                                }
+                              },
+                              child: _buildAdminProductCard(product),
+                            );
+                          },
+                        ),
+        ),
+        
+        // Pagination Controls
+        if (_totalPages > 1)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: _buildPaginationControls(),
           ),
+      ],
+    );
+  }
+
+  Widget _buildPaginationControls() {
+    int startPage = max(0, min(_currentPage - 2, _totalPages - 5));
+    int endPage = min(_totalPages - 1, startPage + 4);
+    
+    // Adjust start page if we hit the end
+    if (endPage - startPage < 4 && _totalPages >= 5) {
+      startPage = max(0, endPage - 4);
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: _currentPage > 0 ? () => _goToPage(_currentPage - 1) : null,
+          color: _currentPage > 0 ? AppColors.textPrimary : Colors.grey.shade300,
+        ),
+        for (int i = startPage; i <= endPage; i++)
+          GestureDetector(
+            onTap: () => _goToPage(i),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: _currentPage == i ? AppColors.overlayDark : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: _currentPage == i ? AppColors.overlayDark : Colors.grey.shade300,
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '${i + 1}',
+                style: TextStyle(
+                  color: _currentPage == i ? Colors.white : AppColors.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: _currentPage < _totalPages - 1 ? () => _goToPage(_currentPage + 1) : null,
+          color: _currentPage < _totalPages - 1 ? AppColors.textPrimary : Colors.grey.shade300,
         ),
       ],
     );
   }
 
-  Widget _buildAdminProductCard(int index) {
-    // Mock data matching mockup 022
-    final mockProducts = [
-      {'name': 'Apple iPhone 16 Pro Max 256GB', 'brand': 'Apple', 'price': '₫389,900.00'},
-      {'name': 'OnePlus Nord N20SE 4GB RAM 64GB', 'brand': 'OnePlus', 'price': '₫54,900.00'},
-      {'name': 'Samsung Galaxy A26 8GB RAM 256GB', 'brand': 'Samsung', 'price': '₫119,990.00'},
-      {'name': 'Apple iPhone 11 128GB', 'brand': 'Apple', 'price': '₫134,900.00'},
-    ];
-
-    final product = mockProducts[index];
-
+  Widget _buildAdminProductCard(Product product) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -98,10 +272,18 @@ class AdminAllProductsScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.grey.shade100, // Light grey background like mockup
                 borderRadius: BorderRadius.circular(12),
+                image: product.imageUrl.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(product.imageUrl),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
-              child: Center(
-                child: Icon(Icons.phone_iphone, size: 50, color: Colors.grey.shade400),
-              ),
+              child: product.imageUrl.isEmpty
+                  ? Center(
+                      child: Icon(Icons.phone_iphone, size: 50, color: Colors.grey.shade400),
+                    )
+                  : null,
             ),
           ),
           // Product details
@@ -111,7 +293,7 @@ class AdminAllProductsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product['name']!,
+                  product.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -123,7 +305,7 @@ class AdminAllProductsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  product['brand']!,
+                  product.brand,
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -131,7 +313,7 @@ class AdminAllProductsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  product['price']!,
+                  '₫${product.price.toStringAsFixed(0)}', // Format price
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
