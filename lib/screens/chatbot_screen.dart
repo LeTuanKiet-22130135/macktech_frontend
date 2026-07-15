@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import '../services/chat_service.dart';
 import '../services/stomp_chat_service.dart';
 import '../services/session_service.dart';
+import '../providers/navigation_provider.dart';
 import '../theme/app_colors.dart';
 
-class ChatbotScreen extends StatefulWidget {
+class ChatbotScreen extends ConsumerStatefulWidget {
   final String? ticketId;
   final String activeRole; // 'user' or 'agent'
   final String? targetName;
@@ -23,10 +26,10 @@ class ChatbotScreen extends StatefulWidget {
   });
 
   @override
-  State<ChatbotScreen> createState() => _ChatbotScreenState();
+  ConsumerState<ChatbotScreen> createState() => _ChatbotScreenState();
 }
 
-class _ChatbotScreenState extends State<ChatbotScreen> {
+class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -44,9 +47,16 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   /// Whether this screen is in live human-to-human chat mode.
   bool get _isLiveChatMode => widget.ticketId != null;
 
+  late final ChatFabVisibleNotifier _chatFabVisibleNotifier;
+
   @override
   void initState() {
     super.initState();
+    // Save notifier so we can use it safely in dispose()
+    _chatFabVisibleNotifier = ref.read(chatFabVisibleProvider.notifier);
+    
+    // Hide global FAB when in chat screen
+    Future.microtask(() => _chatFabVisibleNotifier.set(false));
     _activeProviderId = widget.initialProviderId;
     _initializeChat();
   }
@@ -68,7 +78,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     } else if (widget.chatSessionId != null) {
       // ── Historical AI Bot Chat Session ──
       setState(() => _isLoadingHistory = true);
-      final history = await ChatService.getSessionMessages(widget.chatSessionId!);
+      final history = await ChatService.getSessionMessages(
+        widget.chatSessionId!,
+      );
       if (mounted) {
         setState(() {
           _messages.clear();
@@ -87,12 +99,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       // ── New AI Bot Chat ──
       _messages.addAll([
         {
-          'text': 'Hi there! 👋 I\'m Macktech Assistant. How can I help you today?',
+          'text':
+              'Hi there! 👋 I\'m Macktech Assistant. How can I help you today?',
           'senderType': 'bot',
           'time': '09:00',
         },
         {
-          'text': 'You can ask me about:\n• Product recommendations\n• Order tracking\n• Return & refund policies\n• Technical specifications',
+          'text':
+              'You can ask me about:\n• Product recommendations\n• Order tracking\n• Return & refund policies\n• Technical specifications',
           'senderType': 'bot',
           'time': '09:00',
         },
@@ -241,6 +255,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   @override
   void dispose() {
+    Future.microtask(() => _chatFabVisibleNotifier.set(true));
     _streamSubscription?.cancel();
     _stompSubscription?.cancel();
     _stompService?.dispose();
@@ -310,7 +325,11 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                 Text(
                   _isBotTyping ? 'Typing...' : _headerSubtitle,
                   style: TextStyle(
-                    color: _isBotTyping ? Colors.white70 : (widget.activeRole == 'agent' ? Colors.white70 : Colors.greenAccent),
+                    color: _isBotTyping
+                        ? Colors.white70
+                        : (widget.activeRole == 'agent'
+                              ? Colors.white70
+                              : Colors.greenAccent),
                     fontSize: 12,
                   ),
                 ),
@@ -319,30 +338,32 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           ],
         ),
       ),
-      body: _isLoadingHistory 
-        ? const Center(child: CircularProgressIndicator(color: AppColors.tertiaryDarker))
-        : Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                final msg = _messages[index];
-                return _buildMessageBubble(
-                  text: msg['text'] as String,
-                  senderType: msg['senderType'] as String,
-                  senderName: msg['senderName'] as String?,
-                  time: msg['time'] as String,
-                  isStreaming: msg['isStreaming'] == true,
-                );
-              },
+      body: _isLoadingHistory
+          ? const Center(
+              child: CircularProgressIndicator(color: AppColors.tertiaryDarker),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final msg = _messages[index];
+                      return _buildMessageBubble(
+                        text: msg['text'] as String,
+                        senderType: msg['senderType'] as String,
+                        senderName: msg['senderName'] as String?,
+                        time: msg['time'] as String,
+                        isStreaming: msg['isStreaming'] == true,
+                      );
+                    },
+                  ),
+                ),
+                _buildInputBar(),
+              ],
             ),
-          ),
-          _buildInputBar(),
-        ],
-      ),
     );
   }
 
@@ -393,7 +414,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           right: isMe ? 0 : 48,
         ),
         child: Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isMe
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             if (!isMe && senderName != null) ...[
               Padding(
@@ -409,7 +432,11 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                     const SizedBox(width: 4),
                     Text(
                       senderName,
-                      style: TextStyle(fontSize: 11, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -435,14 +462,29 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
               ),
               child: text.isEmpty && isStreaming
                   ? _buildTypingIndicator()
-                  : Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: textColor,
-                        height: 1.4,
-                      ),
-                    ),
+                  : (isBot
+                      ? MarkdownBody(
+                          data: text,
+                          selectable: true,
+                          styleSheet: MarkdownStyleSheet(
+                            p: TextStyle(
+                              fontSize: 14,
+                              color: textColor,
+                              height: 1.4,
+                            ),
+                            listBullet: TextStyle(
+                              color: textColor,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          text,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: textColor,
+                            height: 1.4,
+                          ),
+                        )),
             ),
             const SizedBox(height: 4),
             Row(
@@ -450,10 +492,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
               children: [
                 Text(
                   time,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey.shade400,
-                  ),
+                  style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
                 ),
                 if (isStreaming) ...[
                   const SizedBox(width: 6),
@@ -534,7 +573,10 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                     hintText: "Type a message...",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                   ),
                 ),
               ),
@@ -549,7 +591,11 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   color: _isBotTyping ? Colors.grey : AppColors.tertiaryDarker,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                child: const Icon(
+                  Icons.send_rounded,
+                  color: Colors.white,
+                  size: 20,
+                ),
               ),
             ),
           ],

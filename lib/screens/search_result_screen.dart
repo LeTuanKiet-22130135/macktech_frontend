@@ -5,6 +5,8 @@ import '../widgets/product_card.dart';
 import '../theme/app_colors.dart';
 import '../providers/search_products_provider.dart';
 import 'filter_screen.dart';
+import '../services/category_service.dart';
+import '../models/category.dart';
 
 /// Search results screen with active search bar, sort & filter controls,
 /// and a product grid showing matching results.
@@ -25,16 +27,19 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
 
   // Filter state
   String? _filterBrand;
+  int? _filterCategoryId;
   double? _filterMinPrice;
   double? _filterMaxPrice;
 
   // Cached filter metadata from last successful API response
   List<String> _availableBrands = [];
+  List<Category> _availableCategories = [];
   double _apiMinPrice = 0;
   double _apiMaxPrice = 0;
 
   bool get _hasActiveFilter =>
       _filterBrand != null ||
+      _filterCategoryId != null ||
       _filterMinPrice != null ||
       _filterMaxPrice != null;
 
@@ -45,6 +50,16 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _searchFocus.requestFocus();
     });
+    _loadCategories();
+  }
+
+  Future<void> _loadCategories() async {
+    final cats = await CategoryService.getAllCategories();
+    if (mounted) {
+      setState(() {
+        _availableCategories = cats;
+      });
+    }
   }
 
   @override
@@ -123,6 +138,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       sortBy: _sortBy,
       page: _currentPage - 1,
       brand: _filterBrand,
+      categoryId: _filterCategoryId,
       minPrice: _filterMinPrice,
       maxPrice: _filterMaxPrice,
     );
@@ -311,9 +327,11 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                 MaterialPageRoute(
                   builder: (_) => FilterScreen(
                     availableBrands: _availableBrands,
+                    availableCategories: _availableCategories,
                     minPrice: _apiMinPrice,
                     maxPrice: _apiMaxPrice,
                     initialBrands: _filterBrand != null ? {_filterBrand!} : null,
+                    initialCategoryId: _filterCategoryId,
                     initialMinPrice: _filterMinPrice,
                     initialMaxPrice: _filterMaxPrice,
                   ),
@@ -324,6 +342,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               if (result == null) {
                 setState(() {
                   _filterBrand = null;
+                  _filterCategoryId = null;
                   _filterMinPrice = null;
                   _filterMaxPrice = null;
                   _currentPage = 1;
@@ -333,6 +352,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   _filterBrand = result.selectedBrands.isNotEmpty
                       ? result.selectedBrands.first
                       : null;
+                  _filterCategoryId = result.selectedCategoryId;
                   _filterMinPrice = result.minPrice;
                   _filterMaxPrice = result.maxPrice;
                   _currentPage = 1;
@@ -351,6 +371,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               onTap: () => setState(() {
                 _sortBy = 'relevance';
                 _filterBrand = null;
+                _filterCategoryId = null;
                 _filterMinPrice = null;
                 _filterMaxPrice = null;
                 _currentPage = 1;

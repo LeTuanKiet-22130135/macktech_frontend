@@ -37,6 +37,7 @@ class ProductService {
   })> searchProducts({
     String? query,
     String? brand,
+    int? categoryId,
     double? minPrice,
     double? maxPrice,
     String? sortBy,
@@ -50,6 +51,7 @@ class ProductService {
     };
     if (query != null && query.isNotEmpty) queryParams['query'] = query;
     if (brand != null && brand.isNotEmpty) queryParams['brand'] = brand;
+    if (categoryId != null) queryParams['categoryId'] = categoryId;
     if (minPrice != null) queryParams['minPrice'] = minPrice;
     if (maxPrice != null) queryParams['maxPrice'] = maxPrice;
     if (sortBy != null && sortBy.isNotEmpty) queryParams['sortBy'] = sortBy;

@@ -7,6 +7,7 @@ class SearchQuery {
   final String sortBy;
   final int page;
   final String? brand;
+  final int? categoryId;
   final double? minPrice;
   final double? maxPrice;
 
@@ -15,6 +16,7 @@ class SearchQuery {
     this.sortBy = 'relevance',
     this.page = 0,
     this.brand,
+    this.categoryId,
     this.minPrice,
     this.maxPrice,
   });
@@ -28,11 +30,12 @@ class SearchQuery {
           sortBy == other.sortBy &&
           page == other.page &&
           brand == other.brand &&
+          categoryId == other.categoryId &&
           minPrice == other.minPrice &&
           maxPrice == other.maxPrice;
 
   @override
-  int get hashCode => Object.hash(query, sortBy, page, brand, minPrice, maxPrice);
+  int get hashCode => Object.hash(query, sortBy, page, brand, categoryId, minPrice, maxPrice);
 }
 
 /// Return type for the search provider, includes filter metadata.
@@ -75,6 +78,7 @@ final searchProductsProvider = FutureProvider.family<SearchResult, SearchQuery>(
   return ProductService.searchProducts(
     query: query.query,
     brand: query.brand,
+    categoryId: query.categoryId,
     minPrice: query.minPrice,
     maxPrice: query.maxPrice,
     sortBy: backendSortBy,

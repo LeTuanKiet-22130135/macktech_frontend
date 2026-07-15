@@ -33,7 +33,7 @@ void main() async {
     if (mapsImplementation is GoogleMapsFlutterAndroid) {
       mapsImplementation.useAndroidViewSurface = true;
       try {
-        mapsImplementation.initializeWithRenderer(AndroidMapRenderer.latest);
+        await mapsImplementation.initializeWithRenderer(AndroidMapRenderer.latest);
       } catch (e) {
         // Ignored, initialization may have already occurred or is not supported
       }

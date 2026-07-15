@@ -5,11 +5,13 @@ import 'package:app_frontend/theme/app_colors.dart';
 /// Result returned when the user applies a filter.
 class FilterResult {
   final Set<String> selectedBrands;
+  final int? selectedCategoryId;
   final double? minPrice;
   final double? maxPrice;
 
   FilterResult({
     required this.selectedBrands,
+    this.selectedCategoryId,
     this.minPrice,
     this.maxPrice,
   });
@@ -20,18 +22,22 @@ class FilterResult {
 /// and optional initial values to restore previous filter state.
 class FilterScreen extends StatefulWidget {
   final List<String> availableBrands;
+  final List<dynamic> availableCategories;
   final double minPrice;
   final double maxPrice;
   final Set<String>? initialBrands;
+  final int? initialCategoryId;
   final double? initialMinPrice;
   final double? initialMaxPrice;
 
   const FilterScreen({
     super.key,
     required this.availableBrands,
+    required this.availableCategories,
     required this.minPrice,
     required this.maxPrice,
     this.initialBrands,
+    this.initialCategoryId,
     this.initialMinPrice,
     this.initialMaxPrice,
   });
@@ -45,6 +51,8 @@ class _FilterScreenState extends State<FilterScreen> {
   late double _sliderMin;
   late double _sliderMax;
   final Set<String> _selectedBrands = {};
+  int? _selectedCategoryId;
+  bool _isBrandExpanded = false;
   late TextEditingController _minPriceController;
   late TextEditingController _maxPriceController;
 
@@ -82,6 +90,7 @@ class _FilterScreenState extends State<FilterScreen> {
     if (widget.initialBrands != null) {
       _selectedBrands.addAll(widget.initialBrands!);
     }
+    _selectedCategoryId = widget.initialCategoryId;
   }
 
   @override
@@ -131,6 +140,20 @@ class _FilterScreenState extends State<FilterScreen> {
                   _buildSectionTitle("Price range"),
                   const SizedBox(height: 24),
                   _buildPriceRange(),
+                  const SizedBox(height: 36),
+
+                  // Category section
+                  _buildSectionTitle("Category"),
+                  const SizedBox(height: 16),
+                  widget.availableCategories.isEmpty
+                      ? Text(
+                          "No categories available",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade500,
+                          ),
+                        )
+                      : _buildCategoryGrid(widget.availableCategories),
                   const SizedBox(height: 36),
 
                   // Brand section
@@ -299,19 +322,19 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget _buildChipGrid(List<String> items, Set<String> selectedSet) {
+  Widget _buildCategoryGrid(List<dynamic> categories) {
     return Wrap(
       spacing: 10,
       runSpacing: 10,
-      children: items.map((item) {
-        final isSelected = selectedSet.contains(item);
+      children: categories.map((cat) {
+        final isSelected = _selectedCategoryId == cat.id;
         return GestureDetector(
           onTap: () {
             setState(() {
               if (isSelected) {
-                selectedSet.remove(item);
+                _selectedCategoryId = null;
               } else {
-                selectedSet.add(item);
+                _selectedCategoryId = cat.id;
               }
             });
           },
@@ -327,7 +350,7 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
             ),
             child: Text(
-              item,
+              cat.name,
               style: TextStyle(
                 fontSize: 14,
                 color: isSelected ? Colors.white : Colors.grey.shade700,
@@ -337,6 +360,73 @@ class _FilterScreenState extends State<FilterScreen> {
           ),
         );
       }).toList(),
+    );
+  }
+
+  Widget _buildChipGrid(List<String> items, Set<String> selectedSet) {
+    final showAll = _isBrandExpanded || items.length <= 6;
+    final displayItems = showAll ? items : items.take(6).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: displayItems.map((item) {
+            final isSelected = selectedSet.contains(item);
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    selectedSet.remove(item);
+                  } else {
+                    selectedSet.add(item);
+                  }
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.tertiaryDarker : Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.tertiaryDarker
+                        : Colors.grey.shade300,
+                  ),
+                ),
+                child: Text(
+                  item,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: isSelected ? Colors.white : Colors.grey.shade700,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+        if (items.length > 6) ...[
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isBrandExpanded = !_isBrandExpanded;
+              });
+            },
+            child: Text(
+              _isBrandExpanded ? "Show less" : "Show all (${items.length})",
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.tertiaryNormal,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -357,6 +447,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   // Reset filters
                   setState(() {
                     _selectedBrands.clear();
+                    _selectedCategoryId = null;
                     _priceRange = RangeValues(_sliderMin, _sliderMax);
                   });
                   // Return null result to clear filters
@@ -395,6 +486,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   context,
                   FilterResult(
                     selectedBrands: Set<String>.from(_selectedBrands),
+                    selectedCategoryId: _selectedCategoryId,
                     minPrice: minP,
                     maxPrice: maxP,
                   ),

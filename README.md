@@ -9,7 +9,8 @@ Macktech Mobile is an Android e-commerce application built with Flutter.
 - **Product Discovery:** Browse products, view details, and get personalized recommendations powered by Recombee.
 - **Shopping & Checkout:** Manage wishlists, shopping carts, and handle complete checkout flows.
 - **Customer Support:** Create and manage support tickets with image uploads.
-- **AI & Live Chat:** Built-in AI assistant for immediate help, and real-time STOMP/WebSocket live chat with support agents.
+- **AI & Live Chat:** Built-in AI assistant for immediate help (featuring Markdown formatting and smart tool integration), and real-time STOMP/WebSocket live chat with support agents.
+- **Admin Dashboard:** Comprehensive admin features including user management, product/promo code CRUD, order tracking, and a real-time revenue dashboard.
 - **Push Notifications:** Stay updated with order status and promotions via Firebase Cloud Messaging (FCM).
 
 ## Setup & Installation
@@ -65,3 +66,4 @@ This project heavily relies on several key packages (see `pubspec.yaml` for exac
 - **`image_picker`**: Accessing the device camera/gallery for support tickets.
 - **`intl_phone_field`**: Phone number formatting and validation.
 - **`fl_chart`**: Rendering charts in the admin dashboard.
+- **`flutter_markdown`**: Rich text formatting for AI Chatbot responses.

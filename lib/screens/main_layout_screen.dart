@@ -22,10 +22,7 @@ class MainLayoutScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavIndexProvider);
 
-    // Ensure chat FAB is visible for user portal
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(chatFabVisibleProvider.notifier).set(true);
-    });
+    // Ensure chat FAB is handled properly elsewhere, removed redundant build-phase modification
 
     return Scaffold(
       drawer: const AppDrawer(),

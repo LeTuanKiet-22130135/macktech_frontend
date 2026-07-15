@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/navigation_provider.dart';
 import '../theme/app_colors.dart';
 import '../services/chat_service.dart';
 import 'chatbot_screen.dart';
 
-class ConversationListScreen extends StatefulWidget {
+class ConversationListScreen extends ConsumerStatefulWidget {
   const ConversationListScreen({super.key});
 
   @override
-  State<ConversationListScreen> createState() => _ConversationListScreenState();
+  ConsumerState<ConversationListScreen> createState() => _ConversationListScreenState();
 }
 
-class _ConversationListScreenState extends State<ConversationListScreen> {
+class _ConversationListScreenState extends ConsumerState<ConversationListScreen> {
   bool _isLoading = true;
   List<dynamic> _sessions = [];
+
+  late final ChatFabVisibleNotifier _chatFabVisibleNotifier;
 
   @override
   void initState() {
     super.initState();
+    _chatFabVisibleNotifier = ref.read(chatFabVisibleProvider.notifier);
+    Future.microtask(() => _chatFabVisibleNotifier.set(false));
     _loadSessions();
+  }
+
+  @override
+  void dispose() {
+    Future.microtask(() => _chatFabVisibleNotifier.set(true));
+    super.dispose();
   }
 
   Future<void> _loadSessions() async {
