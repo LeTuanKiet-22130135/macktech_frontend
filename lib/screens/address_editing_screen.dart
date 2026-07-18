@@ -6,7 +6,9 @@ import '../theme/app_colors.dart';
 import '../models/shipping_address.dart';
 import '../providers/address_provider.dart';
 import '../providers/user_profile_provider.dart';
-import '../services/mapbox_service.dart';
+import '../services/location_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 
 class AddressEditingScreen extends ConsumerStatefulWidget {
   final ShippingAddress? address;
@@ -136,7 +138,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
     if (_selectedLocation == null) return;
     setState(() => _isGeocoding = true);
     
-    final result = await MapboxService.reverseGeocode(_selectedLocation!.latitude, _selectedLocation!.longitude);
+    final result = await LocationService.reverseGeocode(_selectedLocation!.latitude, _selectedLocation!.longitude);
     if (mounted) {
       setState(() {
         _isGeocoding = false;
@@ -251,6 +253,9 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                       myLocationButtonEnabled: true,
                       zoomControlsEnabled: true,
                       zoomGesturesEnabled: true,
+                      gestureRecognizers: {
+                        Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                      },
                       onMapCreated: (GoogleMapController controller) {
                         _mapController = controller;
                       },

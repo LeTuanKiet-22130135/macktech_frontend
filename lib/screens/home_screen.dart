@@ -16,16 +16,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  int _selectedCategory = 0;
   int _currentPage = 1;
-
-  final List<Map<String, dynamic>> _categories = [
-    {"icon": Icons.phone_android, "name": "Phones"},
-    {"icon": Icons.headphones, "name": "Audio"},
-    {"icon": Icons.phone_iphone, "name": "Cases"},
-    {"icon": Icons.storage, "name": "Storage"},
-    {"icon": Icons.more_horiz, "name": "Other"},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +42,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildCategories(),
                       _buildLatestPromotions(context),
                       _buildSuggestedHeader(context),
                       _buildRecommendedProductGrid(recommendationsAsync),
@@ -104,7 +94,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
           // Search bar - navigates to search results
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 20),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -131,66 +121,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
           ),
-
-          // "All Featured" title
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: const Text(
-              "All Featured",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCategories() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(_categories.length, (index) {
-          final cat = _categories[index];
-          final isSelected = _selectedCategory == index;
-          return GestureDetector(
-            onTap: () => setState(() => _selectedCategory = index),
-            child: Column(
-              children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.tertiaryNormal
-                        : Colors.white,
-                    shape: BoxShape.circle,
-                    border: isSelected ? null : Border.all(color: AppColors.borderGrey),
-                  ),
-                  child: Icon(
-                    cat["icon"] as IconData,
-                    color: isSelected ? Colors.white : AppColors.tertiaryNormal,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  cat["name"] as String,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight:
-                        isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
       ),
     );
   }

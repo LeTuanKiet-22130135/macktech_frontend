@@ -53,6 +53,7 @@ class _FilterScreenState extends State<FilterScreen> {
   final Set<String> _selectedBrands = {};
   int? _selectedCategoryId;
   bool _isBrandExpanded = false;
+  bool _isCategoryExpanded = false;
   late TextEditingController _minPriceController;
   late TextEditingController _maxPriceController;
 
@@ -323,43 +324,69 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   Widget _buildCategoryGrid(List<dynamic> categories) {
-    return Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      children: categories.map((cat) {
-        final isSelected = _selectedCategoryId == cat.id;
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              if (isSelected) {
-                _selectedCategoryId = null;
-              } else {
-                _selectedCategoryId = cat.id;
-              }
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(
-              color: isSelected ? AppColors.tertiaryDarker : Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: isSelected
-                    ? AppColors.tertiaryDarker
-                    : Colors.grey.shade300,
+    final showAll = _isCategoryExpanded || categories.length <= 6;
+    final displayItems = showAll ? categories : categories.take(6).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: displayItems.map((cat) {
+            final isSelected = _selectedCategoryId == cat.id;
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    _selectedCategoryId = null;
+                  } else {
+                    _selectedCategoryId = cat.id;
+                  }
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.tertiaryDarker : Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.tertiaryDarker
+                        : Colors.grey.shade300,
+                  ),
+                ),
+                child: Text(
+                  cat.name,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: isSelected ? Colors.white : Colors.grey.shade700,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
+            );
+          }).toList(),
+        ),
+        if (categories.length > 6) ...[
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isCategoryExpanded = !_isCategoryExpanded;
+              });
+            },
             child: Text(
-              cat.name,
-              style: TextStyle(
+              _isCategoryExpanded ? "Show less" : "Show all (${categories.length})",
+              style: const TextStyle(
                 fontSize: 14,
-                color: isSelected ? Colors.white : Colors.grey.shade700,
-                fontWeight: FontWeight.w500,
+                color: AppColors.tertiaryNormal,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-        );
-      }).toList(),
+        ],
+      ],
     );
   }
 
