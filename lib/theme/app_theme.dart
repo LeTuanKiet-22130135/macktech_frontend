@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
@@ -9,11 +10,11 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.background,
       fontFamily: GoogleFonts.inter().fontFamily,
       textTheme: GoogleFonts.interTextTheme().copyWith(
-        displayLarge: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 28),
-        displayMedium: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 24),
-        titleLarge: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600, fontSize: 18),
-        bodyLarge: const TextStyle(color: AppColors.textPrimary, fontSize: 16),
-        bodyMedium: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+        displayLarge: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 28.sp),
+        displayMedium: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 24.sp),
+        titleLarge: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600, fontSize: 18.sp),
+        bodyLarge: TextStyle(color: AppColors.textPrimary, fontSize: 16.sp),
+        bodyMedium: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -21,7 +22,7 @@ class AppTheme {
           foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(28.r),
           ),
           elevation: 0,
         ),
@@ -29,29 +30,29 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+        contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
         hintStyle: const TextStyle(color: AppColors.textSecondary),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+          borderRadius: BorderRadius.circular(16.r),
+          borderSide: BorderSide(color: AppColors.primary, width: 2.w),
         ),
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.textPrimary),
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: AppColors.textPrimary,
-          fontSize: 18,
+          fontSize: 18.sp,
           fontWeight: FontWeight.w600,
         ),
       ),

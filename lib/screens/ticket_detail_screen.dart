@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import 'chatbot_screen.dart';
@@ -58,9 +59,9 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         ),
         title: Text(
           "Ticket no.${widget.ticket.ticketNumber}",
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
@@ -69,86 +70,86 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
       body: _isLoadingUser
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Customer Information header
-                  const Text(
+                  Text(
                     "Customer Information",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Customer Name
                   _buildFieldLabel("Customer Name"),
                   const SizedBox(height: 4),
                   _buildFieldValue(_customerName),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Email Address
                   _buildFieldLabel("Email Address"),
                   const SizedBox(height: 4),
                   _buildFieldValue(_email),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Ticket Type / Category
-                  const Text(
+                  Text(
                     "Ticket Type / Category",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   _buildFieldValue(widget.ticket.type),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Issue
-                  const Text(
+                  Text(
                     "Issue",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     widget.ticket.issueDescription,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: Colors.grey.shade500,
                       height: 1.6,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Attachments
                   if (widget.ticket.attachments.isNotEmpty) ...[
-                    const Text(
+                    Text(
                       "Attachments",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.tertiaryDarker,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     ...widget.ticket.attachments.map(
                       (attachment) => Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 10.h,
                         ),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                           border: Border.all(color: Colors.grey.shade200),
                           color: Colors.grey.shade50,
                         ),
@@ -156,10 +157,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 40,
-                              height: 40,
+                              width: 40.w,
+                              height: 40.h,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                                borderRadius: BorderRadius.circular(6.r),
                                 color: Colors.grey.shade300,
                                 image: DecorationImage(
                                   image: NetworkImage(attachment.imageUrl),
@@ -167,12 +168,12 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: 10.w),
                             Expanded(
                               child: Text(
                                 "Image attached",
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 13.sp,
                                   color: Colors.grey.shade500,
                                 ),
                                 overflow: TextOverflow.ellipsis,
@@ -182,32 +183,32 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                   ],
 
                   // Status row
                   Row(
                     children: [
-                      const Text(
+                      Text(
                         "Status",
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.tertiaryDarker,
                         ),
                       ),
-                      const SizedBox(width: 24),
+                      SizedBox(width: 24.w),
                       Text(
                         widget.ticket.status,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: widget.statusColor,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 48.h),
                 ],
               ),
             ),
@@ -236,8 +237,8 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
   Widget _buildFieldLabel(String label) {
     return Text(
       label,
-      style: const TextStyle(
-        fontSize: 15,
+      style: TextStyle(
+        fontSize: 15.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.tertiaryDarker,
       ),
@@ -247,7 +248,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
   Widget _buildFieldValue(String value) {
     return Text(
       value,
-      style: TextStyle(fontSize: 15, color: Colors.grey.shade500),
+      style: TextStyle(fontSize: 15.sp, color: Colors.grey.shade500),
     );
   }
 }

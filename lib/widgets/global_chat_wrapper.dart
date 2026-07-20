@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/navigation_provider.dart';
@@ -93,10 +94,10 @@ class _GlobalChatWrapperState extends ConsumerState<GlobalChatWrapper> {
                       ),
                     ],
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.chat_bubble_rounded,
                     color: Colors.white,
-                    size: 26,
+                    size: 26.sp,
                   ),
                 ),
               ),

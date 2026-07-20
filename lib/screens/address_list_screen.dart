@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../theme/app_colors.dart';
@@ -21,12 +22,12 @@ class AddressListScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Shipping Addresses",
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
           ),
         ),
       ),
@@ -39,11 +40,11 @@ class AddressListScreen extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.location_off, size: 64, color: Colors.grey.shade400),
-                  const SizedBox(height: 16),
+                  Icon(Icons.location_off, size: 64.sp, color: Colors.grey.shade400),
+                  SizedBox(height: 16.h),
                   Text(
                     "No addresses found.",
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                    style: TextStyle(fontSize: 16.sp, color: Colors.grey.shade600),
                   ),
                 ],
               ),
@@ -54,9 +55,9 @@ class AddressListScreen extends ConsumerWidget {
               ref.invalidate(addressProvider);
             },
             child: ListView.separated(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.w),
               itemCount: addresses.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
+              separatorBuilder: (context, index) => SizedBox(height: 12.h),
               itemBuilder: (context, index) {
                 final address = addresses[index];
                 return _AddressCard(address: address);
@@ -90,8 +91,8 @@ class _AddressCard extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: address.isDefault ? AppColors.primary : Colors.transparent, width: 2),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: address.isDefault ? AppColors.primary : Colors.transparent, width: 2.w),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -101,7 +102,7 @@ class _AddressCard extends ConsumerWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -110,36 +111,36 @@ class _AddressCard extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     address.addressLabel,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.textPrimary),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, color: AppColors.textPrimary),
                   ),
                 ),
                 if (address.isDefault)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Default",
-                      style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 12),
+                      style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 12.sp),
                     ),
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               "${address.recipientName} | ${address.phoneNumber}",
-              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary, fontSize: 15),
+              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary, fontSize: 15.sp),
             ),
             const SizedBox(height: 4),
             Text(
               "${address.streetAddress}, ${address.ward}, ${address.district}, ${address.cityProvince}",
-              style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             const Divider(height: 1, color: AppColors.border),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -184,7 +185,7 @@ class _AddressCard extends ConsumerWidget {
       builder: (ctx) => AlertDialog(
         title: const Text("Delete Address"),
         content: const Text("Are you sure you want to delete this address?"),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),

@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../theme/app_colors.dart';
@@ -33,30 +34,30 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
           children: [
             // Using placeholder for Macktech Mobiles logo if absent
             Container(
-              width: 32,
-              height: 32,
+              width: 32.w,
+              height: 32.h,
               decoration: BoxDecoration(
                 color: Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
               ),
               child: const Icon(Icons.rocket_launch, color: Colors.blueAccent), // Fake logo
             ),
-            const SizedBox(width: 8),
-            const Text(
+            SizedBox(width: 8.w),
+            Text(
               "Macktech Mobiles",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 18.sp,
               ),
             ),
           ],
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 16.0.w),
             child: PopupMenuButton<int>(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
               offset: const Offset(0, 50),
               color: Colors.white,
               child: const CircleAvatar(
@@ -85,30 +86,30 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                 PopupMenuItem<int>(
                   enabled: false,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                    padding: EdgeInsets.only(bottom: 8.0.h, top: 8.0.h),
                     child: Text(
                       "Admin",
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: TextStyle(
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
                   ),
                 ),
-                const PopupMenuDivider(),
+                PopupMenuDivider(),
                 // Change Password
                 PopupMenuItem<int>(
                   value: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
                         "CHANGE PASSWORD",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
-                      SizedBox(width: 24),
-                      Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.textPrimary),
+                      SizedBox(width: 24.w),
+                      Icon(Icons.arrow_forward_ios, size: 16.sp, color: AppColors.textPrimary),
                     ],
                   ),
                 ),
@@ -117,13 +118,13 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   value: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
                         "LOG OUT",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
-                      SizedBox(width: 24),
-                      Icon(Icons.logout, size: 20, color: AppColors.textPrimary),
+                      SizedBox(width: 24.w),
+                      Icon(Icons.logout, size: 20.sp, color: AppColors.textPrimary),
                     ],
                   ),
                 ),
@@ -151,7 +152,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
       backgroundColor: Colors.white,
       child: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -164,7 +165,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.inventory_2_outlined,
                 title: "ALL PRODUCTS",
@@ -174,7 +175,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.receipt_long_outlined,
                 title: "ORDER LIST",
@@ -184,7 +185,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.local_offer_outlined,
                 title: "DISCOUNT CODES",
@@ -194,7 +195,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.people_outline,
                 title: "USER MANAGEMENT",
@@ -204,7 +205,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               
               // Categories Section
               InkWell(
@@ -214,14 +215,14 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         "Categories",
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
@@ -234,7 +235,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               
               if (_categoriesExpanded) ...[
                 _buildCategoryItem("Phones", "21", isSelected: false),
@@ -262,7 +263,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
     return Container(
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: ListTile(
         leading: Icon(icon, color: fgColor),
@@ -271,7 +272,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
           style: TextStyle(
             color: fgColor,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ),
         onTap: onTap,
@@ -284,30 +285,30 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
     final fgColor = isSelected ? Colors.white : AppColors.textPrimary;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
+      padding: EdgeInsets.only(bottom: 16.0.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: 18.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
             decoration: BoxDecoration(
               color: bgColor,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: Text(
               count,
               style: TextStyle(
                 color: fgColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 16.sp,
               ),
             ),
           ),

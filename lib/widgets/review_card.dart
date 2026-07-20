@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../models/review.dart';
 import '../theme/app_colors.dart';
@@ -87,11 +88,11 @@ class _ReviewCardState extends State<ReviewCard> {
     final isOwner = _currentUserName != null && _currentUserName == widget.review.userName;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -110,18 +111,18 @@ class _ReviewCardState extends State<ReviewCard> {
                 backgroundImage: AssetImage(widget.review.userAvatar),
                 radius: 20,
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.review.userName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(widget.review.userName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                     Row(
                       children: List.generate(5, (index) {
                         return Icon(
                           index < widget.review.rating ? Icons.star : Icons.star_border,
                           color: AppColors.star,
-                          size: 16,
+                          size: 16.sp,
                         );
                       }),
                     )
@@ -133,23 +134,23 @@ class _ReviewCardState extends State<ReviewCard> {
                 children: [
                   Text(
                     "${widget.review.createdAt.day} ${_monthName(widget.review.createdAt.month)} ${widget.review.createdAt.year}",
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                    style: TextStyle(color: AppColors.textSecondary, fontSize: 12.sp),
                   ),
                   if (isOwner)
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.edit, size: 16, color: AppColors.tertiaryNormal),
+                          icon: Icon(Icons.edit, size: 16.sp, color: AppColors.tertiaryNormal),
                           onPressed: _editReview,
                           constraints: const BoxConstraints(),
-                          padding: const EdgeInsets.all(4),
+                          padding: EdgeInsets.all(4.w),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.delete_outline, size: 16, color: Colors.red),
+                          icon: Icon(Icons.delete_outline, size: 16.sp, color: Colors.red),
                           onPressed: _deleteReview,
                           constraints: const BoxConstraints(),
-                          padding: const EdgeInsets.all(4),
+                          padding: EdgeInsets.all(4.w),
                         ),
                       ],
                     ),
@@ -157,7 +158,7 @@ class _ReviewCardState extends State<ReviewCard> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text(widget.review.content, style: const TextStyle(color: AppColors.textPrimary, height: 1.5)),
         ],
       ),

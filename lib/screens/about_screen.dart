@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 
@@ -18,28 +19,28 @@ class AboutScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "User Profile",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             // Dark circle logo (img 102)
             Center(
               child: Container(
-                width: 180,
-                height: 180,
+                width: 180.w,
+                height: 180.h,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
@@ -49,11 +50,11 @@ class AboutScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                     errorBuilder: (c, e, s) => Container(
                       color: AppColors.primary,
-                      child: const Center(
+                      child: Center(
                         child: Icon(
                           Icons.phone_android,
                           color: Colors.blue,
-                          size: 60,
+                          size: 60.sp,
                         ),
                       ),
                     ),
@@ -62,41 +63,41 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 36),
+            SizedBox(height: 36.h),
 
             // "About Shoppe" heading
-            const Text(
+            Text(
               "About Shoppe",
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
 
             // Description paragraph
             Text(
               'Shoppe - Shopping UI kit" is likely a user interface (UI) kit designed to facilitate the development of e-commerce or shopping-related applications. UI kits are collections of pre-designed elements, components, and templates that developers and designers can use to create consistent and visually appealing user interfaces.',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: Colors.grey.shade700,
                 height: 1.7,
               ),
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: 28.h),
 
             // Contact note
             Text(
               "If you need help or you have any questions, feel free to contact me by email.",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: Colors.grey.shade700,
                 height: 1.7,
               ),
             ),
 
-            const SizedBox(height: 48),
+            SizedBox(height: 48.h),
           ],
         ),
       ),

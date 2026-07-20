@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../models/review.dart';
 import '../services/review_service.dart';
@@ -53,19 +54,19 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         : Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(24.0.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${_reviews.length} Reviews", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                        Text("${_reviews.length} Reviews", style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
                         Row(
                           children: [
-                            Text(_averageRating.toStringAsFixed(1), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                            const SizedBox(width: 8),
-                            Row(children: List.generate(5, (index) => Icon(index < _averageRating ? Icons.star : Icons.star_half, color: AppColors.star, size: 20))),
+                            Text(_averageRating.toStringAsFixed(1), style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                            SizedBox(width: 8.w),
+                            Row(children: List.generate(5, (index) => Icon(index < _averageRating ? Icons.star : Icons.star_half, color: AppColors.star, size: 20.sp))),
                           ],
                         ),
                       ],
@@ -77,11 +78,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           MaterialPageRoute(builder: (_) => AddReviewScreen(productId: widget.productId))
                         ).then((_) => _fetchReviews());
                       },
-                      icon: const Icon(Icons.edit, size: 16),
+                      icon: Icon(Icons.edit, size: 16.sp),
                       label: const Text("Add Review"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.secondary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                         minimumSize: const Size(120, 40),
                       ),
                     ),
@@ -92,7 +93,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 child: _reviews.isEmpty
                     ? const Center(child: Text("No reviews yet. Be the first to review!"))
                     : ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
                         itemCount: _reviews.length,
                         itemBuilder: (context, index) {
                           return ReviewCard(

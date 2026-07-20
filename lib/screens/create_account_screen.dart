@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -113,17 +114,17 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
           // Content
           SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: EdgeInsets.symmetric(horizontal: 32.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: size.height * 0.16),
 
                   // "Create Account" title — left-aligned, large, two lines
-                  const Text(
+                  Text(
                     "Create\nAccount",
                     style: TextStyle(
-                      fontSize: 48,
+                      fontSize: 48.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                       height: 1.15,
@@ -136,35 +137,35 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                     hintText: "Name",
                     controller: _nameController,
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Phone number field (E.164)
                   IntlPhoneField(
                     initialCountryCode: 'VN',
                     disableLengthCheck: true,
                     showDropdownIcon: true,
-                    flagsButtonPadding: const EdgeInsets.only(left: 16),
-                    style: const TextStyle(fontSize: 16, color: AppColors.primary),
+                    flagsButtonPadding: EdgeInsets.only(left: 16.w),
+                    style: TextStyle(fontSize: 16.sp, color: AppColors.primary),
                     decoration: InputDecoration(
                       hintText: 'Phone Number',
                       hintStyle: TextStyle(
                         color: Colors.grey.shade400,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                       filled: true,
                       fillColor: AppColors.backgroundLightAlt,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40),
-                        borderSide: const BorderSide(color: AppColors.textSecondary, width: 1),
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide(color: AppColors.textSecondary, width: 1.w),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40),
-                        borderSide: const BorderSide(color: AppColors.textSecondary, width: 1),
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide(color: AppColors.textSecondary, width: 1.w),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40),
-                        borderSide: const BorderSide(color: AppColors.tertiaryNormal, width: 1.5),
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide(color: AppColors.tertiaryNormal, width: 1.5.w),
                       ),
                       counterText: '',
                     ),
@@ -172,7 +173,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                       _completePhoneNumber = phone.completeNumber;
                     },
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Email field
                   buildAuthPillField(
@@ -180,7 +181,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Password field with visibility toggle
                   buildAuthPillField(
@@ -193,7 +194,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
                         color: Colors.grey.shade500,
-                        size: 22,
+                        size: 22.sp,
                       ),
                       onPressed: () {
                         setState(() {
@@ -203,12 +204,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
 
                   // "Done" button — navy blue, full-width, rounded
                   SizedBox(
                     width: double.infinity,
-                    height: 60,
+                    height: 60.h,
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _performRegister,
                       style: ElevatedButton.styleFrom(
@@ -216,39 +217,39 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
                       ),
                       child: _isLoading
-                          ? const SizedBox(
-                              height: 24,
-                              width: 24,
+                          ? SizedBox(
+                              height: 24.h,
+                              width: 24.w,
                               child: CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.5,
                               ),
                             )
-                          : const Text(
+                          : Text(
                               "Done",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // "Cancel" text
                   Center(
                     child: TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         "Cancel",
                         style: TextStyle(
                           color: AppColors.textSecondary,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     ),
@@ -266,17 +267,17 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                           ),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         "Already have an Account ?",
                         style: TextStyle(
                           color: AppColors.textSecondary,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                 ],
               ),
             ),

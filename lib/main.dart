@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -150,28 +151,35 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     final sessionAsync = ref.watch(sessionProvider);
 
-    return MaterialApp(
-      title: 'Macktech Mobiles',
-      theme: AppTheme.lightTheme,
-      navigatorKey: appNavigatorKey,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // standard design size
+      minTextAdapt: true,
+      splitScreenMode: true,
       builder: (context, child) {
-        return GlobalChatWrapper(child: child!);
+        return MaterialApp(
+          title: 'Macktech Mobiles',
+          theme: AppTheme.lightTheme,
+          navigatorKey: appNavigatorKey,
+          builder: (context, widget) {
+            return GlobalChatWrapper(child: widget!);
+          },
+          home: sessionAsync.when(
+            data: (session) {
+              // Set chat FAB visibility based on role
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                ref.read(chatFabVisibleProvider.notifier).set(
+                    session.isLoggedIn && session.role == 'user');
+              });
+              return _resolveBySession(session);
+            },
+            loading: () => const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ),
+            error: (_, __) => const WelcomeScreen(),
+          ),
+          debugShowCheckedModeBanner: false,
+        );
       },
-      home: sessionAsync.when(
-        data: (session) {
-          // Set chat FAB visibility based on role
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            ref.read(chatFabVisibleProvider.notifier).set(
-                session.isLoggedIn && session.role == 'user');
-          });
-          return _resolveBySession(session);
-        },
-        loading: () => const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        ),
-        error: (_, __) => const WelcomeScreen(),
-      ),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

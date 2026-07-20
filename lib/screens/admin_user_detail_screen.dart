@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/user.dart';
@@ -128,7 +129,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                 decoration: const InputDecoration(labelText: "New Password", border: OutlineInputBorder()),
                 validator: (val) => val == null || val.isEmpty ? "Required" : null,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               TextFormField(
                 controller: confirmController,
                 obscureText: true,
@@ -225,16 +226,16 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("User Details", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+        title: Text("User Details", style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: const BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.sp),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -255,7 +256,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                   ? const Center(child: Text("User not found."))
                   : SafeArea(
                       child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(24.0),
+                        padding: EdgeInsets.all(24.0.w),
                         child: Form(
                           key: _formKey,
                           child: Column(
@@ -270,86 +271,86 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                                       backgroundColor: AppColors.primary,
                                       child: Text(
                                         _user!.name.isNotEmpty ? _user!.name[0].toUpperCase() : '?',
-                                        style: const TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: 32.sp, color: Colors.white, fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    const SizedBox(height: 16),
+                                    SizedBox(height: 16.h),
                                     Text(
                                       _user!.email,
-                                      style: const TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w500),
+                                      style: TextStyle(fontSize: 16.sp, color: Colors.grey, fontWeight: FontWeight.w500),
                                     ),
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
                                       decoration: BoxDecoration(
                                         color: Colors.grey.shade200,
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: BorderRadius.circular(12.r),
                                       ),
                                       child: Text(
                                         _user!.role.toUpperCase(),
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 32),
+                              SizedBox(height: 32.h),
                               
-                              const Text("Full Name", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              const SizedBox(height: 8),
+                              Text("Full Name", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _nameController,
                                 validator: (val) => val == null || val.isEmpty ? "Required" : null,
                                 decoration: _inputDecoration(),
                               ),
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24.h),
 
-                              const Text("Phone Number", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              const SizedBox(height: 8),
+                              Text("Phone Number", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _phoneController,
                                 decoration: _inputDecoration(hint: "e.g. 0123456789"),
                                 keyboardType: TextInputType.phone,
                               ),
-                              const SizedBox(height: 24),
+                              SizedBox(height: 24.h),
 
-                              const Text("Address", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              const SizedBox(height: 8),
+                              Text("Address", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _addressController,
                                 decoration: _inputDecoration(hint: "User address"),
                                 maxLines: 2,
                               ),
-                              const SizedBox(height: 32),
+                              SizedBox(height: 32.h),
 
                               SizedBox(
                                 width: double.infinity,
-                                height: 56,
+                                height: 56.h,
                                 child: ElevatedButton(
                                   onPressed: _updateProfile,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF14243A), // Navy blue
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "SAVE CHANGES",
-                                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                                    style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              SizedBox(height: 16.h),
                               SizedBox(
                                 width: double.infinity,
-                                height: 56,
+                                height: 56.h,
                                 child: OutlinedButton(
                                   onPressed: _changePassword,
                                   style: OutlinedButton.styleFrom(
                                     side: const BorderSide(color: Color(0xFF14243A)),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "CHANGE PASSWORD",
-                                    style: TextStyle(color: Color(0xFF14243A), fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                                    style: TextStyle(color: Color(0xFF14243A), fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                                   ),
                                 ),
                               ),
@@ -367,18 +368,18 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
       hintStyle: TextStyle(color: Colors.grey.shade400),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF14567B), width: 1.5),
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: Color(0xFF14567B), width: 1.5.w),
       ),
     );
   }

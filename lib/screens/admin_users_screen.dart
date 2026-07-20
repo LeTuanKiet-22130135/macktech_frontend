@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/user.dart';
@@ -52,20 +53,20 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       backgroundColor: const Color(0xFFF9F9F9),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "User Management",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
               ),
-              const SizedBox(height: 8),
-              const Text(
+              SizedBox(height: 8.h),
+              Text(
                 "View and manage customer and admin accounts.",
-                style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Expanded(
                 child: _isLoading
                     ? const Center(child: CircularProgressIndicator())
@@ -78,7 +79,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                 itemBuilder: (context, index) {
                                   final user = _users[index];
                                   return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12.0),
+                                    padding: EdgeInsets.only(bottom: 12.0.h),
                                     child: InkWell(
                                       onTap: () async {
                                         final result = await Navigator.push(
@@ -108,10 +109,10 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     Color roleColor = user.role.toLowerCase() == 'admin' ? AppColors.primary : Colors.grey.shade600;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -127,38 +128,38 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
             backgroundColor: AppColors.tertiaryLight,
             child: Text(
               user.name.isNotEmpty ? user.name[0].toUpperCase() : '?',
-              style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 20.sp),
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   user.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   user.email,
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
                 ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: roleColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: Text(
               user.role.toUpperCase(),
               style: TextStyle(
                 color: roleColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 12,
+                fontSize: 12.sp,
               ),
             ),
           )

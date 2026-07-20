@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/custom_image.dart';
@@ -187,38 +188,38 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           builder: (ctx, setDialogState) {
             return Dialog(
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+              insetPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(24.w),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Card Owner
-                    const Text(
+                    Text(
                       "Card Owner",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87),
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextField(
                       controller: ownerController,
                       decoration: _dialogInputDecoration("Joyce Maxwell"),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // Card Number
-                    const Text(
+                    Text(
                       "Card Number",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87),
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextField(
                       controller: numberController,
                       keyboardType: TextInputType.number,
                       decoration: _dialogInputDecoration("5254 7634 8734 7690"),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // EXP & CVV
                     Row(
@@ -227,11 +228,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 "EXP",
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87),
+                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8.h),
                               TextField(
                                 controller: expController,
                                 decoration: _dialogInputDecoration("24/24"),
@@ -239,16 +240,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 "CVV",
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black87),
+                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8.h),
                               TextField(
                                 controller: cvvController,
                                 decoration: _dialogInputDecoration("7763"),
@@ -258,15 +259,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // Save card info toggle
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           "Save card info",
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
                         ),
                         Switch(
                           value: saveCardInfo,
@@ -277,7 +278,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Cancel & Save Card buttons
                     Row(
@@ -288,14 +289,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 color: Colors.grey.shade500,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12.w),
                         Expanded(
                           flex: 2,
                           child: ElevatedButton(
@@ -318,13 +319,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                               foregroundColor: Colors.white,
                               minimumSize: const Size(0, 52),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.r),
                               ),
                               elevation: 0,
                             ),
-                            child: const Text(
+                            child: Text(
                               "Save Card",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
@@ -347,10 +348,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       filled: true,
       fillColor: Colors.grey.shade100,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         borderSide: BorderSide.none,
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
     );
   }
 
@@ -379,37 +380,37 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.grey.shade300),
             ),
-            child: const Icon(Icons.arrow_back, size: 18),
+            child: Icon(Icons.arrow_back, size: 18.sp),
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Place Order",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         child: Column(
           children: [
             _buildCustomerDetails(context),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildItemsSection(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildPaymentMethod(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildDiscountSection(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildOrderInfoCard(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             // Phone number warning
             Builder(
@@ -418,22 +419,22 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 final hasPhone = profile != null && profile.phone.isNotEmpty;
                 if (!hasPhone) {
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
+                    padding: EdgeInsets.only(bottom: 12.h),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                       decoration: BoxDecoration(
                         color: Colors.orange.shade50,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(color: Colors.orange.shade200),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.warning_amber_rounded, color: Colors.orange.shade700, size: 20),
-                          const SizedBox(width: 8),
+                          Icon(Icons.warning_amber_rounded, color: Colors.orange.shade700, size: 20.sp),
+                          SizedBox(width: 8.w),
                           Expanded(
                             child: Text(
                               'Please add your phone number in your profile before checking out.',
-                              style: TextStyle(fontSize: 13, color: Colors.orange.shade900),
+                              style: TextStyle(fontSize: 13.sp, color: Colors.orange.shade900),
                             ),
                           ),
                         ],
@@ -447,8 +448,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
             // Checkout button
             SizedBox(
-              width: 260,
-              height: 56,
+              width: 260.w,
+              height: 56.h,
               child: Builder(
                 builder: (context) {
                   final profile = ref.watch(userProfileProvider).value;
@@ -558,19 +559,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   backgroundColor: AppColors.tertiaryDarker,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                   ),
                 ),
                 child: _isCalculatingShipping || _isCheckingOut
-                  ? const SizedBox(
-                      width: 24, 
-                      height: 24, 
+                  ? SizedBox(
+                      width: 24.w, 
+                      height: 24.h, 
                       child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)
                     )
-                  : const Text(
+                  : Text(
                       "Checkout",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
@@ -579,7 +580,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
           ],
         ),
       ),
@@ -594,10 +595,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.borderGrey),
       ),
       child: Column(
@@ -606,9 +607,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 "Customer details",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
               ),
               GestureDetector(
                 onTap: () async {
@@ -627,47 +628,47 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 },
                 child: Text(
                   "Edit",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text.rich(
             TextSpan(
               children: [
-                const TextSpan(
+                TextSpan(
                   text: "Name : ",
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                  style: TextStyle(color: Colors.grey, fontSize: 14.sp),
                 ),
                 TextSpan(
                   text: name,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 6),
-          const Text(
+          SizedBox(height: 6.h),
+          Text(
             "Contact information",
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: TextStyle(color: Colors.grey, fontSize: 14.sp),
           ),
           const SizedBox(height: 4),
           Padding(
-            padding: const EdgeInsets.only(left: 12),
+            padding: EdgeInsets.only(left: 12.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text.rich(
                   TextSpan(
                     children: [
-                      const TextSpan(
+                      TextSpan(
                         text: "Number : ",
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                        style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                       ),
                       TextSpan(
                         text: phone,
-                        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                       ),
                     ],
                   ),
@@ -676,13 +677,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 Text.rich(
                   TextSpan(
                     children: [
-                      const TextSpan(
+                      TextSpan(
                         text: "Email address : ",
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                        style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                       ),
                       TextSpan(
                         text: email,
-                        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                       ),
                     ],
                   ),
@@ -690,20 +691,20 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12.h),
+          Text(
             "Shipping address",
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: TextStyle(color: Colors.grey, fontSize: 14.sp),
           ),
           const SizedBox(height: 4),
           Padding(
-            padding: const EdgeInsets.only(left: 12),
+            padding: EdgeInsets.only(left: 12.w),
             child: _selectedAddress != null
               ? Text(
                   _selectedAddress!.fullAddress,
-                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 )
-              : const Text("No address selected", style: TextStyle(color: Colors.redAccent, fontSize: 13)),
+              : Text("No address selected", style: TextStyle(color: Colors.redAccent, fontSize: 13.sp)),
           ),
         ],
       ),
@@ -713,57 +714,57 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   Widget _buildItemsSection() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.borderGrey),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Items",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           ...(ref.read(cartProvider).value ?? []).where((item) => item.selected).map((item) {
             final product = item.product;
             final qty = item.qty;
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(12),
+              margin: EdgeInsets.only(bottom: 12.h),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: AppColors.background,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Row(
                 children: [
                   Container(
-                    width: 70,
-                    height: 70,
+                    width: 70.w,
+                    height: 70.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(6),
+                      padding: EdgeInsets.all(6.w),
                       child: CustomImage(
                         imageUrl: product.imageUrl,
                         fit: BoxFit.contain,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12.w),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           product.title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                            fontSize: 13.sp,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -773,14 +774,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           product.brand,
                           style: TextStyle(
                             color: Colors.grey.shade500,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           "Color: Blue  ·  Storage: 512 GB",
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 11.sp,
                             color: Colors.grey.shade600,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -788,7 +789,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         Text(
                           "Units: $qty",
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             color: Colors.grey.shade700,
                           ),
                         ),
@@ -797,9 +798,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             "₫${(product.price * qty).toStringAsFixed(0)}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 13,
+                              fontSize: 13.sp,
                             ),
                           ),
                         ),
@@ -821,7 +822,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.borderGrey),
       ),
       child: Column(
@@ -833,13 +834,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               setState(() => _paymentExpanded = !_paymentExpanded);
             },
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "Payment Method",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -848,13 +849,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         _selectedPayment == 'Visa Payment' && _selectedCard != null
                             ? 'Visa $_selectedCard'
                             : _selectedPayment,
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12.sp),
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4.w),
                       AnimatedRotation(
                         turns: _paymentExpanded ? 0.5 : 0,
                         duration: const Duration(milliseconds: 200),
-                        child: const Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 22),
+                        child: Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 22.sp),
                       ),
                     ],
                   ),
@@ -905,7 +906,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.tertiaryLight.withValues(alpha: 0.5)
@@ -914,24 +915,24 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   child: Row(
                     children: [
                       Container(
-                        width: 36,
-                        height: 36,
+                        width: 36.w,
+                        height: 36.h,
                         decoration: BoxDecoration(
                           color: (method['color'] as Color).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                         child: Icon(
                           method['icon'] as IconData,
                           color: method['color'] as Color,
-                          size: 20,
+                          size: 20.sp,
                         ),
                       ),
-                      const SizedBox(width: 14),
+                      SizedBox(width: 14.w),
                       Expanded(
                         child: Text(
                           name,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                             color: isSelected ? AppColors.tertiaryDark : Colors.black87,
                           ),
@@ -941,10 +942,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         AnimatedRotation(
                           turns: _visaExpanded ? 0.5 : 0,
                           duration: const Duration(milliseconds: 200),
-                          child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade400, size: 20),
+                          child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade400, size: 20.sp),
                         )
                       else if (isSelected)
-                        const Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 20),
+                        Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 20.sp),
                     ],
                   ),
                 ),
@@ -982,11 +983,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
+                padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 12.h),
                 child: Row(
                   children: [
-                    Icon(Icons.credit_card, size: 18, color: Colors.blue.shade400),
-                    const SizedBox(width: 12),
+                    Icon(Icons.credit_card, size: 18.sp, color: Colors.blue.shade400),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -994,20 +995,20 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           Text(
                             label,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 13.sp,
                               fontWeight: isCardSelected ? FontWeight.w600 : FontWeight.w400,
                               color: isCardSelected ? AppColors.tertiaryDark : Colors.black87,
                             ),
                           ),
                           Text(
                             card['holder'] as String,
-                            style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                            style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade500),
                           ),
                         ],
                       ),
                     ),
                     if (isCardSelected)
-                      const Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 18),
+                      Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 18.sp),
                   ],
                 ),
               ),
@@ -1018,23 +1019,23 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           InkWell(
             onTap: _showAddCardDialog,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 12.h),
               child: Row(
                 children: [
                   Container(
-                    width: 24,
-                    height: 24,
+                    width: 24.w,
+                    height: 24.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: AppColors.tertiaryNormal, width: 1.5),
+                      borderRadius: BorderRadius.circular(6.r),
+                      border: Border.all(color: AppColors.tertiaryNormal, width: 1.5.w),
                     ),
-                    child: const Icon(Icons.add, size: 16, color: AppColors.tertiaryNormal),
+                    child: Icon(Icons.add, size: 16.sp, color: AppColors.tertiaryNormal),
                   ),
-                  const SizedBox(width: 12),
-                  const Text(
+                  SizedBox(width: 12.w),
+                  Text(
                     "Add Card",
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.tertiaryNormal,
                     ),
@@ -1052,20 +1053,20 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   Widget _buildDiscountSection() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.borderGrey),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Discount Code",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Row(
             children: [
               Expanded(
@@ -1073,18 +1074,18 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   controller: _discountController,
                   decoration: InputDecoration(
                     hintText: "Enter code (e.g. SAVE10)",
-                    hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+                    hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14.sp),
                     filled: true,
                     fillColor: Colors.grey.shade100,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       borderSide: BorderSide.none,
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               ElevatedButton(
                 onPressed: _isCheckingPromo ? null : _applyDiscount,
                 style: ElevatedButton.styleFrom(
@@ -1092,36 +1093,36 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   foregroundColor: Colors.white,
                   minimumSize: const Size(80, 48),
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                 ),
                 child: _isCheckingPromo
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
+                    ? SizedBox(
+                        width: 18.w,
+                        height: 18.h,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
+                    : Text(
                         "Apply",
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                       ),
               ),
             ],
           ),
           if (_appliedDiscountCode != null) ...[
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               children: [
-                const Icon(Icons.check_circle, color: AppColors.success, size: 16),
-                const SizedBox(width: 6),
+                Icon(Icons.check_circle, color: AppColors.success, size: 16.sp),
+                SizedBox(width: 6.w),
                 Text(
                   "Code '$_appliedDiscountCode' applied",
-                  style: const TextStyle(color: AppColors.success, fontSize: 13),
+                  style: TextStyle(color: AppColors.success, fontSize: 13.sp),
                 ),
                 const Spacer(),
                 GestureDetector(
@@ -1132,11 +1133,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       _appliedDiscountCode = null;
                     });
                   },
-                  child: const Text(
+                  child: Text(
                     "Remove",
                     style: TextStyle(
                       color: Colors.redAccent,
-                      fontSize: 13,
+                      fontSize: 13.sp,
                       decoration: TextDecoration.underline,
                     ),
                   ),
@@ -1152,29 +1153,29 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   Widget _buildOrderInfoCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.borderGrey),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Order Info",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
           _buildInfoRow("Subtotal", "₫${_subtotal.toStringAsFixed(0)}"),
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           _buildInfoRow("Shipping Fee", _isCalculatingShipping ? "..." : "₫${_shippingFee.toStringAsFixed(0)}"),
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           _buildInfoRow("Discount", "-₫${_appliedDiscount.toStringAsFixed(0)}", 
             valueColor: _appliedDiscount > 0 ? AppColors.success : null),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Divider(color: Colors.grey.shade200),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           _buildInfoRow(
             "Total",
             "₫${_total.toStringAsFixed(0)}",
@@ -1193,7 +1194,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           label,
           style: TextStyle(
             color: Colors.grey.shade500,
-            fontSize: 15,
+            fontSize: 15.sp,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -1201,7 +1202,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           value,
           style: TextStyle(
             fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            fontSize: 15,
+            fontSize: 15.sp,
             color: valueColor,
           ),
         ),

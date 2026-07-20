@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -79,20 +80,20 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       builder: (context) {
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Sort By",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 _buildSortOption("Relevance", "relevance"),
                 _buildSortOption("Price: Low → High", "price_low"),
                 _buildSortOption("Price: High → Low", "price_high"),
@@ -113,13 +114,13 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       title: Text(
         label,
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 15.sp,
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? AppColors.tertiaryNormal : AppColors.textPrimary,
         ),
       ),
       trailing: isSelected
-          ? const Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 20)
+          ? Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 20.sp)
           : null,
       onTap: () {
         setState(() {
@@ -165,8 +166,8 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, color: Colors.redAccent, size: 40),
-                      const SizedBox(height: 12),
+                      Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
+                      SizedBox(height: 12.h),
                       const Text('Failed to load products'),
                       TextButton(
                         onPressed: () => ref.invalidate(searchProductsProvider(queryParams)),
@@ -197,7 +198,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                     children: [
                       // Results count
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -205,7 +206,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                                 ? "$totalElements products"
                                 : "$totalElements results for \"$_searchQuery\"",
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 13.sp,
                               color: Colors.grey.shade600,
                               fontWeight: FontWeight.w500,
                             ),
@@ -223,7 +224,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                                     GridView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      padding: const EdgeInsets.all(16),
+                                      padding: EdgeInsets.all(16.w),
                                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 12,
@@ -235,10 +236,10 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                                         return ProductCard(product: products[index]);
                                       },
                                     ),
-                                    const SizedBox(height: 24),
+                                    SizedBox(height: 24.h),
                                     // Pagination controls
                                     if (totalPages > 1) _buildPagination(totalPages),
-                                    const SizedBox(height: 24),
+                                    SizedBox(height: 24.h),
                                   ],
                                 ),
                               ),
@@ -268,7 +269,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
               child: TextField(
                 controller: _searchController,
@@ -281,11 +282,11 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                 },
                 decoration: InputDecoration(
                   hintText: "Search any Product..",
-                  hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+                  hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14.sp),
                   prefixIcon: const Icon(Icons.search, color: Colors.grey),
                   suffixIcon: _searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: const Icon(Icons.close, size: 18, color: Colors.grey),
+                          icon: Icon(Icons.close, size: 18.sp, color: Colors.grey),
                           onPressed: () {
                             _searchController.clear();
                             setState(() {
@@ -296,7 +297,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                         )
                       : null,
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                  contentPadding: EdgeInsets.symmetric(vertical: 14.h),
                 ),
               ),
             ),
@@ -308,7 +309,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
 
   Widget _buildSortFilterBar() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
@@ -319,7 +320,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
             onTap: _showSortBottomSheet,
             child: _buildChip("Sort", Icons.swap_vert),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
           GestureDetector(
             onTap: () async {
               final result = await Navigator.push<FilterResult>(
@@ -377,20 +378,20 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                 _currentPage = 1;
               }),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: AppColors.tertiaryLight.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.close, size: 14, color: AppColors.tertiaryDark),
-                    const SizedBox(width: 4),
+                    Icon(Icons.close, size: 14.sp, color: AppColors.tertiaryDark),
+                    SizedBox(width: 4.w),
                     Text(
                       "Clear all",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: AppColors.tertiaryDark,
                         fontWeight: FontWeight.w500,
                       ),
@@ -406,10 +407,10 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
 
   Widget _buildChip(String label, IconData icon, {bool isActive = false}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: isActive ? AppColors.tertiaryLight.withValues(alpha: 0.3) : AppColors.backgroundLightAlt,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(
           color: isActive ? AppColors.tertiaryNormal : Colors.grey.shade300,
         ),
@@ -417,12 +418,12 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: isActive ? AppColors.tertiaryDark : AppColors.textPrimary),
-          const SizedBox(width: 4),
+          Icon(icon, size: 16.sp, color: isActive ? AppColors.tertiaryDark : AppColors.textPrimary),
+          SizedBox(width: 4.w),
           Text(
             label,
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w500,
               color: isActive ? AppColors.tertiaryDark : AppColors.textPrimary,
             ),
@@ -437,21 +438,21 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search_off_rounded, size: 80, color: Colors.grey.shade300),
-          const SizedBox(height: 16),
+          Icon(Icons.search_off_rounded, size: 80.sp, color: Colors.grey.shade300),
+          SizedBox(height: 16.h),
           Text(
             "No products found",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade500,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
             "Try a different search term",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               color: Colors.grey.shade400,
             ),
           ),
@@ -476,10 +477,10 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -494,7 +495,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   color: _currentPage > 1
                       ? AppColors.textPrimary
                       : Colors.grey.shade400,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),
@@ -503,20 +504,20 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               return GestureDetector(
                 onTap: () => setState(() => _currentPage = page),
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 32,
-                  height: 32,
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  width: 32.w,
+                  height: 32.h,
                   decoration: BoxDecoration(
                     color: isActive
                         ? AppColors.primary
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(6.r),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     "$page",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight:
                           isActive ? FontWeight.bold : FontWeight.normal,
                       color: isActive ? Colors.white : AppColors.textPrimary,
@@ -536,7 +537,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                       ? AppColors.tertiaryNormal
                       : Colors.grey.shade400,
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),

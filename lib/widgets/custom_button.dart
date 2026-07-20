@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -26,10 +27,10 @@ class CustomButton extends StatelessWidget {
           side: BorderSide(color: color ?? AppColors.primary),
           minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(28.r),
           ),
         ),
-        child: Text(text, style: TextStyle(color: textColor ?? AppColors.primary, fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text(text, style: TextStyle(color: textColor ?? AppColors.primary, fontSize: 16.sp, fontWeight: FontWeight.bold)),
       );
     }
 
@@ -39,7 +40,7 @@ class CustomButton extends StatelessWidget {
         backgroundColor: color,
         foregroundColor: textColor,
       ),
-      child: Text(text, style: TextStyle(color: textColor ?? Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+      child: Text(text, style: TextStyle(color: textColor ?? Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold)),
     );
   }
 }

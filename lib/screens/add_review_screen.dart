@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
 import '../theme/app_colors.dart';
@@ -79,7 +80,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         title: Text(isEditing ? "Edit Review" : "Add Review"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -90,31 +91,31 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 hintText: "How was your experience?",
                 filled: true,
                 fillColor: AppColors.surface,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.border)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.border)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: const BorderSide(color: AppColors.border)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: const BorderSide(color: AppColors.border)),
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             Row(
               children: [
-                const Text("Rating", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                const SizedBox(width: 12),
+                Text("Rating", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                SizedBox(width: 12.w),
                 Text(
                   "${_rating.toInt()}/5",
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade600),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               children: List.generate(5, (index) {
                 return GestureDetector(
                   onTap: () => setState(() => _rating = (index + 1).toDouble()),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 8),
+                    padding: EdgeInsets.only(right: 8.w),
                     child: Icon(
                       index < _rating ? Icons.star : Icons.star_border,
-                      size: 36,
+                      size: 36.sp,
                       color: AppColors.star,
                     ),
                   ),

@@ -13,6 +13,15 @@ class ProductService {
 
   /// Fetch paginated products from GET /api/products.
   /// [page] is 0-indexed (backend default: 0). [size] is items per page (backend default: 10).
+  static Future<List<Product>> fetchSimilarProducts(String productId, {int limit = 10}) async {
+    final response = await DioClient.instance.get(
+      '/api/products/$productId/similar',
+      queryParameters: {'limit': limit},
+    );
+    final productsList = response.data as List<dynamic>? ?? [];
+    return productsList.map((json) => Product.fromJson(json as Map<String, dynamic>)).toList();
+  }
+
   static Future<({List<Product> products, int totalPages, int totalElements})> fetchAllProducts({int page = 0, int size = 20}) async {
     final response = await DioClient.instance.get(
       '/api/products',

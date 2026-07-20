@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'onboarding_screen.dart';
 import 'login_screen.dart';
@@ -41,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
           // Content
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: EdgeInsets.symmetric(horizontal: 32.0.w),
               child: Column(
                 children: [
                   const Spacer(flex: 3),
@@ -49,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                   // Logo image (logohomecscreen.png)
                   Image.asset(
                     'assets/images/logohomecscreen.png',
-                    width: 280,
+                    width: 280.w,
                     fit: BoxFit.contain,
                   ),
 
@@ -58,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                   // "Let's get started" button
                   SizedBox(
                     width: double.infinity,
-                    height: 60,
+                    height: 60.h,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -73,20 +74,20 @@ class WelcomeScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Let's get started",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // "I already have an account" row
                   GestureDetector(
@@ -101,31 +102,31 @@ class WelcomeScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "I already have an account",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 15,
+                            fontSize: 15.sp,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8.w),
                         Container(
-                          padding: const EdgeInsets.all(6),
+                          padding: EdgeInsets.all(6.w),
                           decoration: BoxDecoration(
                             color: _navyBlue,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
-                            size: 18,
+                            size: 18.sp,
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                 ],
               ),
             ),

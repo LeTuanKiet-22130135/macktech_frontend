@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,20 +49,20 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
           // Content
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
 
                   // Avatar
                   Container(
-                    width: 110,
-                    height: 110,
+                    width: 110.w,
+                    height: 110.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.grey.shade200,
-                        width: 3,
+                        width: 3.w,
                       ),
                     ),
                     child: ClipOval(
@@ -70,43 +71,43 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (c, e, s) => Container(
                           color: Colors.pink.shade100,
-                          child: const Icon(
+                          child: Icon(
                             Icons.person,
-                            size: 60,
+                            size: 60.sp,
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Title
-                  const Text(
+                  Text(
                     "Setup New Password",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Subtitle
                   Text(
                     "Please, setup a new password for\nyour account",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       color: Colors.grey.shade600,
                       height: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
 
                   // New Password field
                   _buildPasswordField("New Password", _newPasswordController),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14.h),
 
                   // Repeat Password field
                   _buildPasswordField("Repeat Password", _repeatPasswordController),
@@ -116,7 +117,7 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                   // Save button
                   SizedBox(
                     width: double.infinity,
-                    height: 56,
+                    height: 56.h,
                     child: ElevatedButton(
                       onPressed: _isLoading
                           ? null
@@ -186,23 +187,23 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                         disabledBackgroundColor: AppColors.tertiaryDarker.withValues(alpha: 0.5),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14.r),
                         ),
                         elevation: 0,
                       ),
                       child: _isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
+                          : Text(
                               "Save",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 48.h),
                 ],
               ),
             ),
@@ -214,15 +215,15 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
 
   Widget _buildWaveHeader() {
     return SizedBox(
-      height: 200,
+      height: 200.h,
       child: Stack(
         children: [
           Positioned(
             top: -80,
             right: -60,
             child: Container(
-              width: 400,
-              height: 280,
+              width: 400.w,
+              height: 280.h,
               decoration: const BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
@@ -232,11 +233,11 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
             ),
           ),
           Positioned(
-            top: 40,
+            top: 40.h,
             left: -30,
             child: Container(
-              width: 500,
-              height: 180,
+              width: 500.w,
+              height: 180.h,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.5),
                 borderRadius: const BorderRadius.only(
@@ -254,7 +255,7 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
   Widget _buildPasswordField(String hint, TextEditingController controller) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: TextField(
@@ -265,12 +266,12 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
           hintText: hint,
           hintStyle: TextStyle(
             color: Colors.grey.shade400,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 16,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 16.h,
           ),
         ),
       ),

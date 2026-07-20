@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,14 +39,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(), // Important for RefreshIndicator
-                  padding: const EdgeInsets.only(bottom: 100),
+                  padding: EdgeInsets.only(bottom: 100.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildLatestPromotions(context),
                       _buildSuggestedHeader(context),
                       _buildRecommendedProductGrid(recommendationsAsync),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                     ],
                   ),
                 ),
@@ -61,30 +62,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       color: AppColors.tertiaryDarker,
-      padding: const EdgeInsets.only(top: 8),
+      padding: EdgeInsets.only(top: 8.h),
       child: Column(
         children: [
           // Title row with logo
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/images/logohomecscreen.png',
-                  height: 28,
-                  errorBuilder: (c, e, s) => const Icon(
+                  height: 28.h,
+                  errorBuilder: (c, e, s) => Icon(
                     Icons.phone_android,
                     color: Colors.white,
-                    size: 24,
+                    size: 24.sp,
                   ),
                 ),
-                const SizedBox(width: 10),
-                const Text(
+                SizedBox(width: 10.w),
+                Text(
                   "Macktech Mobiles",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -94,7 +95,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
           // Search bar - navigates to search results
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 20),
+            padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 8.h, bottom: 20.h),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -103,18 +104,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Row(
                   children: [
                     const Icon(Icons.search, color: Colors.grey),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Text(
                       "Search any Product..",
-                      style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                      style: TextStyle(color: Colors.grey.shade500, fontSize: 14.sp),
                     ),
                   ],
                 ),
@@ -128,22 +129,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildLatestPromotions(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Latest Promotions",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           // Promo Carousel
           const _PromoCarousel(),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           // View all promotions button
           Align(
             alignment: Alignment.centerRight,
@@ -157,22 +158,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black,
                 side: const BorderSide(color: Colors.black),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text("View all promotions", style: TextStyle(fontWeight: FontWeight.w600)),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward, size: 16),
+                  SizedBox(width: 4.w),
+                  Icon(Icons.arrow_forward, size: 16.sp),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
         ],
       ),
     );
@@ -180,14 +181,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildSuggestedHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
+      padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h, bottom: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             "Suggested for You",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -200,16 +201,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               );
             },
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Text(
+            child: Text(
               "View All",
               style: TextStyle(
                 color: AppColors.tertiaryNormal,
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: 14.sp,
               ),
             ),
           ),
@@ -221,27 +222,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   /// Displays recommended products from the API with server-side pagination.
   Widget _buildRecommendedProductGrid(AsyncValue<({String? recommId, List<Product> products, int totalPages, int totalElements})> asyncData) {
     return asyncData.when(
-      loading: () => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 60),
+      loading: () => Padding(
+        padding: EdgeInsets.symmetric(vertical: 60.h),
         child: Center(
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
       ),
       error: (error, _) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
         child: Center(
           child: Column(
             children: [
-              const Icon(Icons.error_outline, color: Colors.redAccent, size: 40),
-              const SizedBox(height: 12),
+              Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
+              SizedBox(height: 12.h),
               Text(
                 'Failed to load recommendations',
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               OutlinedButton.icon(
                 onPressed: () => ref.invalidate(recommendationsProvider(_currentPage - 1)),
-                icon: const Icon(Icons.refresh, size: 18),
+                icon: Icon(Icons.refresh, size: 18.sp),
                 label: const Text("Retry"),
               ),
             ],
@@ -262,12 +263,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         }
         
         if (products.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 40),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.h),
             child: Center(
               child: Text(
                 'No recommendations available',
-                style: TextStyle(color: Colors.grey, fontSize: 14),
+                style: TextStyle(color: Colors.grey, fontSize: 14.sp),
               ),
             ),
           );
@@ -279,7 +280,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             // Product grid
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -295,7 +296,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             // Pagination controls
             if (totalPages > 1) _buildPagination(totalPages),
           ],
@@ -321,10 +322,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -339,7 +340,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   color: _currentPage > 1
                       ? AppColors.textPrimary
                       : Colors.grey.shade400,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),
@@ -348,20 +349,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               return GestureDetector(
                 onTap: () => setState(() => _currentPage = page),
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 32,
-                  height: 32,
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  width: 32.w,
+                  height: 32.h,
                   decoration: BoxDecoration(
                     color: isActive
                         ? AppColors.primary
                         : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(6.r),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     "$page",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight:
                           isActive ? FontWeight.bold : FontWeight.normal,
                       color: isActive ? Colors.white : AppColors.textPrimary,
@@ -381,7 +382,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ? AppColors.tertiaryNormal
                       : Colors.grey.shade400,
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),
@@ -421,7 +422,7 @@ class _PromoCarouselState extends State<_PromoCarousel> {
         AspectRatio(
           aspectRatio: 16 / 9,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             child: PageView.builder(
               controller: _pageController,
               onPageChanged: (index) {
@@ -441,8 +442,8 @@ class _PromoCarouselState extends State<_PromoCarousel> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.image, size: 40, color: Colors.grey),
-                        const SizedBox(height: 8),
+                        Icon(Icons.image, size: 40.sp, color: Colors.grey),
+                        SizedBox(height: 8.h),
                         Text(
                           "Image missing: \n${imagePath.split('/').last}",
                           textAlign: TextAlign.center,
@@ -456,16 +457,16 @@ class _PromoCarouselState extends State<_PromoCarousel> {
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         // Dots indicator
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
             _promoImages.length,
             (index) => Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2),
-              width: 8,
-              height: 8,
+              margin: EdgeInsets.symmetric(horizontal: 2.w),
+              width: 8.w,
+              height: 8.h,
               decoration: BoxDecoration(
                 color: _currentPage == index ? AppColors.primary : Colors.grey.shade400,
                 shape: BoxShape.circle,

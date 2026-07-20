@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../theme/app_colors.dart';
@@ -108,13 +109,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 1. Key Metrics Header
           _isLoadingMetrics
-              ? const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()))
+              ? SizedBox(height: 100.h, child: Center(child: CircularProgressIndicator()))
               : Row(
                   children: [
                     Expanded(
@@ -123,14 +124,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             "₫${((_metrics?['totalRevenue'] as num?) ?? 0).toStringAsFixed(0)}",
                             Icons.attach_money,
                             AppColors.success)),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                         child: _buildMetricCard(
                             "Orders",
                             "${_metrics?['totalOrders'] ?? 0}",
                             Icons.shopping_bag_outlined,
                             Colors.blue)),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                         child: _buildMetricCard(
                             "Products",
@@ -139,16 +140,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             Colors.orange)),
                   ],
                 ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
 
           // 2. Revenue Chart Header & Toggle
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 "Revenue Analytics",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
                 ),
@@ -156,7 +157,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -169,15 +170,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               )
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
 
           // 3. FL Chart Box
           Container(
-            height: 280,
-            padding: const EdgeInsets.all(16),
+            height: 280.h,
+            padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.02),
@@ -192,20 +193,20 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     : _buildRevenueChart(),
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
 
           // 4. Previews (Orders and Products)
-          const Text(
+          Text(
             "Recent Orders",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _isLoadingOrders
-              ? const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()))
+              ? SizedBox(height: 100.h, child: Center(child: CircularProgressIndicator()))
               : _recentOrders.isEmpty
                   ? const Center(child: Text("No recent orders."))
                   : Column(
@@ -219,22 +220,22 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       }).toList(),
                     ),
 
-          const SizedBox(height: 32),
-          const Text(
+          SizedBox(height: 32.h),
+          Text(
             "Top Selling Products",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _isLoadingProducts
-              ? const SizedBox(height: 150, child: Center(child: CircularProgressIndicator()))
+              ? SizedBox(height: 150.h, child: Center(child: CircularProgressIndicator()))
               : _topProducts.isEmpty
                   ? const Center(child: Text("No top products."))
                   : SizedBox(
-                      height: 240, // Height for horizontal product strip
+                      height: 240.h, // Height for horizontal product strip
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: _topProducts.map((p) {
@@ -245,7 +246,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         }).toList(),
                       ),
                     ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
         ],
       ),
     );
@@ -257,17 +258,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       onTap: () => _onTimeframeChanged(title),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.tertiaryNormal : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Text(
           title,
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.grey.shade700,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-            fontSize: 12,
+            fontSize: 12.sp,
           ),
         ),
       ),
@@ -276,10 +277,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildMetricCard(String title, String value, IconData icon, Color iconColor) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.02),
@@ -291,18 +292,18 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               color: iconColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: iconColor, size: 20),
+            child: Icon(icon, color: iconColor, size: 20.sp),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -312,8 +313,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           const SizedBox(height: 2),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              fontSize: 12.sp,
               color: Colors.grey,
             ),
             maxLines: 1,
@@ -344,7 +345,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           BarChartRodData(
             toY: val,
             color: AppColors.tertiaryNormal,
-            width: 16,
+            width: 16.w,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
             backDrawRodData: BackgroundBarChartRodData(
               show: true,
@@ -380,8 +381,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 final idx = value.toInt();
                 final text = (idx >= 0 && idx < labels.length) ? labels[idx].toString() : '';
                 return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 10)),
+                  padding: EdgeInsets.only(top: 8.0.h),
+                  child: Text(text, style: TextStyle(color: Colors.grey, fontSize: 10.sp)),
                 );
               },
             ),
@@ -415,11 +416,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget _buildRecentOrderTile(String name, String date, String price, String status) {
     Color statusColor = status == 'Pending' ? Colors.orange : (status == 'Shipped' ? Colors.blue : (status == 'Cancelled' ? Colors.red : AppColors.success));
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: 12.h),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
@@ -430,22 +431,22 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             child: Text(name.isNotEmpty ? name[0].toUpperCase() : '?',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                Text(date, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                Text(name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp)),
+                Text(date, style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
               ],
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(price, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              Text(price, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp)),
               const SizedBox(height: 4),
-              Text(status, style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold)),
+              Text(status, style: TextStyle(color: statusColor, fontSize: 12.sp, fontWeight: FontWeight.bold)),
             ],
           )
         ],
@@ -455,11 +456,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildProductTile(String name, String price, String? imageUrl) {
     return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 16),
+      width: 160.w,
+      margin: EdgeInsets.only(right: 16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
@@ -467,18 +468,18 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         children: [
           Expanded(
             child: Container(
-              margin: const EdgeInsets.all(8),
+              margin: EdgeInsets.all(8.w),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Center(
                 child: imageUrl != null && imageUrl.isNotEmpty
                     ? ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(imageUrl, fit: BoxFit.cover, width: double.infinity, height: double.infinity, errorBuilder: (c,e,s) => Icon(Icons.phone_iphone, size: 40, color: Colors.grey.shade400)),
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: Image.network(imageUrl, fit: BoxFit.cover, width: double.infinity, height: double.infinity, errorBuilder: (c,e,s) => Icon(Icons.phone_iphone, size: 40.sp, color: Colors.grey.shade400)),
                       )
-                    : Icon(Icons.phone_iphone, size: 40, color: Colors.grey.shade400),
+                    : Icon(Icons.phone_iphone, size: 40.sp, color: Colors.grey.shade400),
               ),
             ),
           ),
@@ -491,12 +492,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, height: 1.2),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp, height: 1.2),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   price,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
                 ),
               ],
             ),

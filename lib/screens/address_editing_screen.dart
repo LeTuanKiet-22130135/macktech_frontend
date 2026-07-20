@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -165,19 +166,19 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
         ),
         title: Text(
           widget.address == null ? "Add Address" : "Edit Address",
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         actions: [
           _isLoading 
-            ? const Padding(padding: EdgeInsets.only(right: 16), child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))))
+            ? Padding(padding: EdgeInsets.only(right: 16.w), child: Center(child: SizedBox(width: 20.w, height: 20.h, child: CircularProgressIndicator(strokeWidth: 2))))
             : TextButton(
                 onPressed: _saveAddress,
-                child: const Text("Save", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+                child: Text("Save", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16.sp)),
               )
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w),
         child: Form(
           key: _formKey,
           child: Column(
@@ -190,13 +191,13 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
               Row(
                 children: [
                   Expanded(child: _buildInput("Ward", _wardController, true)),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Expanded(child: _buildInput("District", _districtController, true)),
                 ],
               ),
               _buildInput("City/Province", _cityController, true),
               
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               SwitchListTile(
                 title: const Text("Set as Default Address", style: TextStyle(fontWeight: FontWeight.w600)),
                 value: _isDefault,
@@ -205,41 +206,41 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                 onChanged: (val) => setState(() => _isDefault = val),
               ),
               
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       "Pinpoint Location", 
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   _isGeocoding 
-                    ? const SizedBox(
-                        width: 16, height: 16,
+                    ? SizedBox(
+                        width: 16.w, height: 16.h,
                         child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
                       )
                     : TextButton.icon(
                         onPressed: _selectedLocation == null ? null : _handleCameraIdle,
-                        icon: const Icon(Icons.location_searching, size: 18),
+                        icon: Icon(Icons.location_searching, size: 18.sp),
                         label: const Text("Use Pin Location"),
                         style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                       )
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Container(
-                height: 250,
+                height: 250.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: AppColors.borderGrey),
                 ),
                 clipBehavior: Clip.hardEdge,
@@ -267,10 +268,10 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                     // Center Pin
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 40), // Align pin tip to center
+                        padding: EdgeInsets.only(bottom: 40.h), // Align pin tip to center
                         child: Icon(
                           Icons.location_on,
-                          size: 40,
+                          size: 40.sp,
                           color: AppColors.primary,
                           shadows: [
                             Shadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4)),
@@ -281,7 +282,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
             ],
           ),
         ),
@@ -291,7 +292,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
 
   Widget _buildInput(String label, TextEditingController controller, bool isRequired, {bool isPhone = false}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 16.h),
       child: TextFormField(
         controller: controller,
         keyboardType: isPhone ? TextInputType.phone : TextInputType.text,
@@ -299,14 +300,14 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
           labelText: label,
           labelStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             borderSide: const BorderSide(color: AppColors.borderGrey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: BorderSide(color: AppColors.primary, width: 2.w),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         ),
         validator: (value) {
           if (isRequired && (value == null || value.trim().isEmpty)) {

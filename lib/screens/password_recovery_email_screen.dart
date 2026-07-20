@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app_frontend/theme/app_colors.dart';
@@ -43,20 +44,20 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
           // Content
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.symmetric(horizontal: 32.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
 
                   // Avatar
                   Container(
-                    width: 110,
-                    height: 110,
+                    width: 110.w,
+                    height: 110.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.grey.shade200,
-                        width: 3,
+                        width: 3.w,
                       ),
                     ),
                     child: ClipOval(
@@ -65,39 +66,39 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                         fit: BoxFit.cover,
                         errorBuilder: (c, e, s) => Container(
                           color: Colors.pink.shade100,
-                          child: const Icon(
+                          child: Icon(
                             Icons.person,
-                            size: 60,
+                            size: 60.sp,
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Title
-                  const Text(
+                  Text(
                     "Password Recovery",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Subtitle
                   Text(
                     "Enter your email address to\nrecover your password",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       color: Colors.grey.shade600,
                       height: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
 
                   // Email Input Field
                   CustomTextField(
@@ -111,7 +112,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                   // Next button
                   SizedBox(
                     width: double.infinity,
-                    height: 56,
+                    height: 56.h,
                     child: ElevatedButton(
                       onPressed: _isLoading
                           ? null
@@ -150,23 +151,23 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                         disabledBackgroundColor: AppColors.tertiaryDarker.withValues(alpha: 0.5),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14.r),
                         ),
                         elevation: 0,
                       ),
                       child: _isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
+                          : Text(
                               "Next",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Cancel
                   TextButton(
@@ -174,12 +175,12 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                     child: Text(
                       "Cancel",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: Colors.grey.shade500,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                 ],
               ),
             ),
@@ -191,7 +192,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
 
   Widget _buildWaveHeader() {
     return SizedBox(
-      height: 200,
+      height: 200.h,
       child: Stack(
         children: [
           // Dark navy background
@@ -199,8 +200,8 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
             top: -80,
             right: -60,
             child: Container(
-              width: 400,
-              height: 280,
+              width: 400.w,
+              height: 280.h,
               decoration: const BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
@@ -211,11 +212,11 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
           ),
           // Light blue accent wave
           Positioned(
-            top: 40,
+            top: 40.h,
             left: -30,
             child: Container(
-              width: 500,
-              height: 180,
+              width: 500.w,
+              height: 180.h,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.5),
                 borderRadius: const BorderRadius.only(

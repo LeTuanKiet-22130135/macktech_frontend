@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'raise_ticket_screen.dart';
 import 'ticket_detail_screen.dart';
@@ -60,33 +61,33 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Customer Support",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             // Section title
-            const Text(
+            Text(
               "Raised ticket history",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
 
             // Ticket cards
             Expanded(
@@ -101,7 +102,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                         )
                       : ListView.separated(
                           itemCount: _tickets.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 16),
+                          separatorBuilder: (_, __) => SizedBox(height: 16.h),
                           itemBuilder: (context, index) {
                             final t = _tickets[index];
                             final dateStr = DateFormat('dd-MM-yyyy').format(t.createdAt);
@@ -125,11 +126,11 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
 
             // "Raise a new ticket" button
             Padding(
-              padding: const EdgeInsets.only(bottom: 32, top: 16),
+              padding: EdgeInsets.only(bottom: 32.h, top: 16.h),
               child: Center(
                 child: SizedBox(
-                  width: 240,
-                  height: 52,
+                  width: 240.w,
+                  height: 52.h,
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
@@ -148,14 +149,14 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
-                    icon: const Icon(Icons.add, size: 20),
-                    label: const Text(
+                    icon: Icon(Icons.add, size: 20.sp),
+                    label: Text(
                       "Raise a new ticket",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
@@ -193,10 +194,10 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
         );
       },
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: Column(
@@ -207,41 +208,41 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               children: [
                 Text(
                   "Ticket no. $ticketNo",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color: AppColors.tertiaryDarker,
                   ),
                 ),
                 Text(
                   date,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 13.sp,
                     color: Colors.grey.shade500,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
 
             // Type / category
             _buildDetailRow("Ticket type /\ncategory", category),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
 
             // Description
             _buildDetailRow("Description", description),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
 
             // Status
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 120,
+                  width: 120.w,
                   child: Text(
                     "Status",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: Colors.grey.shade400,
                     ),
                   ),
@@ -250,7 +251,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                   child: Text(
                     status,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: statusColor,
                     ),
@@ -269,11 +270,11 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 120,
+          width: 120.w,
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               color: Colors.grey.shade400,
             ),
           ),
@@ -281,8 +282,8 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.tertiaryDarker,
             ),

@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -111,14 +112,14 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: BoxDecoration(
               color: AppColors.backgroundLight, // Light grayish-blue for back button bg matching 008
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary, size: 20),
+              icon: Icon(Icons.arrow_back, color: AppColors.textPrimary, size: 20.sp),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -126,26 +127,26 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.0.w),
           child: Container(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0.w),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
               border: Border.all(color: Colors.grey.shade300),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   "Old Password",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 _buildTextField(
                   controller: _oldPasswordController,
                   obscureText: _obscureOld,
@@ -155,15 +156,15 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 20),
-                const Text(
+                SizedBox(height: 20.h),
+                Text(
                   "New Password",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 _buildTextField(
                   controller: _newPasswordController,
                   obscureText: _obscureNew,
@@ -173,15 +174,15 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 20),
-                const Text(
+                SizedBox(height: 20.h),
+                Text(
                   "Re-enter New Password",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 _buildTextField(
                   controller: _reenterPasswordController,
                   obscureText: _obscureReenter,
@@ -191,17 +192,17 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         "Cancel",
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -213,19 +214,19 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                         foregroundColor: Colors.white,
                         minimumSize: const Size(120, 48),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                         elevation: 0,
                       ),
                       child: _isUpdating
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
+                          ? SizedBox(
+                              width: 24.w,
+                              height: 24.h,
                               child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                             )
-                          : const Text(
+                          : Text(
                               "Done",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.normal),
                             ),
                     ),
                   ],
@@ -247,17 +248,17 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
       decoration: BoxDecoration(
         color: Colors.white, // Transparent white back
         border: Border.all(color: Colors.grey.shade400),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: TextField(
         controller: controller,
         obscureText: obscureText,
-        style: const TextStyle(
-          fontSize: 18,
+        style: TextStyle(
+          fontSize: 18.sp,
           letterSpacing: 2, // Spacing matching password dots
         ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           border: InputBorder.none,
           hintText: "***********",
           hintStyle: TextStyle(color: Colors.black.withValues(alpha: 0.5)),
@@ -272,7 +273,7 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
       barrierDismissible: false,
       builder: (ctx) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
           backgroundColor: Colors.transparent,
           elevation: 0,
           child: Stack(
@@ -280,29 +281,29 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
             alignment: Alignment.topCenter,
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 40),
+                margin: EdgeInsets.only(top: 40.h),
                 padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(24.r),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
+                    Text(
                       "Password Changed\nSuccessfully !",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w800,
                         color: AppColors.textPrimary,
                         height: 1.3,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h),
                     SizedBox(
                       width: double.infinity,
-                      height: 56,
+                      height: 56.h,
                       child: ElevatedButton(
                         onPressed: () {
                           final nav = Navigator.of(context);
@@ -313,13 +314,13 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                           backgroundColor: AppColors.overlayDark, // Dark navy
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
                           minimumSize: const Size(double.infinity, 56), // Override global infinite width to double.infinity locally just in case
                         ),
-                        child: const Text(
+                        child: Text(
                           "OK",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -327,24 +328,24 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
                 ),
               ),
               Positioned(
-                top: 0,
+                top: 0.h,
                 child: Container(
-                  width: 80,
-                  height: 80,
+                  width: 80.w,
+                  height: 80.h,
                   decoration: BoxDecoration(
                     color: AppColors.background, // Off-white backing
                     shape: BoxShape.circle,
                   ),
                   child: Center(
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 50.w,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         color: AppColors.background,
                         shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.success, width: 4),
+                        border: Border.all(color: AppColors.success, width: 4.w),
                       ),
-                      child: const Icon(Icons.check, color: AppColors.success, size: 30),
+                      child: Icon(Icons.check, color: AppColors.success, size: 30.sp),
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app_frontend/theme/app_colors.dart';
@@ -23,15 +24,15 @@ class BottomNavBar extends ConsumerWidget {
     final wishlistCount = wishlistAsync.value?.length ?? 0;
 
     return Positioned(
-      bottom: 24,
-      left: 24,
-      right: 24,
+      bottom: 24.h,
+      left: 24.w,
+      right: 24.w,
       child: Container(
-        height: 64,
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        height: 64.h,
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         decoration: BoxDecoration(
           color: AppColors.tertiaryDarker, // Deep dark blue
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(40.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.15),

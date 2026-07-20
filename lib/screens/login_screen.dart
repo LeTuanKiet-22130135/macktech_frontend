@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../theme/app_colors.dart';
@@ -134,22 +135,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           // Content
           SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: EdgeInsets.symmetric(horizontal: 32.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: size.height * 0.18),
 
                   // "Login" title
-                  const Text(
+                  Text(
                     "Login",
                     style: TextStyle(
-                      fontSize: 36,
+                      fontSize: 36.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  SizedBox(height: 28.h),
 
                   // Email field
                   buildAuthPillField(
@@ -157,7 +158,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // Password field
                   buildAuthPillField(
@@ -165,7 +166,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscure: true,
                     controller: _passwordController,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
 
                   // "Forgot your password?"
                   TextButton(
@@ -179,20 +180,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Forgot your password?",
                       style: TextStyle(
                         color: AppColors.textSecondary,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // "Next" button
                   SizedBox(
                     width: double.infinity,
-                    height: 60,
+                    height: 60.h,
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _performLogin,
                       style: ElevatedButton.styleFrom(
@@ -200,61 +201,61 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
                       ),
                       child: _isLoading
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
+                          ? SizedBox(
+                              width: 24.w,
+                              height: 24.h,
                               child: CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.5,
                               ),
                             )
-                          : const Text(
+                          : Text(
                               "Next",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
 
                   // "Cancel" text link
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text(
+                    child: Text(
                       "Cancel",
                       style: TextStyle(
                         color: AppColors.textSecondary,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Divider with "Or login with"
                   Row(
                     children: [
                       Expanded(child: Divider(color: Colors.grey.shade300)),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: Text(
                           "Or login with",
                           style: TextStyle(
                             color: Colors.grey.shade500,
-                            fontSize: 14,
+                            fontSize: 14.sp,
                           ),
                         ),
                       ),
                       Expanded(child: Divider(color: Colors.grey.shade300)),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // Google & Facebook buttons
                   Row(
@@ -262,41 +263,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: _isLoading ? null : _performGoogleLogin,
-                          icon: const Icon(Icons.g_mobiledata, size: 28),
+                          icon: Icon(Icons.g_mobiledata, size: 28.sp),
                           label: const Text("Google"),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.black87,
                             side: BorderSide(color: Colors.grey.shade300),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            padding: EdgeInsets.symmetric(vertical: 14.h),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16.w),
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: _isLoading ? null : _performFacebookLogin,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.facebook,
-                            size: 24,
+                            size: 24.sp,
                             color: Color(0xFF1877F2),
                           ),
                           label: const Text("Facebook"),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.black87,
                             side: BorderSide(color: Colors.grey.shade300),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            padding: EdgeInsets.symmetric(vertical: 14.h),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: 48.h),
                 ],
               ),
             ),

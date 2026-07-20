@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,11 +69,11 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Messages",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
@@ -87,7 +88,7 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
       body: _isLoading
           ? const Center(child: CircularProgressIndicator(color: AppColors.tertiaryDarker))
           : ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: EdgeInsets.symmetric(vertical: 8.h),
               children: [
                 // Static entry point to start a new chat
                 _buildConversationTile(
@@ -103,12 +104,12 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                 
                 // Dynamic history from the backend
                 if (_sessions.isNotEmpty) ...[
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20, top: 16, bottom: 8),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w, top: 16.h, bottom: 8.h),
                     child: Text(
                       "Chat History",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
@@ -139,12 +140,12 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                 ],
                 
                 // Keep the mock agents for testing UI states
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, top: 16, bottom: 8),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w, top: 16.h, bottom: 8.h),
                   child: Text(
                     "Customer Support (Mock)",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
                     ),
@@ -185,15 +186,15 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
     required IconData icon,
   }) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       leading: Container(
-        width: 50,
-        height: 50,
+        width: 50.w,
+        height: 50.h,
         decoration: const BoxDecoration(
           color: AppColors.tertiaryNormal,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: Colors.white, size: 24),
+        child: Icon(icon, color: Colors.white, size: 24.sp),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,9 +202,9 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
           Expanded(
             child: Text(
               name,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: AppColors.tertiaryDarker,
               ),
               overflow: TextOverflow.ellipsis,
@@ -212,18 +213,18 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
           Text(
             time,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               color: Colors.grey.shade500,
             ),
           ),
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 6),
+        padding: EdgeInsets.only(top: 6.h),
         child: Text(
           lastMessage,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             color: Colors.grey.shade600,
           ),
           maxLines: 1,

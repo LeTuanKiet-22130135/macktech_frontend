@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class CustomImage extends StatelessWidget {
@@ -13,14 +14,14 @@ class CustomImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl.isEmpty) {
-      return const Icon(Icons.image, color: Colors.grey, size: 40);
+      return Icon(Icons.image, color: Colors.grey, size: 40.sp);
     }
     
     if (imageUrl.startsWith('http')) {
       return Image.network(
         imageUrl,
         fit: fit,
-        errorBuilder: (c, e, s) => const Icon(Icons.image, color: Colors.grey, size: 40),
+        errorBuilder: (c, e, s) => Icon(Icons.image, color: Colors.grey, size: 40.sp),
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
           return Center(
@@ -36,7 +37,7 @@ class CustomImage extends StatelessWidget {
       return Image.asset(
         imageUrl,
         fit: fit,
-        errorBuilder: (c, e, s) => const Icon(Icons.image, color: Colors.grey, size: 40),
+        errorBuilder: (c, e, s) => Icon(Icons.image, color: Colors.grey, size: 40.sp),
       );
     }
   }

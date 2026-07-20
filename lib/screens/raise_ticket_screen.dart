@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -82,11 +83,11 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Raise a new ticket",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
@@ -96,43 +97,43 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Customer Information section
-                  const Text(
+                  Text(
                     "Customer Information",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Customer Name
                   _buildLabel("Customer Name"),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   _buildTextField(_nameController, "Customer Name"),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Email Address
                   _buildLabel("Email Address"),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   _buildTextField(_emailController, "Email Address"),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Ticket Type / Category
-                  const Text(
+                  Text(
                     "Ticket Type / Category",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   _buildSelectField(
                     value: _selectedTicketType,
                     placeholder: "Select",
@@ -144,21 +145,21 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Issue
-                  const Text(
+                  Text(
                     "Issue",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(color: Colors.grey.shade300),
                     ),
                     child: TextField(
@@ -168,52 +169,52 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                         hintText: "Type here ...",
                         hintStyle: TextStyle(color: Colors.grey.shade400),
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.all(16),
+                        contentPadding: EdgeInsets.all(16.w),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Upload Image
-                  const Text(
+                  Text(
                     "Upload Image",
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   GestureDetector(
                     onTap: _pickTicketImage,
                     child: _attachedImage != null
                         ? Stack(
                             children: [
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.r),
                                 child: Image.file(
                                   _attachedImage!,
                                   width: double.infinity,
-                                  height: 160,
+                                  height: 160.h,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               Positioned(
-                                top: 8,
-                                right: 8,
+                                top: 8.h,
+                                right: 8.w,
                                 child: GestureDetector(
                                   onTap: () =>
                                       setState(() => _attachedImage = null),
                                   child: Container(
-                                    padding: const EdgeInsets.all(4),
+                                    padding: EdgeInsets.all(4.w),
                                     decoration: const BoxDecoration(
                                       color: Colors.red,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.close,
                                       color: Colors.white,
-                                      size: 16,
+                                      size: 16.sp,
                                     ),
                                   ),
                                 ),
@@ -222,12 +223,12 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                           )
                         : Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 20,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 20.h,
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
                                 color: Colors.grey.shade300,
                                 style: BorderStyle.solid,
@@ -238,14 +239,14 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                               children: [
                                 Icon(
                                   Icons.cloud_upload_outlined,
-                                  size: 36,
+                                  size: 36.sp,
                                   color: Colors.grey.shade400,
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: 8.h),
                                 Text(
                                   "Tap to attach an image",
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                     color: Colors.grey.shade500,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -254,7 +255,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                             ),
                           ),
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                 ],
               ),
             ),
@@ -270,14 +271,14 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
   Widget _buildLabel(String text) {
     return Text(
       text,
-      style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+      style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700),
     );
   }
 
   Widget _buildTextField(TextEditingController controller, String hint) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: TextField(
@@ -286,9 +287,9 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
           hintText: hint,
           hintStyle: TextStyle(color: Colors.grey.shade400),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 14.h,
           ),
         ),
       ),
@@ -304,9 +305,9 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: Row(
@@ -315,13 +316,13 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
             Text(
               value ?? placeholder,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
                 color: value != null
                     ? AppColors.tertiaryDarker
                     : Colors.grey.shade400,
               ),
             ),
-            Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 22),
+            Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 22.sp),
           ],
         ),
       ),
@@ -343,7 +344,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
       ),
       builder: (ctx) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+          padding: EdgeInsets.symmetric(vertical: 24.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: items.map((item) {
@@ -353,16 +354,16 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                   onSelected(item);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 18,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 28.w,
+                    vertical: 18.h,
                   ),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       item,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         color: Colors.grey.shade500,
                       ),
                     ),
@@ -396,14 +397,14 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
               child: Text(
                 "Remove all answers",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: Colors.grey.shade500,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           // Send button
           Expanded(
             flex: 2,
@@ -414,23 +415,23 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: const Size(0, 52),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 elevation: 0,
               ),
               child: _isLoading
-                  ? const SizedBox(
-                      height: 24,
-                      width: 24,
+                  ? SizedBox(
+                      height: 24.h,
+                      width: 24.w,
                       child: CircularProgressIndicator(
                         color: Colors.white,
                         strokeWidth: 2,
                       ),
                     )
-                  : const Text(
+                  : Text(
                       "Send",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),

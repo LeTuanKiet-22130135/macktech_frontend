@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/ticket.dart';
@@ -50,79 +51,79 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
         ),
         title: Text(
           "Ticket no.${widget.ticket.ticketNumber.substring(widget.ticket.ticketNumber.length - 4)}",
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Customer Information",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildFieldLabel("Customer Name"),
             const SizedBox(height: 4),
             _buildFieldValue("Unknown"), // No customer data in basic Ticket model
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildFieldLabel("Email Address"),
             const SizedBox(height: 4),
             _buildFieldValue("Unknown"), // No customer data in basic Ticket model
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: 24.h),
+            Text(
               "Ticket Type / Category",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             _buildFieldValue(widget.ticket.type),
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: 24.h),
+            Text(
               "Issue",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               widget.ticket.issueDescription,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
                 color: Colors.grey.shade500,
                 height: 1.6,
               ),
             ),
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: 24.h),
+            Text(
               "Update Status",
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.tertiaryDarker,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: _isUpdating
                   ? const Center(child: CircularProgressIndicator(strokeWidth: 2))
@@ -166,7 +167,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
                       ),
                     ),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48.h),
           ],
         ),
       ),
@@ -196,8 +197,8 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
   Widget _buildFieldLabel(String label) {
     return Text(
       label,
-      style: const TextStyle(
-        fontSize: 15,
+      style: TextStyle(
+        fontSize: 15.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.tertiaryDarker,
       ),
@@ -208,7 +209,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
     return Text(
       value,
       style: TextStyle(
-        fontSize: 15,
+        fontSize: 15.sp,
         color: Colors.grey.shade500,
       ),
     );

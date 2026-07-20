@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -32,28 +33,28 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 24.0.w, vertical: 24.0.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Your account is protected",
                     style: TextStyle(
                       color: AppColors.success,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  const Text(
+                  SizedBox(height: 12.h),
+                  Text(
                     "Macktech mobile app protects your personal information and keeps it private , safe and secure .",
                     style: TextStyle(
                       color: AppColors.textSecondary,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       height: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   
                   // 2x2 Grid for the green features
                   Row(
@@ -62,7 +63,7 @@ class SettingsScreen extends StatelessWidget {
                       Expanded(child: _buildGreenItem(Icons.lock_outline, "Privacy")),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Row(
                     children: [
                       Expanded(child: _buildGreenItem(Icons.key, "Permissions")),
@@ -73,7 +74,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             
             // List Items matching 027.png
             Container(
@@ -102,14 +103,14 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildGreenItem(IconData icon, String title) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.success, size: 28),
-        const SizedBox(width: 8),
+        Icon(icon, color: AppColors.success, size: 28.sp),
+        SizedBox(width: 8.w),
         Expanded(
           child: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.success,
-              fontSize: 14,
+              fontSize: 14.sp,
             ),
           ),
         ),
@@ -119,25 +120,25 @@ class SettingsScreen extends StatelessWidget {
 
   Widget _buildListTile(String title, {String? subtitle, VoidCallback? onTap}) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 16,
+          fontSize: 16.sp,
           color: AppColors.textPrimary,
         ),
       ),
       subtitle: subtitle != null
           ? Padding(
-              padding: const EdgeInsets.only(top: 4.0),
+              padding: EdgeInsets.only(top: 4.0.h),
               child: Text(
                 subtitle,
-                style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp),
               ),
             )
           : null,
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16.sp, color: Colors.grey),
       onTap: onTap,
     );
   }

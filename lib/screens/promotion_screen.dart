@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -17,14 +18,14 @@ class PromotionScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         children: [
           _buildImagePlaceholder('assets/images/banner.jpg'),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _buildImagePlaceholder('assets/images/084.png'),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _buildImagePlaceholder('assets/images/banner.jpg'),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           _buildImagePlaceholder('assets/images/084.png'),
         ],
       ),
@@ -33,22 +34,22 @@ class PromotionScreen extends StatelessWidget {
 
   Widget _buildImagePlaceholder(String imagePath) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       child: Image.asset(
         imagePath,
         width: double.infinity,
         fit: BoxFit.fitWidth,
         errorBuilder: (context, error, stackTrace) {
           return Container(
-            height: 160,
+            height: 160.h,
             width: double.infinity,
             color: Colors.grey.shade200,
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.image, size: 40, color: Colors.grey),
-                const SizedBox(height: 8),
+                Icon(Icons.image, size: 40.sp, color: Colors.grey),
+                SizedBox(height: 8.h),
                 Text(
                   "Image missing: ${imagePath.split('/').last}",
                   style: const TextStyle(color: Colors.grey),

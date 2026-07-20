@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'chatbot_screen.dart';
@@ -15,17 +16,17 @@ class AgentConversationListScreen extends StatelessWidget {
         // I don't need a nested AppBar if it's in the main layout tab. Let's return just the body.
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           "Customer Messages",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
             color: AppColors.tertiaryDarker,
           ),
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         children: [
           _buildConversationTile(
             context: context,
@@ -61,42 +62,42 @@ class AgentConversationListScreen extends StatelessWidget {
     required IconData icon,
   }) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       leading: Container(
-        width: 50,
-        height: 50,
+        width: 50.w,
+        height: 50.h,
         decoration: BoxDecoration(
           color: Colors.amber.shade700,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: Colors.white, size: 24),
+        child: Icon(icon, color: Colors.white, size: 24.sp),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             name,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 16.sp,
               color: AppColors.tertiaryDarker,
             ),
           ),
           Text(
             time,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               color: Colors.grey.shade500,
             ),
           ),
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 6),
+        padding: EdgeInsets.only(top: 6.h),
         child: Text(
           lastMessage,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             color: Colors.grey.shade600,
           ),
           maxLines: 1,

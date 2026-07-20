@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'main_layout_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
@@ -13,14 +14,14 @@ class OrderSuccessScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Column(
             children: [
               const Spacer(flex: 2),
 
               // Shopping bags illustration with confetti
               SizedBox(
-                height: 260,
+                height: 260.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -29,8 +30,8 @@ class OrderSuccessScreen extends StatelessWidget {
 
                     // Light bag (behind)
                     Positioned(
-                      top: 30,
-                      left: 80,
+                      top: 30.h,
+                      left: 80.w,
                       child: _buildShoppingBag(
                         AppColors.primary,
                         AppColors.primary,
@@ -40,8 +41,8 @@ class OrderSuccessScreen extends StatelessWidget {
                     ),
                     // Dark bag (front)
                     Positioned(
-                      top: 60,
-                      left: 110,
+                      top: 60.h,
+                      left: 110.w,
                       child: _buildShoppingBag(
                         AppColors.primary,
                         AppColors.primary,
@@ -53,25 +54,25 @@ class OrderSuccessScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
 
               // "Success!" text
-              const Text(
+              Text(
                 "Success!",
                 style: TextStyle(
-                  fontSize: 36,
+                  fontSize: 36.sp,
                   fontWeight: FontWeight.bold,
                   color: AppColors.tertiaryDarker,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               // Subtitle messages
               Text(
                 "Your order has been placed.\nOrder will be ready for pick-up.\nThank you for choosing our app!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   color: Colors.grey.shade600,
                   height: 1.6,
                 ),
@@ -82,9 +83,9 @@ class OrderSuccessScreen extends StatelessWidget {
               // CONTINUE SHOPPING button with subtle pink shadow
               Container(
                 width: double.infinity,
-                height: 60,
+                height: 60.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.pinkAccent.withValues(alpha: 0.15),
@@ -108,13 +109,13 @@ class OrderSuccessScreen extends StatelessWidget {
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "CONTINUE SHOPPING",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1,
                       color: Colors.white,
@@ -127,19 +128,19 @@ class OrderSuccessScreen extends StatelessWidget {
 
               // Help button at bottom
               Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.only(bottom: 16.h),
                 child: Row(
                   children: [
                     Icon(
                       Icons.help_outline,
-                      size: 24,
+                      size: 24.sp,
                       color: Colors.grey.shade800,
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     Text(
                       "Help",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         color: Colors.grey.shade800,
                         fontWeight: FontWeight.w500,
                       ),
@@ -163,7 +164,7 @@ class OrderSuccessScreen extends StatelessWidget {
           width: w * 0.4,
           height: h * 0.2,
           decoration: BoxDecoration(
-            border: Border.all(color: darkColor, width: 3),
+            border: Border.all(color: darkColor, width: 3.w),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             color: Colors.transparent,
           ),
@@ -174,7 +175,7 @@ class OrderSuccessScreen extends StatelessWidget {
           height: h,
           decoration: BoxDecoration(
             color: bodyColor,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(4.r),
           ),
         ),
       ],
@@ -209,7 +210,7 @@ class OrderSuccessScreen extends StatelessWidget {
             height: (c["size"] as double) * 2,
             decoration: BoxDecoration(
               color: c["color"] as Color,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(2.r),
             ),
           ),
         ),

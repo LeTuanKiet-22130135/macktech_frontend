@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/address_provider.dart';
@@ -48,21 +49,21 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
         elevation: 0,
         leading: IconButton(
           icon: Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.grey.shade300),
             ),
-            child: const Icon(Icons.arrow_back, size: 18, color: Colors.black),
+            child: Icon(Icons.arrow_back, size: 18.sp, color: Colors.black),
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Customer details",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 20.sp,
           ),
         ),
         centerTitle: false,
@@ -85,49 +86,49 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                 }
               }
             },
-            child: const Text(
+            child: Text(
               "Done",
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 16.sp,
               ),
             ),
           )
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Name Field
             _buildInlineInput("Name :", _nameController),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             
             // Contact Information Group
-            const Text(
+            Text(
               "Contact information",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildInlineInput("Number :", _numberController, placeholder: "07*******2"),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _buildInlineInput("Email address :", _emailController, placeholder: "email@domain.com"),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             
             // Shipping Address Group
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Shipping Address",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
@@ -140,9 +141,9 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             _buildAddressList(),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
@@ -154,11 +155,11 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 120, // Fixed width to align input boxes nicely
+          width: 120.w, // Fixed width to align input boxes nicely
           child: Text(
             label,
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
               color: Colors.grey,
             ),
@@ -166,23 +167,23 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
         ),
         Expanded(
           child: Container(
-            height: 44,
+            height: 44.h,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black87, width: 1.2),
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: Colors.black87, width: 1.2.w),
             ),
             child: TextField(
               controller: controller,
-              style: const TextStyle(
-                fontSize: 15,
+              style: TextStyle(
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.black45, // Simulating the grayed out look from img 119
               ),
               decoration: InputDecoration(
                 hintText: placeholder,
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               ),
             ),
           ),
@@ -198,8 +199,8 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
       error: (e, _) => Center(child: Text("Error: $e")),
       data: (addresses) {
         if (addresses.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
             child: Text("No addresses found. Please add a new address."),
           );
         }
@@ -208,7 +209,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: addresses.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          separatorBuilder: (_, __) => SizedBox(height: 12.h),
           itemBuilder: (context, index) {
             final addr = addresses[index];
             final isSelected = _selectedAddress?.id == addr.id;
@@ -217,16 +218,16 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
               onTap: () {
                 setState(() => _selectedAddress = addr);
               },
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.tertiaryLight.withValues(alpha: 0.1) : Colors.white,
                   border: Border.all(
                     color: isSelected ? AppColors.tertiaryNormal : AppColors.borderGrey,
                     width: isSelected ? 1.5 : 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Row(
                   children: [
@@ -234,7 +235,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                       isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
                       color: isSelected ? AppColors.tertiaryNormal : Colors.grey,
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,17 +244,17 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                             children: [
                               Text(
                                 addr.addressLabel.isNotEmpty ? addr.addressLabel : "Address",
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
                               ),
                               if (addr.isDefault) ...[
-                                const SizedBox(width: 8),
+                                SizedBox(width: 8.w),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                                   decoration: BoxDecoration(
                                     color: AppColors.primary.withValues(alpha: 0.1),
-                                    borderRadius: BorderRadius.circular(4),
+                                    borderRadius: BorderRadius.circular(4.r),
                                   ),
-                                  child: const Text("Default", style: TextStyle(color: AppColors.primary, fontSize: 10, fontWeight: FontWeight.bold)),
+                                  child: Text("Default", style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold)),
                                 ),
                               ]
                             ],
@@ -261,12 +262,12 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                           const SizedBox(height: 4),
                           Text(
                             "${addr.recipientName}  |  ${addr.phoneNumber}",
-                            style: const TextStyle(color: Colors.black87, fontSize: 13),
+                            style: TextStyle(color: Colors.black87, fontSize: 13.sp),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             addr.fullAddress,
-                            style: const TextStyle(color: Colors.grey, fontSize: 13),
+                            style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                           ),
                         ],
                       ),

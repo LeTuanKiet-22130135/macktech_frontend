@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'create_account_screen.dart';
@@ -15,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0.w),
                 child: IconButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -25,14 +26,14 @@ class OnboardingScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.chevron_right, size: 32),
+                  icon: Icon(Icons.chevron_right, size: 32.sp),
                   style: IconButton.styleFrom(
                     backgroundColor: Colors.grey.shade100,
                   ),
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               flex: 2,
               child: Center(
                 child: Image(
@@ -44,25 +45,25 @@ class OnboardingScreen extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
                       "Tech Upgrades Made Easy",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Text(
                       "Shop phones, accessories, and exclusive student deals in a tap !",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
@@ -71,7 +72,7 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48.h),
           ],
         ),
       ),

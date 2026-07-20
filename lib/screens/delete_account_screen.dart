@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,24 +22,24 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
       builder: (dialogCtx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(24.r),
           ),
           elevation: 0,
           backgroundColor: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(32.0),
+            padding: EdgeInsets.all(32.0.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Top icon
                 Container(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24.w),
                   decoration: const BoxDecoration(
                     color: AppColors.background,
                     shape: BoxShape.circle,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8.w),
                     decoration: const BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
@@ -46,30 +47,30 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                     child: const Icon(Icons.priority_high, color: Colors.white),
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
 
-                const Text(
+                Text(
                   "You are going to delete\nyour account",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 24.sp,
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
                     height: 1.3,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
 
-                const Text(
+                Text(
                   "You won't be able to restore your data",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
 
                 Row(
                   children: [
@@ -80,21 +81,21 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                           backgroundColor: const Color(0xFF9FBEE4),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Cancel",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -105,15 +106,15 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                           backgroundColor: const Color(0xFFC62828),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
                         ),
-                        child: const Text(
+                        child: Text(
                           "DELETE",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -142,18 +143,18 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
           builder: (context, setDialogState) {
             return Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(24.r),
               ),
               elevation: 0,
               backgroundColor: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: EdgeInsets.all(32.0.w),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // Lock icon
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20.w),
                       decoration: BoxDecoration(
                         color: Colors.red.shade50,
                         shape: BoxShape.circle,
@@ -161,32 +162,32 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                       child: Icon(
                         Icons.lock_outline,
                         color: Colors.red.shade700,
-                        size: 36,
+                        size: 36.sp,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
 
-                    const Text(
+                    Text(
                       "Confirm Your Password",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
 
                     Text(
                       "Enter your password to permanently\ndelete your account",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         color: Colors.grey.shade600,
                         height: 1.4,
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
 
                     // Password field
                     TextField(
@@ -199,23 +200,23 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                         filled: true,
                         fillColor: Colors.grey.shade50,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: BorderSide(color: Colors.grey.shade300),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: BorderSide(color: Colors.grey.shade300),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: BorderSide(
                             color: Colors.red.shade400,
-                            width: 2,
+                            width: 2.w,
                           ),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 16.h,
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -232,7 +233,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
 
                     // Buttons
                     Row(
@@ -246,22 +247,22 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                                     Navigator.pop(dialogCtx);
                                   },
                             style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.r),
                                 side: BorderSide(color: Colors.grey.shade300),
                               ),
                             ),
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 color: Colors.grey.shade600,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16.w),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: isProcessing
@@ -317,23 +318,23 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                               ).withValues(alpha: 0.5),
                               elevation: 0,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12.r),
                               ),
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
                             ),
                             child: isProcessing
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
+                                ? SizedBox(
+                                    width: 20.w,
+                                    height: 20.h,
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
                                       strokeWidth: 2,
                                     ),
                                   )
-                                : const Text(
+                                : Text(
                                     "Delete",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -414,7 +415,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new,
             color: AppColors.textPrimary,
           ),
@@ -422,12 +423,12 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0.w),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.w),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             border: Border.all(color: AppColors.borderGrey),
           ),
           child: Column(
@@ -435,28 +436,28 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: const [
-                  Text("⚠️ ", style: TextStyle(fontSize: 18)),
+                children: [
+                  Text("⚠️ ", style: TextStyle(fontSize: 18.sp)),
                   Text(
                     "Delete Your Account",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              const Text(
+              SizedBox(height: 16.h),
+              Text(
                 "This will permanently erase your profile, order history, and saved payment methods. You'll lose access to all MACKTECH MOBILES app benefits.",
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   color: AppColors.textPrimary,
                   height: 1.5,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -465,13 +466,13 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                     backgroundColor: const Color(0xFF9FBEE4),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
                   ),
-                  child: const Text(
+                  child: Text(
                     "I understand",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                    style: TextStyle(color: Colors.white, fontSize: 15.sp),
                   ),
                 ),
               ),

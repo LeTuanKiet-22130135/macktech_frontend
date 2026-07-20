@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../widgets/custom_button.dart';
@@ -10,7 +11,7 @@ void showPasswordSuccessDialog(BuildContext context) {
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -26,26 +27,26 @@ Widget _buildDialogContent(BuildContext context) {
     clipBehavior: Clip.none,
     children: [
       Container(
-        margin: const EdgeInsets.only(top: 40),
-        padding: const EdgeInsets.only(top: 60, bottom: 24, left: 24, right: 24),
+        margin: EdgeInsets.only(top: 40.h),
+        padding: EdgeInsets.only(top: 60.h, bottom: 24.h, left: 24.w, right: 24.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            Text(
               "Password Changed\nSuccessfully !",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
                 height: 1.3,
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             CustomButton(
               text: "OK",
               onPressed: () {
@@ -61,22 +62,22 @@ Widget _buildDialogContent(BuildContext context) {
         ),
       ),
       Positioned(
-        top: 0,
+        top: 0.h,
         child: CircleAvatar(
           radius: 40,
           backgroundColor: Colors.white,
           child: Container(
-            width: 60,
-            height: 60,
+            width: 60.w,
+            height: 60.h,
             decoration: BoxDecoration(
               color: AppColors.success.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Center(
+            child: Center(
               child: Icon(
                 Icons.check_circle_outline,
                 color: AppColors.success,
-                size: 40,
+                size: 40.sp,
               ),
             ),
           ),

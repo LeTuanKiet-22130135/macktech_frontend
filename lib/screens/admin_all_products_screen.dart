@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
@@ -85,7 +86,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
       children: [
         // Top action bar
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0.w),
           child: Column(
             children: [
               Align(
@@ -100,19 +101,19 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                       _fetchProducts();
                     }
                   },
-                  icon: const Icon(Icons.add, size: 18),
-                  label: const Text("Add new product", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  icon: Icon(Icons.add, size: 18.sp),
+                  label: Text("Add new product", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.overlayDark, // Dark navy blue matching 022 button
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               // Search Bar
               TextField(
                 controller: _searchController,
@@ -135,9 +136,9 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                       : null,
                   filled: true,
                   fillColor: const Color(0xFFF5F6F8),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide.none,
                   ),
                 ),
@@ -162,7 +163,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                   : _products.isEmpty
                       ? const Center(child: Text("No products found."))
                       : GridView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: 0.65, // Adjust to fit image and text comfortably
@@ -191,7 +192,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
         // Pagination Controls
         if (_totalPages > 1)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: EdgeInsets.symmetric(vertical: 16.0.h),
             child: _buildPaginationControls(),
           ),
       ],
@@ -219,12 +220,12 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
           GestureDetector(
             onTap: () => _goToPage(i),
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              width: 32,
-              height: 32,
+              margin: EdgeInsets.symmetric(horizontal: 4.w),
+              width: 32.w,
+              height: 32.h,
               decoration: BoxDecoration(
                 color: _currentPage == i ? AppColors.overlayDark : Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(
                   color: _currentPage == i ? AppColors.overlayDark : Colors.grey.shade300,
                 ),
@@ -252,7 +253,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
@@ -268,10 +269,10 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
           // Image placeholder matching mockup card top
           Expanded(
             child: Container(
-              margin: const EdgeInsets.all(8),
+              margin: EdgeInsets.all(8.w),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100, // Light grey background like mockup
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 image: product.imageUrl.isNotEmpty
                     ? DecorationImage(
                         image: NetworkImage(product.imageUrl),
@@ -281,14 +282,14 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
               ),
               child: product.imageUrl.isEmpty
                   ? Center(
-                      child: Icon(Icons.phone_iphone, size: 50, color: Colors.grey.shade400),
+                      child: Icon(Icons.phone_iphone, size: 50.sp, color: Colors.grey.shade400),
                     )
                   : null,
             ),
           ),
           // Product details
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.0.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -296,26 +297,26 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                   product.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.textPrimary,
                     height: 1.2,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   product.brand,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: TextStyle(
+                    fontSize: 12.sp,
                     color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(
                   '₫${product.price.toStringAsFixed(0)}', // Format price
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),

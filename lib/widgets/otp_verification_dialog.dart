@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_frontend/theme/app_colors.dart';
@@ -29,57 +30,57 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
       backgroundColor: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            Text(
               "Please enter the OTP (One-Time Password) sent to your registered email/phone number to complete your verification.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.primary,
                 height: 1.4,
               ),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(4, (index) => _buildCodeBox(index)),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text(
+                  child: Text(
                     "Cancel",
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                const SizedBox(width: 24),
+                SizedBox(width: 24.w),
                 ElevatedButton(
                   onPressed: widget.onVerify,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.tertiaryDarker,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(0, 56), // Override global infinite width
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 16.h),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                     elevation: 0,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Verify",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -92,11 +93,11 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
 
   Widget _buildCodeBox(int index) {
     return Container(
-      width: 56,
-      height: 64,
+      width: 56.w,
+      height: 64.h,
       decoration: BoxDecoration(
         color: AppColors.backgroundLightAlt,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Center(
         child: TextField(
@@ -108,8 +109,8 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(1),
           ],
-          style: const TextStyle(
-            fontSize: 22,
+          style: TextStyle(
+            fontSize: 22.sp,
             fontWeight: FontWeight.bold,
             color: Colors.grey,
           ),

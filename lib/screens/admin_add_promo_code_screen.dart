@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../services/promo_code_service.dart';
@@ -89,16 +90,16 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Create Promo Code", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+        title: Text("Create Promo Code", style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: const BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.sp),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -108,28 +109,28 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(24.0.w),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Code String", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      const SizedBox(height: 8),
+                      Text("Code String", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      SizedBox(height: 8.h),
                       TextFormField(
                         controller: _codeController,
                         validator: (val) => val == null || val.isEmpty ? "Required" : null,
                         decoration: _inputDecoration(hint: "e.g. SUMMER26"),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       Row(
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Discount Type", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                const SizedBox(height: 8),
+                                Text("Discount Type", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                SizedBox(height: 8.h),
                                 DropdownButtonFormField<String>(
                                   value: _discountType,
                                   decoration: _inputDecoration(),
@@ -144,13 +145,13 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: 16.w),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                const SizedBox(height: 8),
+                                Text("Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                SizedBox(height: 8.h),
                                 TextFormField(
                                   controller: _valueController,
                                   keyboardType: TextInputType.number,
@@ -162,30 +163,30 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      const Text("Minimum Order Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 24.h),
+                      Text("Minimum Order Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      SizedBox(height: 8.h),
                       TextFormField(
                         controller: _minOrderController,
                         keyboardType: TextInputType.number,
                         decoration: _inputDecoration(hint: "e.g. 500.00"),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       Row(
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Valid From", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                const SizedBox(height: 8),
+                                Text("Valid From", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                SizedBox(height: 8.h),
                                 InkWell(
                                   onTap: () => _selectDate(context, true),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.r),
                                       border: Border.all(color: Colors.grey.shade300),
                                     ),
                                     child: Text(
@@ -197,20 +198,20 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: 16.w),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Valid Until", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                const SizedBox(height: 8),
+                                Text("Valid Until", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                SizedBox(height: 8.h),
                                 InkWell(
                                   onTap: () => _selectDate(context, false),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.r),
                                       border: Border.all(color: Colors.grey.shade300),
                                     ),
                                     child: Text(
@@ -224,19 +225,19 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      const Text("Usage Limit (Optional)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 24.h),
+                      Text("Usage Limit (Optional)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      SizedBox(height: 8.h),
                       TextFormField(
                         controller: _usageLimitController,
                         keyboardType: TextInputType.number,
                         decoration: _inputDecoration(hint: "e.g. 100"),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Is Active", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text("Is Active", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                           Switch(
                             value: _isActive,
                             onChanged: (val) {
@@ -246,19 +247,19 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 48),
+                      SizedBox(height: 48.h),
                       SizedBox(
                         width: double.infinity,
-                        height: 56,
+                        height: 56.h,
                         child: ElevatedButton(
                           onPressed: _submit,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF14243A), // Navy blue
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                           ),
-                          child: const Text(
+                          child: Text(
                             "SAVE PROMO CODE",
-                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                            style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                           ),
                         ),
                       ),
@@ -276,18 +277,18 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
       hintStyle: TextStyle(color: Colors.grey.shade400),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF14567B), width: 1.5),
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: Color(0xFF14567B), width: 1.5.w),
       ),
     );
   }

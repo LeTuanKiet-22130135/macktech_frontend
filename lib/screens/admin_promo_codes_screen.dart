@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/promo_code.dart';
@@ -64,20 +65,20 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
       backgroundColor: const Color(0xFFF9F9F9),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Discount Codes",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
               ),
-              const SizedBox(height: 8),
-              const Text(
+              SizedBox(height: 8.h),
+              Text(
                 "Manage promotions and product-specific limits.",
-                style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Expanded(
                 child: _isLoading
                     ? const Center(child: CircularProgressIndicator())
@@ -90,7 +91,7 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
                                 itemBuilder: (context, index) {
                                   final promo = _promoCodes[index];
                                   return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12.0),
+                                    padding: EdgeInsets.only(bottom: 12.0.h),
                                     child: InkWell(
                                       onTap: () async {
                                         final result = await Navigator.push(
@@ -140,10 +141,10 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
         : "Storewide";
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -159,14 +160,14 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: AppColors.tertiaryLight,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(6.r),
                 ),
                 child: Text(
                   promo.code,
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary, fontSize: 16.sp),
                 ),
               ),
               Switch(
@@ -178,23 +179,23 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Text(
             "$valueText • $target",
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textPrimary),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, color: AppColors.textPrimary),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
             promo.usageLimit != null 
                 ? "Used ${promo.usedCount} / ${promo.usageLimit} times" 
                 : "Used ${promo.usedCount} times (No Limit)",
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
           ),
           if (promo.validUntil != null) ...[
             const SizedBox(height: 4),
             Text(
               "Expires: ${promo.validUntil!.toLocal().toString().split(' ')[0]}",
-              style: TextStyle(color: Colors.red.shade400, fontSize: 12),
+              style: TextStyle(color: Colors.red.shade400, fontSize: 12.sp),
             ),
           ]
         ],

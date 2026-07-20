@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -157,49 +158,49 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
         elevation: 0,
         centerTitle: true,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: BoxDecoration(
               color: const Color(0xFFF5F6F8),
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.sp),
               onPressed: () => Navigator.pop(context),
             ),
           ),
         ),
-        title: const Text(
+        title: Text(
           "Add new product",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 18.sp,
           ),
         ),
       ),
       body: _isSaving
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Product Information",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
 
                     // Category
                     _buildLabel("Category"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     _isLoadingCategories
                         ? const Center(child: CircularProgressIndicator())
                         : DropdownButtonFormField<int>(
@@ -210,7 +211,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                             items: _categories.map((cat) {
                               return DropdownMenuItem<int>(
                                 value: cat.id,
-                                child: Text(cat.name, style: const TextStyle(fontSize: 16)),
+                                child: Text(cat.name, style: TextStyle(fontSize: 16.sp)),
                               );
                             }).toList(),
                             onChanged: (val) {
@@ -219,129 +220,129 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                               });
                             },
                           ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // SKU
                     _buildLabel("SKU"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _skuController,
                       validator: (val) => val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. MK-PHONE-001"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Product Name
                     _buildLabel("Product Name"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _nameController,
                       validator: (val) => val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "Type Here"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Brand
                     _buildLabel("Brand"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _brandController,
                       validator: (val) => val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. Apple, Samsung"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // SubText
                     _buildLabel("Sub Text (Short description)"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _subTextController,
                       decoration: _inputDecoration(hint: "Brief summary"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Add Image
                     _buildLabel("Add Image"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     InkWell(
                       onTap: _pickImage,
                       child: Container(
-                        width: 120,
-                        height: 120,
+                        width: 120.w,
+                        height: 120.h,
                         decoration: BoxDecoration(
                           color: const Color(0xFFE0E0E0),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           image: _imageFile != null
                               ? DecorationImage(image: FileImage(_imageFile!), fit: BoxFit.cover)
                               : null,
                         ),
                         child: _imageFile == null
-                            ? const Center(
-                                child: Icon(Icons.photo_camera_outlined, size: 48, color: Colors.grey),
+                            ? Center(
+                                child: Icon(Icons.photo_camera_outlined, size: 48.sp, color: Colors.grey),
                               )
                             : null,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Product Price
                     _buildLabel("Product Price"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _priceController,
                       keyboardType: TextInputType.number,
                       validator: (val) => val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "100000"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Stock Quantity
                     _buildLabel("Stock Quantity"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _stockController,
                       keyboardType: TextInputType.number,
                       validator: (val) => val == null || val.isEmpty ? 'Required' : null,
                       decoration: _inputDecoration(hint: "e.g. 100"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Colors
                     _buildLabel("Colors (comma separated)"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _colorsController,
                       decoration: _inputDecoration(hint: "Black, Silver"),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Key Features
                     _buildLabel("Key Features"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _featuresController,
                       maxLines: 5,
                       decoration: _inputDecoration(hint: "Type Here ....."),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // Description
                     _buildLabel("Description"),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextFormField(
                       controller: _descController,
                       maxLines: 5,
                       decoration: _inputDecoration(hint: "Type Here ....."),
                     ),
 
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40.h),
                   ],
                 ),
               ),
             ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -357,11 +358,11 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
             children: [
               TextButton(
                 onPressed: _isSaving ? null : _clearAll,
-                child: const Text(
+                child: Text(
                   "Clear All",
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -371,18 +372,18 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF14243A), // Navy blue
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 48,
-                    vertical: 16,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 48.w,
+                    vertical: 16.h,
                   ),
                   minimumSize: const Size(120, 56),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Done",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -395,7 +396,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
   Widget _buildLabel(String text) {
     return Text(
       text,
-      style: const TextStyle(fontSize: 15, color: AppColors.textPrimary),
+      style: TextStyle(fontSize: 15.sp, color: AppColors.textPrimary),
     );
   }
 
@@ -405,18 +406,18 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
       hintStyle: TextStyle(color: Colors.grey.shade400),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: Colors.grey.shade300),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF14567B), width: 1.5),
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: Color(0xFF14567B), width: 1.5.w),
       ),
     );
   }

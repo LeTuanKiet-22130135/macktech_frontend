@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/wishlist_provider.dart';
@@ -16,9 +17,9 @@ class WishlistScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Wishlist",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -33,8 +34,8 @@ class WishlistScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, color: Colors.redAccent, size: 40),
-              const SizedBox(height: 12),
+              Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
+              SizedBox(height: 12.h),
               const Text('Failed to load wishlist'),
               TextButton(
                 onPressed: () => ref.invalidate(wishlistProvider),
@@ -49,12 +50,12 @@ class WishlistScreen extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite_border, size: 80, color: Colors.grey.shade300),
-                  const SizedBox(height: 16),
+                  Icon(Icons.favorite_border, size: 80.sp, color: Colors.grey.shade300),
+                  SizedBox(height: 16.h),
                   Text(
                     "Your wishlist is empty",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey.shade500,
                     ),
@@ -64,11 +65,11 @@ class WishlistScreen extends ConsumerWidget {
             );
           }
           return ListView.builder(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 8,
-              bottom: 100,
+            padding: EdgeInsets.only(
+              left: 20.w,
+              right: 20.w,
+              top: 8.h,
+              bottom: 100.h,
             ),
             itemCount: wishlistItems.length,
             itemBuilder: (context, index) {
@@ -93,32 +94,32 @@ class WishlistScreen extends ConsumerWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(12),
+        margin: EdgeInsets.only(bottom: 12.h),
+        padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.border),
         ),
       child: Row(
         children: [
           // Product image
           Container(
-            width: 80,
-            height: 90,
+            width: 80.w,
+            height: 90.h,
             decoration: BoxDecoration(
               color: AppColors.backgroundLightAlt,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0.w),
               child: CustomImage(
                 imageUrl: product.imageUrl,
                 fit: BoxFit.contain,
               ),
             ),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
 
           // Details
           Expanded(
@@ -127,24 +128,24 @@ class WishlistScreen extends ConsumerWidget {
               children: [
                 Text(
                   product.title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 // Price row
                 Text(
                   "₫${product.price.toStringAsFixed(0)}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
 
                 // Add to Cart + Delete row
                 Row(
@@ -167,39 +168,39 @@ class WishlistScreen extends ConsumerWidget {
                           foregroundColor: Colors.white,
                           minimumSize: const Size(0, 40),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20.r),
                           ),
                           padding:
-                              const EdgeInsets.symmetric(horizontal: 12),
+                              EdgeInsets.symmetric(horizontal: 12.w),
                         ),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.shopping_cart_outlined,
-                          size: 16,
+                          size: 16.sp,
                         ),
-                        label: const Text(
+                        label: Text(
                           "Add to Cart",
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     GestureDetector(
                       onTap: () {
                         ref.read(wishlistProvider.notifier).toggleWishlist(product);
                       },
                       child: Container(
-                        width: 40,
-                        height: 40,
+                        width: 40.w,
+                        height: 40.h,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.grey.shade300),
                         ),
                         child: Icon(
                           Icons.delete_outline,
-                          size: 20,
+                          size: 20.sp,
                           color: Colors.grey.shade500,
                         ),
                       ),

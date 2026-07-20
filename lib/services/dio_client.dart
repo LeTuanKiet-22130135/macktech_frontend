@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'session_service.dart';
 
 /// Centralized Dio client singleton.
 /// Provides connection pooling, automatic JWT injection, and error handling.
 class DioClient {
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static String get baseUrl => dotenv.env['API_BASE_URL'] ?? 'http://10.0.2.2:8080';
 
   static Dio? _instance;
 

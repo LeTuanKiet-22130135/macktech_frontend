@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -27,7 +28,7 @@ class _AppDrawerState extends State<AppDrawer> {
       ), // Light background to match images
       child: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+          padding: EdgeInsets.symmetric(horizontal: 24.0.w, vertical: 32.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -35,18 +36,18 @@ class _AppDrawerState extends State<AppDrawer> {
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: ListTile(
                   leading: const Icon(
                     Icons.grid_view_outlined,
                     color: Colors.white,
                   ),
-                  title: const Text(
+                  title: Text(
                     "DASHBOARD",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.1,
                     ),
@@ -56,7 +57,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   },
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
 
               // All Products
               ListTile(
@@ -64,16 +65,16 @@ class _AppDrawerState extends State<AppDrawer> {
                   Icons.inbox_outlined,
                   color: AppColors.textPrimary,
                 ),
-                title: const Text(
+                title: Text(
                   "ALL PRODUCTS",
                   style: TextStyle(
                     color: AppColors.textPrimary,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.1,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0.w),
                 onTap: () {},
               ),
 
@@ -83,32 +84,32 @@ class _AppDrawerState extends State<AppDrawer> {
                   Icons.description_outlined,
                   color: AppColors.textPrimary,
                 ),
-                title: const Text(
+                title: Text(
                   "ORDER LIST",
                   style: TextStyle(
                     color: AppColors.textPrimary,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.1,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0.w),
                 onTap: () {},
               ),
 
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
 
               // Categories Header
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Categories",
                       style: TextStyle(
                         color: AppColors.textPrimary,
-                        fontSize: 22,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -120,7 +121,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
 
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               // Category Items
               ...categories.map(
@@ -137,32 +138,32 @@ class _AppDrawerState extends State<AppDrawer> {
     bool isSelected = selectedCategory == name;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: EdgeInsets.only(bottom: 8.0.h),
       child: ListTile(
         title: Text(
           name,
-          style: const TextStyle(
+          style: TextStyle(
             color: AppColors.textPrimary,
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
           ),
         ),
         trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primary : AppColors.borderGrey,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(6.r),
           ),
           child: Text(
             count,
             style: TextStyle(
               color: isSelected ? Colors.white : AppColors.textPrimary,
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.0.w),
         onTap: () {
           setState(() {
             selectedCategory = name;

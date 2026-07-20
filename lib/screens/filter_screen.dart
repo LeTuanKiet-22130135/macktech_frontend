@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_frontend/theme/app_colors.dart';
@@ -109,22 +110,22 @@ class _FilterScreenState extends State<FilterScreen> {
         backgroundColor: AppColors.tertiaryDarker,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Text(
               "Filter",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 20,
+                fontSize: 20.sp,
               ),
             ),
-            SizedBox(width: 8),
-            Icon(Icons.filter_alt_outlined, color: Colors.white, size: 22),
+            SizedBox(width: 8.w),
+            Icon(Icons.filter_alt_outlined, color: Colors.white, size: 22.sp),
           ],
         ),
         centerTitle: true,
@@ -133,38 +134,38 @@ class _FilterScreenState extends State<FilterScreen> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Price range section
                   _buildSectionTitle("Price range"),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   _buildPriceRange(),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
 
                   // Category section
                   _buildSectionTitle("Category"),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   widget.availableCategories.isEmpty
                       ? Text(
                           "No categories available",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             color: Colors.grey.shade500,
                           ),
                         )
                       : _buildCategoryGrid(widget.availableCategories),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
 
                   // Brand section
                   _buildSectionTitle("Brand"),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   widget.availableBrands.isEmpty
                       ? Text(
                           "No brands available",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             color: Colors.grey.shade500,
                           ),
                         )
@@ -187,8 +188,8 @@ class _FilterScreenState extends State<FilterScreen> {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 18,
+          style: TextStyle(
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.tertiaryDarker,
           ),
@@ -222,8 +223,8 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text("–", style: TextStyle(fontSize: 20, color: Colors.grey.shade400)),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              child: Text("–", style: TextStyle(fontSize: 20.sp, color: Colors.grey.shade400)),
             ),
             Expanded(
               child: _buildPriceField(
@@ -243,7 +244,7 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         // Slider
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
@@ -274,11 +275,11 @@ class _FilterScreenState extends State<FilterScreen> {
           children: [
             Text(
               "${_formatVnd(_sliderMin)}₫",
-              style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+              style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade500),
             ),
             Text(
               "${_formatVnd(_sliderMax)}₫",
-              style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+              style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade500),
             ),
           ],
         ),
@@ -295,24 +296,24 @@ class _FilterScreenState extends State<FilterScreen> {
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+        labelStyle: TextStyle(fontSize: 13.sp, color: Colors.grey.shade500),
         suffixText: '₫',
-        suffixStyle: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        suffixStyle: TextStyle(fontSize: 14.sp, color: Colors.grey.shade600),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           borderSide: BorderSide(color: Colors.grey.shade300),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.tertiaryDarker, width: 1.5),
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: AppColors.tertiaryDarker, width: 1.5.w),
         ),
       ),
       onSubmitted: onSubmitted,
@@ -346,10 +347,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 });
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.tertiaryDarker : Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(
                     color: isSelected
                         ? AppColors.tertiaryDarker
@@ -359,7 +360,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: Text(
                   cat.name,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: isSelected ? Colors.white : Colors.grey.shade700,
                     fontWeight: FontWeight.w500,
                   ),
@@ -369,7 +370,7 @@ class _FilterScreenState extends State<FilterScreen> {
           }).toList(),
         ),
         if (categories.length > 6) ...[
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           GestureDetector(
             onTap: () {
               setState(() {
@@ -378,8 +379,8 @@ class _FilterScreenState extends State<FilterScreen> {
             },
             child: Text(
               _isCategoryExpanded ? "Show less" : "Show all (${categories.length})",
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.tertiaryNormal,
                 fontWeight: FontWeight.bold,
               ),
@@ -413,10 +414,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 });
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.tertiaryDarker : Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(
                     color: isSelected
                         ? AppColors.tertiaryDarker
@@ -426,7 +427,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: Text(
                   item,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: isSelected ? Colors.white : Colors.grey.shade700,
                     fontWeight: FontWeight.w500,
                   ),
@@ -436,7 +437,7 @@ class _FilterScreenState extends State<FilterScreen> {
           }).toList(),
         ),
         if (items.length > 6) ...[
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           GestureDetector(
             onTap: () {
               setState(() {
@@ -445,8 +446,8 @@ class _FilterScreenState extends State<FilterScreen> {
             },
             child: Text(
               _isBrandExpanded ? "Show less" : "Show all (${items.length})",
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: 14.sp,
                 color: AppColors.tertiaryNormal,
                 fontWeight: FontWeight.bold,
               ),
@@ -486,14 +487,14 @@ class _FilterScreenState extends State<FilterScreen> {
               child: Text(
                 hasActiveFilter ? "Reset" : "Cancel",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: Colors.grey.shade500,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           // Filter button
           Expanded(
             flex: 2,
@@ -524,14 +525,14 @@ class _FilterScreenState extends State<FilterScreen> {
                 foregroundColor: Colors.white,
                 minimumSize: const Size(0, 56),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14.r),
                 ),
                 elevation: 0,
               ),
-              child: const Text(
+              child: Text(
                 "Filter",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),

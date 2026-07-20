@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/product.dart';
@@ -22,7 +23,7 @@ class ProductCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 5))
@@ -42,13 +43,13 @@ class ProductCard extends StatelessWidget {
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.0.w),
                       child: CustomImage(imageUrl: product.imageUrl, fit: BoxFit.contain),
                     ),
                   ),
                   Positioned(
-                    top: 8,
-                    right: 8,
+                    top: 8.h,
+                    right: 8.w,
                     child: Consumer(
                       builder: (context, ref, child) {
                         ref.watch(wishlistProvider);
@@ -64,7 +65,7 @@ class ProductCard extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(6),
+                            padding: EdgeInsets.all(6.w),
                             decoration: BoxDecoration(
                               color: isWished ? Colors.white : Colors.white.withValues(alpha: 0.8),
                               shape: BoxShape.circle,
@@ -79,7 +80,7 @@ class ProductCard extends StatelessWidget {
                             child: Icon(
                               isWished ? Icons.favorite : Icons.favorite_border,
                               color: isWished ? Colors.redAccent : Colors.grey.shade600,
-                              size: 16,
+                              size: 16.sp,
                             ),
                           ),
                         );
@@ -90,7 +91,7 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(12.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -98,22 +99,22 @@ class ProductCard extends StatelessWidget {
                     product.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     product.brand,
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                    style: TextStyle(color: AppColors.textSecondary, fontSize: 11.sp),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "₫${product.price.toStringAsFixed(0)}",
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
                       ),
-                      const Icon(Icons.shopping_cart_outlined, size: 18),
+                      Icon(Icons.shopping_cart_outlined, size: 18.sp),
                     ],
                   ),
                 ],

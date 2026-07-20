@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,25 +98,25 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           final notificationsEnabled = notificationsAsync.value ?? false;
           return SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 120),
+              padding: EdgeInsets.only(bottom: 120.h),
               child: Column(
                 children: [
                   // Replicating the AppBar actions
                   Padding(
-                    padding: const EdgeInsets.only(right: 16, top: 8),
+                    padding: EdgeInsets.only(right: 16.w, top: 8.h),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
-                        icon: const Icon(Icons.settings_outlined, color: AppColors.textPrimary, size: 28),
+                        icon: Icon(Icons.settings_outlined, color: AppColors.textPrimary, size: 28.sp),
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
                         },
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   _buildProfileHeader(profile),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
           
                 // Options List matching 010.png
                 Container(
@@ -180,8 +181,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             alignment: Alignment.center,
             children: [
               Container(
-                width: 110,
-                height: 110,
+                width: 110.w,
+                height: 110.h,
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
@@ -193,13 +194,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       : null,
                 ),
                 child: (profile.avatarUrl == null || profile.avatarUrl!.isEmpty)
-                    ? const Icon(Icons.person, size: 60, color: AppColors.primary)
+                    ? Icon(Icons.person, size: 60.sp, color: AppColors.primary)
                     : null,
               ),
               if (_isUploadingAvatar)
                 Container(
-                  width: 110,
-                  height: 110,
+                  width: 110.w,
+                  height: 110.h,
                   decoration: const BoxDecoration(
                     color: Colors.black54,
                     shape: BoxShape.circle,
@@ -210,29 +211,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 ),
               if (!_isUploadingAvatar)
                 Positioned(
-                  bottom: 0,
-                  right: 0,
+                  bottom: 0.h,
+                  right: 0.w,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8.w),
                     decoration: const BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.camera_alt,
                       color: Colors.white,
-                      size: 20,
+                      size: 20.sp,
                     ),
                   ),
                 ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Text(
           profile.name,
-          style: const TextStyle(
-            fontSize: 22,
+          style: TextStyle(
+            fontSize: 22.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
@@ -240,7 +241,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         const SizedBox(height: 4),
         Text(
           profile.email,
-          style: const TextStyle(color: AppColors.textSecondary, fontSize: 16),
+          style: TextStyle(color: AppColors.textSecondary, fontSize: 16.sp),
         ),
       ],
     );
@@ -248,32 +249,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Widget _buildListTile(String title, {String? subtitle, VoidCallback? onTap}) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 16,
+          fontSize: 16.sp,
           color: AppColors.textPrimary,
         ),
       ),
       subtitle: subtitle != null ? Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+        style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp),
       ) : null,
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16.sp, color: Colors.grey),
       onTap: onTap,
     );
   }
 
   Widget _buildNotificationTile(bool notificationsEnabled) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      title: const Text(
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
+      title: Text(
         "Notifications",
         style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 16,
+          fontSize: 16.sp,
           color: AppColors.textPrimary,
         ),
       ),
@@ -289,13 +290,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Widget _buildLogoutTile() {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
       leading: const Icon(Icons.logout, color: Colors.redAccent),
-      title: const Text(
+      title: Text(
         "Logout",
         style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 16,
+          fontSize: 16.sp,
           color: Colors.redAccent,
         ),
       ),
@@ -310,7 +311,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       builder: (ctx) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
           ),
           backgroundColor: Colors.white,
           child: Padding(
@@ -320,33 +321,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               children: [
                 // Red prohibition icon in circle
                 Container(
-                  width: 72,
-                  height: 72,
+                  width: 72.w,
+                  height: 72.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey.shade100,
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Icon(
                       Icons.not_interested,
                       color: Colors.red,
-                      size: 48,
+                      size: 48.sp,
                     ),
                   ),
                 ),
-                const SizedBox(height: 28),
+                SizedBox(height: 28.h),
 
                 // Title text
-                const Text(
+                Text(
                   "Sure you want to Log-out ?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 22.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.tertiaryDarker,
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
 
                 // Cancel + Yes buttons
                 Row(
@@ -358,14 +359,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         child: Text(
                           "Cancel",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             color: Colors.grey.shade500,
                             decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     // Yes button
                     Expanded(
                       flex: 2,
@@ -389,14 +390,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           foregroundColor: Colors.white,
                           minimumSize: const Size(0, 52),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
+                        child: Text(
                           "Yes",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),

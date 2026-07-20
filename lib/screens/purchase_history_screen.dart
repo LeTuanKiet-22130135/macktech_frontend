@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../theme/app_colors.dart';
@@ -96,16 +97,16 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
             onPressed: () => Navigator.pop(context),
           ),
-          title: const Text("Purchase History", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)),
+          title: Text("Purchase History", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, color: Colors.black)),
           centerTitle: true,
-          bottom: const TabBar(
+          bottom: TabBar(
             labelColor: Colors.black,
             unselectedLabelColor: Colors.black54,
             indicatorColor: AppColors.primary,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
             tabs: [
               Tab(text: "Ongoing"),
               Tab(text: "Completed"),
@@ -163,9 +164,9 @@ class _OrderListView extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: ListView.separated(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         itemCount: orders.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 16),
+        separatorBuilder: (_, _) => SizedBox(height: 16.h),
         itemBuilder: (context, index) {
           final order = orders[index];
           final items = order['items'] as List<dynamic>? ?? [];
@@ -182,10 +183,10 @@ class _OrderListView extends StatelessWidget {
               ).then((_) => onRefresh());
             },
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.w),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(color: Colors.grey.shade200),
                 boxShadow: [
                   BoxShadow(
@@ -204,55 +205,55 @@ class _OrderListView extends StatelessWidget {
                     children: [
                       Text(
                         "Order #${orderId.split('-').last.toUpperCase()}",
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
                       ),
                       Text(
                         status,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           color: status == 'PENDING' ? Colors.orange : (status == 'COMPLETED' ? Colors.green : Colors.grey),
                         ),
                       ),
                     ],
                   ),
-                  const Divider(height: 24),
+                  Divider(height: 24.h),
                   
                   // Product info
                   Row(
                     children: [
                       Container(
-                        width: 60,
-                        height: 60,
+                        width: 60.w,
+                        height: 60.h,
                         decoration: BoxDecoration(
                           color: AppColors.backgroundLightAlt,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: firstItem != null && firstItem['imageUrl'] != null
                             ? CustomImage(imageUrl: firstItem['imageUrl'] as String, fit: BoxFit.contain)
                             : const Icon(Icons.image, color: Colors.grey),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               firstItem != null ? firstItem['productTitle']?.toString() ?? 'Item' : 'Unknown Item',
-                              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 4),
                             if (totalItems > 1)
-                              Text("and ${totalItems - 1} more item(s)", style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                              Text("and ${totalItems - 1} more item(s)", style: TextStyle(color: Colors.grey.shade600, fontSize: 12.sp)),
                           ],
                         ),
                       ),
                     ],
                   ),
                   
-                  const Divider(height: 24),
+                  Divider(height: 24.h),
                   
                   // Footer: Total and Action
                   Row(
@@ -261,11 +262,11 @@ class _OrderListView extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Total Payment", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          Text("Total Payment", style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
                           const SizedBox(height: 2),
                           Text(
                             "₫${(order['total'] ?? 0).toString()}",
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
                           ),
                         ],
                       ),
@@ -277,15 +278,15 @@ class _OrderListView extends StatelessWidget {
                             foregroundColor: Colors.red,
                             elevation: 0,
                             minimumSize: Size.zero,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                           ),
                           child: const Text("Cancel Order", style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       else
                         Text(
                           _formatDate(order['createdAt'] as String?),
-                          style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                          style: TextStyle(color: Colors.grey.shade500, fontSize: 12.sp),
                         ),
                     ],
                   ),

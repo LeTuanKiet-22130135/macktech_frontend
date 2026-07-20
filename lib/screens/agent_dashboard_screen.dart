@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../theme/app_colors.dart';
@@ -61,33 +62,33 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
           : _tickets.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
                     "No tickets assigned yet.",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                   ),
                 )
               : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         "All Tickets",
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.tertiaryDarker,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Expanded(
                         child: RefreshIndicator(
                           onRefresh: _fetchTickets,
                           child: ListView.separated(
                             itemCount: _tickets.length,
-                            separatorBuilder: (_, __) => const SizedBox(height: 16),
+                            separatorBuilder: (_, __) => SizedBox(height: 16.h),
                             itemBuilder: (context, index) {
                               final ticket = _tickets[index];
                               return _buildAgentTicketCard(
@@ -129,10 +130,10 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
         }
       },
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: Column(
@@ -142,33 +143,33 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
               children: [
                 Text(
                   "Ticket no. ${ticket.ticketNumber.substring(ticket.ticketNumber.length - 4)}",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color: AppColors.tertiaryDarker,
                   ),
                 ),
                 Text(
                   dateStr,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 13.sp,
                     color: Colors.grey.shade500,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
             _buildDetailRow("Type", ticket.type),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 100,
+                  width: 100.w,
                   child: Text(
                     "Status",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: Colors.grey.shade400,
                     ),
                   ),
@@ -177,7 +178,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                   child: Text(
                     ticket.status,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: statusColor,
                     ),
@@ -196,11 +197,11 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 100,
+          width: 100.w,
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               color: Colors.grey.shade400,
             ),
           ),
@@ -208,8 +209,8 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.tertiaryDarker,
             ),

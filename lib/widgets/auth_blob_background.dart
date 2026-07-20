@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 
@@ -122,28 +123,28 @@ Widget buildAuthPillField({
     controller: controller,
     obscureText: obscure,
     keyboardType: keyboardType,
-    style: const TextStyle(fontSize: 16, color: AppColors.primary),
+    style: TextStyle(fontSize: 16.sp, color: AppColors.primary),
     decoration: InputDecoration(
       hintText: hintText,
       hintStyle: TextStyle(
         color: Colors.grey.shade400,
-        fontSize: 16,
+        fontSize: 16.sp,
       ),
       filled: true,
       fillColor: AppColors.backgroundLightAlt,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
       suffixIcon: suffixIcon,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
-        borderSide: const BorderSide(color: AppColors.textSecondary, width: 1),
+        borderRadius: BorderRadius.circular(40.r),
+        borderSide: BorderSide(color: AppColors.textSecondary, width: 1.w),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
-        borderSide: const BorderSide(color: AppColors.textSecondary, width: 1),
+        borderRadius: BorderRadius.circular(40.r),
+        borderSide: BorderSide(color: AppColors.textSecondary, width: 1.w),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40),
-        borderSide: const BorderSide(color: AppColors.tertiaryNormal, width: 1.5),
+        borderRadius: BorderRadius.circular(40.r),
+        borderSide: BorderSide(color: AppColors.tertiaryNormal, width: 1.5.w),
       ),
     ),
   );

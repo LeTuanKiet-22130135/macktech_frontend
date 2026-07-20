@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -19,7 +20,7 @@ class SecurityPrivacyScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,57 +31,57 @@ class SecurityPrivacyScreen extends StatelessWidget {
             _buildBullet("Device Data: OS version, app crashes (for troubleshooting)."),
             _buildBullet("Permissions: Location (for store pickup), camera (for repair tickets), notifications."),
             _buildParagraph('"We never sell your data to third parties."'),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             _buildSectionTitle("2. How We Use Your Data"),
             _buildBullet("Process orders and repairs."),
             _buildBullet("Personalize recommendations (e.g., student discounts)."),
             _buildBullet("Send security alerts (e.g., login attempts)."),
             _buildBullet("Improve app performance via analytics (anonymous where possible)."),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             _buildSectionTitle("3. Security Measures"),
             _buildBullet("Encryption: All data transmitted via TLS/SSL."),
             _buildBullet("Payments: PCI-compliant processors (card details never stored on our servers)."),
             _buildBullet("Access Controls: Staff training and strict data access policies."),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             _buildSectionTitle("4. Your Rights"),
             _buildBullet("Access/Delete Data: Via Account Settings or email [privacy@macktech.com]."),
             _buildBullet("Opt-Out: Disable notifications or location in device settings."),
             _buildBullet("Report Issues: Security vulnerabilities? Contact [security@macktech.com]."),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             _buildSectionTitle("5. Third-Party Services"),
             _buildBullet("Payment Gateways: Stripe, PayPal (see their policies)."),
             _buildBullet("Analytics: Google Firebase (aggregated data only)."),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             _buildSectionTitle("6. Updates to This Policy"),
             _buildParagraph("We'll notify users of material changes via:"),
             _buildBullet("In-app banners."),
             _buildBullet("Email (if subscribed)."),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
 
             _buildSectionTitle("Contact Us"),
             _buildParagraph("For questions or data requests:"),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               children: [
-                const Text("✉️ ", style: TextStyle(fontSize: 16)),
+                Text("✉️ ", style: TextStyle(fontSize: 16.sp)),
                 Expanded(child: _buildParagraph("Email: privacy@macktech.com", paddingBottom: 0)),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               children: [
-                const Text("📍 ", style: TextStyle(fontSize: 16)),
+                Text("📍 ", style: TextStyle(fontSize: 16.sp)),
                 Expanded(child: _buildParagraph("Address: 162 Kaduwela Rd, Malabe .", paddingBottom: 0)),
               ],
             ),
-            const SizedBox(height: 32),
-            const Text('"Your trust is our priority."', style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 40),
+            SizedBox(height: 32.h),
+            Text('"Your trust is our priority."', style: TextStyle(color: AppColors.textPrimary, fontSize: 16.sp, fontWeight: FontWeight.bold)),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
@@ -89,10 +90,10 @@ class SecurityPrivacyScreen extends StatelessWidget {
 
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: EdgeInsets.only(bottom: 12.0.h),
       child: Text(
         title,
-        style: const TextStyle(color: AppColors.textPrimary, fontSize: 17, fontWeight: FontWeight.bold),
+        style: TextStyle(color: AppColors.textPrimary, fontSize: 17.sp, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -102,22 +103,22 @@ class SecurityPrivacyScreen extends StatelessWidget {
       padding: EdgeInsets.only(bottom: paddingBottom),
       child: Text(
         text,
-        style: const TextStyle(color: AppColors.textPrimary, fontSize: 15, height: 1.5),
+        style: TextStyle(color: AppColors.textPrimary, fontSize: 15.sp, height: 1.5),
       ),
     );
   }
 
   Widget _buildBullet(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0, left: 8.0),
+      padding: EdgeInsets.only(bottom: 6.0.h, left: 8.0.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("• ", style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+          Text("• ", style: TextStyle(color: AppColors.textPrimary, fontSize: 16.sp, fontWeight: FontWeight.bold)),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(color: AppColors.textPrimary, fontSize: 15, height: 1.5),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 15.sp, height: 1.5),
             ),
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../services/order_service.dart';
@@ -48,19 +49,19 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(16.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Recent Orders",
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 22.sp,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -103,11 +104,11 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
     }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -132,48 +133,48 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       userName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                     if (userEmail.isNotEmpty)
                       Text(
                         userEmail,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         ),
                       ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: statusColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Text(
                   status.toString(),
                   style: TextStyle(
                     color: statusColor,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               )
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0.h),
             child: Divider(color: AppColors.borderGrey, height: 1),
           ),
           // Order summary details
@@ -183,14 +184,14 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Order Date",
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                    style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     date,
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                   ),
                 ],
               ),
@@ -199,12 +200,12 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
                 children: [
                   Text(
                     "Items: $productCount",
-                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                    style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     "₫${total.toStringAsFixed(0)}",
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
                   ),
                 ],
               ),

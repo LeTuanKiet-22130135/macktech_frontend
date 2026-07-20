@@ -38,7 +38,7 @@ class RecombeeTrackingService {
         'userId': userId,
         'timestamp': unixTimestamp,
         'cascadeCreate': true,
-        if (recommId != null) 'recommId': recommId,
+        'recommId': ?recommId,
       };
       
       // The frontend_timestamp must be appended to the URI before signing
@@ -114,8 +114,8 @@ class RecombeeTrackingService {
         'userId': userId,
         'timestamp': unixTimestamp,
         'cascadeCreate': true,
-        if (recommId != null) 'recommId': recommId,
-        if (amount != null) 'amount': amount,
+        'recommId': ?recommId,
+        'amount': ?amount,
       };
       
       final frontendTimestamp = unixTimestamp;

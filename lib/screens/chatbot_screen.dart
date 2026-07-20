@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -296,29 +297,29 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
         backgroundColor: AppColors.tertiaryDarker,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: Row(
           children: [
             Container(
-              width: 36,
-              height: 36,
+              width: 36.w,
+              height: 36.h,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(_headerIcon, color: Colors.white, size: 20),
+              child: Icon(_headerIcon, color: Colors.white, size: 20.sp),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   _headerTitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -330,7 +331,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                         : (widget.activeRole == 'agent'
                               ? Colors.white70
                               : Colors.greenAccent),
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                 ),
               ],
@@ -347,7 +348,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                 Expanded(
                   child: ListView.builder(
                     controller: _scrollController,
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16.w),
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
                       final msg = _messages[index];
@@ -390,12 +391,12 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
 
     if (senderType == 'system') {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
+        padding: EdgeInsets.symmetric(vertical: 24.h),
         child: Center(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade500,
             ),
@@ -409,7 +410,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.only(
-          bottom: 12,
+          bottom: 12.h,
           left: isMe ? 48 : 0,
           right: isMe ? 0 : 48,
         ),
@@ -420,20 +421,20 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           children: [
             if (!isMe && senderName != null) ...[
               Padding(
-                padding: const EdgeInsets.only(left: 8, bottom: 4),
+                padding: EdgeInsets.only(left: 8.w, bottom: 4.h),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       isBot ? Icons.smart_toy : Icons.person,
-                      size: 12,
+                      size: 12.sp,
                       color: Colors.grey.shade500,
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4.w),
                     Text(
                       senderName,
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 11.sp,
                         color: Colors.grey.shade600,
                         fontWeight: FontWeight.bold,
                       ),
@@ -443,7 +444,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
               ),
             ],
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
                 color: bubbleColor,
                 borderRadius: BorderRadius.only(
@@ -468,7 +469,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                           selectable: true,
                           styleSheet: MarkdownStyleSheet(
                             p: TextStyle(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               color: textColor,
                               height: 1.4,
                             ),
@@ -480,25 +481,25 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                       : Text(
                           text,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             color: textColor,
                             height: 1.4,
                           ),
                         )),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   time,
-                  style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+                  style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade400),
                 ),
                 if (isStreaming) ...[
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6.w),
                   SizedBox(
-                    width: 10,
-                    height: 10,
+                    width: 10.w,
+                    height: 10.h,
                     child: CircularProgressIndicator(
                       strokeWidth: 1.5,
                       color: Colors.grey.shade400,
@@ -523,12 +524,12 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           duration: Duration(milliseconds: 600 + i * 200),
           builder: (context, value, child) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
+              padding: EdgeInsets.symmetric(horizontal: 2.w),
               child: Opacity(
                 opacity: 0.3 + 0.7 * ((value + i * 0.3) % 1.0),
                 child: Container(
-                  width: 8,
-                  height: 8,
+                  width: 8.w,
+                  height: 8.h,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade500,
                     shape: BoxShape.circle,
@@ -544,7 +545,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
 
   Widget _buildInputBar() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -563,38 +564,38 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(24.r),
                 ),
                 child: TextField(
                   controller: _messageController,
                   textInputAction: TextInputAction.send,
                   onSubmitted: (_) => _sendMessage(),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Type a message...",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
+                      horizontal: 20.w,
+                      vertical: 12.h,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10.w),
             GestureDetector(
               onTap: _sendMessage,
               child: Container(
-                width: 46,
-                height: 46,
+                width: 46.w,
+                height: 46.h,
                 decoration: BoxDecoration(
                   color: _isBotTyping ? Colors.grey : AppColors.tertiaryDarker,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.send_rounded,
                   color: Colors.white,
-                  size: 20,
+                  size: 20.sp,
                 ),
               ),
             ),

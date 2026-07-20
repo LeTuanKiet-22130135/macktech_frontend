@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -89,7 +90,7 @@ class _PasswordRecoverySmsCodeScreenState
   Widget _buildWaveHeader() {
     return Container(
       width: double.infinity,
-      height: 120,
+      height: 120.h,
       decoration: const BoxDecoration(
         color: AppColors.tertiaryDarker,
         borderRadius: BorderRadius.only(
@@ -102,8 +103,8 @@ class _PasswordRecoverySmsCodeScreenState
         child: Stack(
           children: [
             Positioned(
-              left: 16,
-              top: 16,
+              left: 16.w,
+              top: 16.h,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
@@ -117,12 +118,12 @@ class _PasswordRecoverySmsCodeScreenState
 
   Widget _buildCodeBox(int index) {
     return Container(
-      width: 42,
-      height: 48,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
+      width: 42.w,
+      height: 48.h,
+      margin: EdgeInsets.symmetric(horizontal: 4.w),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       alignment: Alignment.center,
       child: TextField(
@@ -134,8 +135,8 @@ class _PasswordRecoverySmsCodeScreenState
           FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(1),
         ],
-        style: const TextStyle(
-          fontSize: 20,
+        style: TextStyle(
+          fontSize: 20.sp,
           fontWeight: FontWeight.bold,
           color: AppColors.tertiaryDarker,
         ),
@@ -171,20 +172,20 @@ class _PasswordRecoverySmsCodeScreenState
           // Content
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
 
                   // Avatar
                   Container(
-                    width: 110,
-                    height: 110,
+                    width: 110.w,
+                    height: 110.h,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.grey.shade200,
-                        width: 3,
+                        width: 3.w,
                       ),
                     ),
                     child: ClipOval(
@@ -193,58 +194,58 @@ class _PasswordRecoverySmsCodeScreenState
                         fit: BoxFit.cover,
                         errorBuilder: (c, e, s) => Container(
                           color: Colors.pink.shade100,
-                          child: const Icon(
+                          child: Icon(
                             Icons.person,
-                            size: 60,
+                            size: 60.sp,
                             color: Colors.white,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Title
-                  const Text(
+                  Text(
                     "Password Recovery",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Subtitle
                   Text(
                     "Enter 6-digits code we sent you\non your Phone Number",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       color: Colors.grey.shade600,
                       height: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14.h),
 
                   // Masked contact
                   Text(
                     maskedPhone,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
                       color: AppColors.tertiaryDarker,
                     ),
                   ),
-                  const SizedBox(height: 36),
+                  SizedBox(height: 36.h),
 
                   // 6 code boxes
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(6, (i) => _buildCodeBox(i)),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Send Again
                   TextButton(
@@ -254,7 +255,7 @@ class _PasswordRecoverySmsCodeScreenState
                     child: Text(
                       "Send Again",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: Colors.grey.shade600,
                       ),
                     ),
@@ -265,7 +266,7 @@ class _PasswordRecoverySmsCodeScreenState
                   // Done button
                   SizedBox(
                     width: double.infinity,
-                    height: 56,
+                    height: 56.h,
                     child: ElevatedButton(
                       onPressed: _isLoading ? null : _verifyOtp,
                       style: ElevatedButton.styleFrom(
@@ -274,30 +275,30 @@ class _PasswordRecoverySmsCodeScreenState
                             AppColors.tertiaryDarker.withValues(alpha: 0.5),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14.r),
                         ),
                         elevation: 0,
                       ),
                       child: _isLoading
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
+                          ? SizedBox(
+                              width: 24.w,
+                              height: 24.h,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 color: Colors.white,
                               ),
                             )
-                          : const Text(
+                          : Text(
                               "Done",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Cancel
                   TextButton(
@@ -305,12 +306,12 @@ class _PasswordRecoverySmsCodeScreenState
                     child: Text(
                       "Cancel",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: Colors.grey.shade500,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                 ],
               ),
             ),

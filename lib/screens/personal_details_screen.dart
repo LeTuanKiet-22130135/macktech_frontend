@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
@@ -172,7 +173,7 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
         child: _isLoading 
           ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
           : SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -184,12 +185,12 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
                         alignment: Alignment.bottomRight,
                         children: [
                           Container(
-                            width: 100,
-                            height: 100,
+                            width: 100.w,
+                            height: 100.h,
                             decoration: BoxDecoration(
                               color: AppColors.primary.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: Colors.white, width: 2.w),
                               image: _profileImage != null
                                   ? DecorationImage(
                                       image: FileImage(_profileImage!),
@@ -203,32 +204,32 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
                                       : null,
                             ),
                             child: (_profileImage == null && (_avatarUrl == null || _avatarUrl!.isEmpty))
-                                ? const Icon(Icons.person, size: 50, color: AppColors.primary)
+                                ? Icon(Icons.person, size: 50.sp, color: AppColors.primary)
                                 : null,
                       ),
                       Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: EdgeInsets.all(6.w),
                         decoration: BoxDecoration(
                           color: AppColors.tertiaryNormal,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(color: Colors.white, width: 2.w),
                         ),
-                        child: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
+                        child: Icon(Icons.camera_alt, size: 16.sp, color: Colors.white),
                       )
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
 
               // Form Fields
-              const Text("Name", style: TextStyle(color: AppColors.textPrimary, fontSize: 14)),
-              const SizedBox(height: 8),
+              Text("Name", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              SizedBox(height: 8.h),
               CustomTextField(hintText: "Enter your name", controller: _nameController),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-              const Text("Phone Number", style: TextStyle(color: AppColors.textPrimary, fontSize: 14)),
-              const SizedBox(height: 8),
+              Text("Phone Number", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              SizedBox(height: 8.h),
               IntlPhoneField(
                 initialCountryCode: _initialCountryCode,
                 initialValue: _initialPhoneNumber,
@@ -242,17 +243,17 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
                   _completePhoneNumber = phone.completeNumber;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-              const Text("Email Address", style: TextStyle(color: AppColors.textPrimary, fontSize: 14)),
-              const SizedBox(height: 8),
+              Text("Email Address", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              SizedBox(height: 8.h),
               CustomTextField(
                 hintText: "Enter your email", 
                 keyboardType: TextInputType.emailAddress, 
                 controller: _emailController,
                 enabled: !_isEmailLocked,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               // Change Password Link
               if (!_isEmailLocked)
@@ -270,25 +271,25 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: const Text(
+                    child: Text(
                       "Change Password",
                       style: TextStyle(
                         color: Colors.redAccent,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
                 ),
               
-              const SizedBox(height: 48),
+              SizedBox(height: 48.h),
 
               // Save Button
               CustomButton(
                 text: _isSaving ? "Saving..." : "Save",
                 onPressed: _isSaving ? () {} : _updateProfile,
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
             ],
           ),
         ),
