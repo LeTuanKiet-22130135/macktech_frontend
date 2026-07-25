@@ -26,7 +26,7 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.border),
           boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 5))
+            BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: Offset(0, 5))
           ]
         ),
         child: Column(
@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.borderLight,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                     ),
@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(isWished ? "Removed from wishlist" : "Added to wishlist"),
-                                duration: const Duration(seconds: 1),
+                                duration: Duration(seconds: 1),
                               ),
                             );
                           },
@@ -73,7 +73,7 @@ class ProductCard extends StatelessWidget {
                                 BoxShadow(
                                   color: Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                                  offset: Offset(0, 2),
                                 ),
                               ],
                             ),
@@ -101,7 +101,7 @@ class ProductCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     product.brand,
                     style: TextStyle(color: AppColors.textSecondary, fontSize: 11.sp),

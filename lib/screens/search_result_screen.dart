@@ -8,6 +8,7 @@ import '../providers/search_products_provider.dart';
 import 'filter_screen.dart';
 import '../services/category_service.dart';
 import '../models/category.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Search results screen with active search bar, sort & filter controls,
 /// and a product grid showing matching results.
@@ -74,7 +75,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
@@ -85,8 +86,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Sort By",
+                Text(AppLocalizations.of(context)!.sortBy,
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
@@ -94,11 +94,11 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   ),
                 ),
                 SizedBox(height: 16.h),
-                _buildSortOption("Relevance", "relevance"),
-                _buildSortOption("Price: Low → High", "price_low"),
-                _buildSortOption("Price: High → Low", "price_high"),
-                _buildSortOption("Name: A → Z", "name_az"),
-                _buildSortOption("Name: Z → A", "name_za"),
+                _buildSortOption(AppLocalizations.of(context)!.relevance, "relevance"),
+                _buildSortOption(AppLocalizations.of(context)!.priceLowToHigh, "price_low"),
+                _buildSortOption(AppLocalizations.of(context)!.priceHighToLow, "price_high"),
+                _buildSortOption(AppLocalizations.of(context)!.nameAToZ, "name_az"),
+                _buildSortOption(AppLocalizations.of(context)!.nameZToA, "name_za"),
               ],
             ),
           ),
@@ -159,7 +159,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
             // Async product grid handling
             Expanded(
               child: productsAsyncValue.when(
-                loading: () => const Center(
+                loading: () => Center(
                   child: CircularProgressIndicator(color: AppColors.primary),
                 ),
                 error: (error, _) => Center(
@@ -168,10 +168,10 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                     children: [
                       Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
                       SizedBox(height: 12.h),
-                      const Text('Failed to load products'),
+                      Text(AppLocalizations.of(context)!.failedToLoadProducts),
                       TextButton(
                         onPressed: () => ref.invalidate(searchProductsProvider(queryParams)),
-                        child: const Text('Retry'),
+                        child: Text(AppLocalizations.of(context)!.retry),
                       ),
                     ],
                   ),
@@ -203,8 +203,8 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             _searchQuery.isEmpty
-                                ? "$totalElements products"
-                                : "$totalElements results for \"$_searchQuery\"",
+                                ? "$totalElements ${AppLocalizations.of(context)!.productsText}"
+                                : "$totalElements ${AppLocalizations.of(context)!.resultsFor} \"$_searchQuery\"",
                             style: TextStyle(
                               fontSize: 13.sp,
                               color: Colors.grey.shade600,
@@ -222,10 +222,10 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                                 child: Column(
                                   children: [
                                     GridView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       padding: EdgeInsets.all(16.w),
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 12,
                                         mainAxisSpacing: 12,
@@ -262,7 +262,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
           ),
           Expanded(
@@ -281,9 +281,9 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   });
                 },
                 decoration: InputDecoration(
-                  hintText: "Search any Product..",
+                  hintText: AppLocalizations.of(context)!.searchAnyProduct,
                   hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14.sp),
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
                   suffixIcon: _searchQuery.isNotEmpty
                       ? IconButton(
                           icon: Icon(Icons.close, size: 18.sp, color: Colors.grey),
@@ -318,7 +318,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
         children: [
           GestureDetector(
             onTap: _showSortBottomSheet,
-            child: _buildChip("Sort", Icons.swap_vert),
+            child: _buildChip(AppLocalizations.of(context)!.sort, Icons.swap_vert),
           ),
           SizedBox(width: 10.w),
           GestureDetector(
@@ -361,12 +361,12 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               }
             },
             child: _buildChip(
-              _hasActiveFilter ? "Filter ✓" : "Filter",
+              _hasActiveFilter ? "${AppLocalizations.of(context)!.filter} ✓" : AppLocalizations.of(context)!.filter,
               Icons.filter_list,
               isActive: _hasActiveFilter,
             ),
           ),
-          const Spacer(),
+          Spacer(),
           if (_sortBy != 'relevance' || _hasActiveFilter)
             GestureDetector(
               onTap: () => setState(() {
@@ -388,8 +388,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   children: [
                     Icon(Icons.close, size: 14.sp, color: AppColors.tertiaryDark),
                     SizedBox(width: 4.w),
-                    Text(
-                      "Clear all",
+                    Text(AppLocalizations.of(context)!.clearAll,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: AppColors.tertiaryDark,
@@ -440,8 +439,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
         children: [
           Icon(Icons.search_off_rounded, size: 80.sp, color: Colors.grey.shade300),
           SizedBox(height: 16.h),
-          Text(
-            "No products found",
+          Text(AppLocalizations.of(context)!.noProductsFound,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -449,8 +447,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
             ),
           ),
           SizedBox(height: 8.h),
-          Text(
-            "Try a different search term",
+          Text(AppLocalizations.of(context)!.tryADifferentSearchTerm,
             style: TextStyle(
               fontSize: 14.sp,
               color: Colors.grey.shade400,
@@ -489,8 +486,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               onPressed: _currentPage > 1
                   ? () => setState(() => _currentPage--)
                   : null,
-              child: Text(
-                "Back",
+              child: Text(AppLocalizations.of(context)!.back,
                 style: TextStyle(
                   color: _currentPage > 1
                       ? AppColors.textPrimary
@@ -530,8 +526,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
               onPressed: _currentPage < totalPages
                   ? () => setState(() => _currentPage++)
                   : null,
-              child: Text(
-                "Next",
+              child: Text(AppLocalizations.of(context)!.next,
                 style: TextStyle(
                   color: _currentPage < totalPages
                       ? AppColors.tertiaryNormal

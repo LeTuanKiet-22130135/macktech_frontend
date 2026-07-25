@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../services/order_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminOrderListScreen extends StatefulWidget {
   const AdminOrderListScreen({super.key});
@@ -53,8 +54,7 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Recent Orders",
+          Text(AppLocalizations.of(context)!.recentOrders,
             style: TextStyle(
               fontSize: 22.sp,
               fontWeight: FontWeight.bold,
@@ -64,9 +64,9 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
           SizedBox(height: 16.h),
           Expanded(
             child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: CircularProgressIndicator())
                 : _orders.isEmpty
-                    ? const Center(child: Text("No orders found."))
+                    ? Center(child: Text(AppLocalizations.of(context)!.noOrdersFound))
                     : ListView.builder(
                         itemCount: _orders.length,
                         itemBuilder: (context, index) {
@@ -113,7 +113,7 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           )
         ],
       ),
@@ -127,7 +127,7 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
                 backgroundColor: AppColors.backgroundLight,
                 child: Text(
                   userName.isNotEmpty ? userName[0].toUpperCase() : '?',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -184,11 +184,10 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Order Date",
+                  Text(AppLocalizations.of(context)!.orderDate,
                     style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     date,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
@@ -202,7 +201,7 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
                     "Items: $productCount",
                     style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     "₫${total.toStringAsFixed(0)}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),

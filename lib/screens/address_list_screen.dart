@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../providers/address_provider.dart';
 import '../models/shipping_address.dart';
 import 'address_editing_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AddressListScreen extends ConsumerWidget {
   const AddressListScreen({super.key});
@@ -19,11 +20,10 @@ class AddressListScreen extends ConsumerWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Shipping Addresses",
+        title: Text(AppLocalizations.of(context)!.shippingAddresses,
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class AddressListScreen extends ConsumerWidget {
         ),
       ),
       body: addressesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (error, stack) => Center(child: Text('Error: $error')),
         data: (addresses) {
           if (addresses.isEmpty) {
@@ -42,8 +42,7 @@ class AddressListScreen extends ConsumerWidget {
                 children: [
                   Icon(Icons.location_off, size: 64.sp, color: Colors.grey.shade400),
                   SizedBox(height: 16.h),
-                  Text(
-                    "No addresses found.",
+                  Text(AppLocalizations.of(context)!.noAddressesFound,
                     style: TextStyle(fontSize: 16.sp, color: Colors.grey.shade600),
                   ),
                 ],
@@ -70,12 +69,12 @@ class AddressListScreen extends ConsumerWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const AddressEditingScreen(address: null)),
+            MaterialPageRoute(builder: (_) => AddressEditingScreen(address: null)),
           );
         },
         backgroundColor: AppColors.primary,
-        icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text("Add New", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        icon: Icon(Icons.add, color: Colors.white),
+        label: Text(AppLocalizations.of(context)!.addNew, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -97,7 +96,7 @@ class _AddressCard extends ConsumerWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           )
         ],
       ),
@@ -121,8 +120,7 @@ class _AddressCard extends ConsumerWidget {
                       color: AppColors.primary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: Text(
-                      "Default",
+                    child: Text(AppLocalizations.of(context)!.defaultText,
                       style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 12.sp),
                     ),
                   ),
@@ -133,13 +131,13 @@ class _AddressCard extends ConsumerWidget {
               "${address.recipientName} | ${address.phoneNumber}",
               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary, fontSize: 15.sp),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Text(
               "${address.streetAddress}, ${address.ward}, ${address.district}, ${address.cityProvince}",
               style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
             ),
             SizedBox(height: 16.h),
-            const Divider(height: 1, color: AppColors.border),
+            Divider(height: 1, color: AppColors.border),
             SizedBox(height: 8.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,15 +147,15 @@ class _AddressCard extends ConsumerWidget {
                     onPressed: () {
                       ref.read(addressProvider.notifier).setDefaultAddress(address.id!);
                     },
-                    style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(50, 30)),
-                    child: const Text("Set as Default", style: TextStyle(color: AppColors.primary)),
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size(50, 30)),
+                    child: Text(AppLocalizations.of(context)!.setAsDefault, style: TextStyle(color: AppColors.primary)),
                   )
                 else
-                  const SizedBox(),
+                  SizedBox(),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.edit_outlined, color: AppColors.textSecondary),
+                      icon: Icon(Icons.edit_outlined, color: AppColors.textSecondary),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -166,7 +164,7 @@ class _AddressCard extends ConsumerWidget {
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                      icon: Icon(Icons.delete_outline, color: Colors.redAccent),
                       onPressed: () => _showDeleteConfirmation(context, ref),
                     ),
                   ],
@@ -183,20 +181,20 @@ class _AddressCard extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Delete Address"),
-        content: const Text("Are you sure you want to delete this address?"),
+        title: Text(AppLocalizations.of(context)!.deleteAddress),
+        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToDeleteThisA),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel", style: TextStyle(color: AppColors.textSecondary)),
+            child: Text(AppLocalizations.of(context)!.cancel, style: TextStyle(color: AppColors.textSecondary)),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
               ref.read(addressProvider.notifier).deleteAddress(address.id!);
             },
-            child: const Text("Delete", style: TextStyle(color: Colors.redAccent)),
+            child: Text(AppLocalizations.of(context)!.delete, style: TextStyle(color: Colors.redAccent)),
           ),
         ],
       ),

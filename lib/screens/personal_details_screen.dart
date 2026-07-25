@@ -11,6 +11,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../providers/user_profile_provider.dart';
 import 'change_password_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PersonalDetailsScreen extends ConsumerStatefulWidget {
   const PersonalDetailsScreen({super.key});
@@ -123,7 +124,7 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
 
     if (name.isEmpty || email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Name and Email are required.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.nameAndEmailAreRequired)),
       );
       return;
     }
@@ -134,7 +135,7 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
       await ref.read(userProfileProvider.notifier).updateProfile(name: name, phone: phone, email: email);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile updated successfully.')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.profileUpdatedSuccessfully)),
         );
         Navigator.pop(context);
       }
@@ -157,21 +158,20 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Personal Details",
+        title: Text(AppLocalizations.of(context)!.personalDetails,
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SafeArea(
         child: _isLoading 
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary))
           : SingleChildScrollView(
               padding: EdgeInsets.all(24.0.w),
               child: Column(
@@ -223,20 +223,20 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
               SizedBox(height: 32.h),
 
               // Form Fields
-              Text("Name", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              Text(AppLocalizations.of(context)!.name, style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
               SizedBox(height: 8.h),
-              CustomTextField(hintText: "Enter your name", controller: _nameController),
+              CustomTextField(hintText: AppLocalizations.of(context)!.enterYourName, controller: _nameController),
               SizedBox(height: 16.h),
 
-              Text("Phone Number", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              Text(AppLocalizations.of(context)!.phoneNumber, style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
               SizedBox(height: 8.h),
               IntlPhoneField(
                 initialCountryCode: _initialCountryCode,
                 initialValue: _initialPhoneNumber,
                 disableLengthCheck: true,
                 showDropdownIcon: true,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your phone number',
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.enterYourPhoneNumber,
                   counterText: '',
                 ),
                 onChanged: (phone) {
@@ -245,10 +245,10 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
               ),
               SizedBox(height: 16.h),
 
-              Text("Email Address", style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
+              Text(AppLocalizations.of(context)!.emailAddress, style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp)),
               SizedBox(height: 8.h),
               CustomTextField(
-                hintText: "Enter your email", 
+                hintText: AppLocalizations.of(context)!.enterYourEmail, 
                 keyboardType: TextInputType.emailAddress, 
                 controller: _emailController,
                 enabled: !_isEmailLocked,
@@ -263,16 +263,15 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ChangePasswordScreen()),
+                        MaterialPageRoute(builder: (_) => ChangePasswordScreen()),
                       );
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      minimumSize: const Size(0, 0),
+                      minimumSize: Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: Text(
-                      "Change Password",
+                    child: Text(AppLocalizations.of(context)!.changePassword,
                       style: TextStyle(
                         color: Colors.redAccent,
                         fontSize: 14.sp,

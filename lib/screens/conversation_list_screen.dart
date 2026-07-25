@@ -6,6 +6,7 @@ import '../providers/navigation_provider.dart';
 import '../theme/app_colors.dart';
 import '../services/chat_service.dart';
 import 'chatbot_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ConversationListScreen extends ConsumerStatefulWidget {
   const ConversationListScreen({super.key});
@@ -66,11 +67,10 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Messages",
+        title: Text(AppLocalizations.of(context)!.messages,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -80,13 +80,13 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh, color: AppColors.tertiaryDarker),
+            icon: Icon(Icons.refresh, color: AppColors.tertiaryDarker),
             onPressed: _loadSessions,
           )
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.tertiaryDarker))
+          ? Center(child: CircularProgressIndicator(color: AppColors.tertiaryDarker))
           : ListView(
               padding: EdgeInsets.symmetric(vertical: 8.h),
               children: [
@@ -100,14 +100,13 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                   time: "",
                   icon: Icons.smart_toy,
                 ),
-                const Divider(height: 1),
+                Divider(height: 1),
                 
                 // Dynamic history from the backend
                 if (_sessions.isNotEmpty) ...[
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, top: 16.h, bottom: 8.h),
-                    child: Text(
-                      "Chat History",
+                    child: Text(AppLocalizations.of(context)!.chatHistory,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
@@ -133,7 +132,7 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                           time: displayTime,
                           icon: isTicket ? Icons.support_agent : Icons.history,
                         ),
-                        const Divider(height: 1),
+                        Divider(height: 1),
                       ],
                     );
                   }),
@@ -142,8 +141,7 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                 // Keep the mock agents for testing UI states
                 Padding(
                   padding: EdgeInsets.only(left: 20.w, top: 16.h, bottom: 8.h),
-                  child: Text(
-                    "Customer Support (Mock)",
+                  child: Text(AppLocalizations.of(context)!.customerSupportMock,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
@@ -160,7 +158,7 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
                   time: "Yesterday",
                   icon: Icons.person,
                 ),
-                const Divider(height: 1),
+                Divider(height: 1),
                 _buildConversationTile(
                   context: context,
                   targetProviderId: 'agent_2',
@@ -190,7 +188,7 @@ class _ConversationListScreenState extends ConsumerState<ConversationListScreen>
       leading: Container(
         width: 50.w,
         height: 50.h,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.tertiaryNormal,
           shape: BoxShape.circle,
         ),

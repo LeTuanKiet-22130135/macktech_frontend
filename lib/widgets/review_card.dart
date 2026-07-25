@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../services/session_service.dart';
 import '../services/review_service.dart';
 import '../screens/add_review_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ReviewCard extends StatefulWidget {
   final Review review;
@@ -54,14 +55,14 @@ class _ReviewCardState extends State<ReviewCard> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Review'),
-        content: const Text('Are you sure you want to delete this review?'),
+        title: Text(AppLocalizations.of(context)!.deleteReview),
+        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToDeleteThisR),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(context)!.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Delete'),
+            child: Text(AppLocalizations.of(context)!.delete),
           ),
         ],
       ),
@@ -76,7 +77,7 @@ class _ReviewCardState extends State<ReviewCard> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to delete review')),
+            SnackBar(content: Text(AppLocalizations.of(context)!.failedToDeleteReview)),
           );
         }
       }
@@ -97,7 +98,7 @@ class _ReviewCardState extends State<ReviewCard> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -143,13 +144,13 @@ class _ReviewCardState extends State<ReviewCard> {
                         IconButton(
                           icon: Icon(Icons.edit, size: 16.sp, color: AppColors.tertiaryNormal),
                           onPressed: _editReview,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                           padding: EdgeInsets.all(4.w),
                         ),
                         IconButton(
                           icon: Icon(Icons.delete_outline, size: 16.sp, color: Colors.red),
                           onPressed: _deleteReview,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                           padding: EdgeInsets.all(4.w),
                         ),
                       ],
@@ -159,7 +160,7 @@ class _ReviewCardState extends State<ReviewCard> {
             ],
           ),
           SizedBox(height: 12.h),
-          Text(widget.review.content, style: const TextStyle(color: AppColors.textPrimary, height: 1.5)),
+          Text(widget.review.content, style: TextStyle(color: AppColors.textPrimary, height: 1.5)),
         ],
       ),
     );

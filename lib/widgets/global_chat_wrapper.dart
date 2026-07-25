@@ -76,7 +76,7 @@ class _GlobalChatWrapperState extends ConsumerState<GlobalChatWrapper> {
                   width: _fabSize,
                   height: _fabSize,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       colors: [
                         AppColors.tertiaryNormal,
                         AppColors.tertiaryDarker
@@ -90,7 +90,7 @@ class _GlobalChatWrapperState extends ConsumerState<GlobalChatWrapper> {
                         color:
                             AppColors.tertiaryNormal.withValues(alpha: 0.4),
                         blurRadius: 12,
-                        offset: const Offset(0, 4),
+                        offset: Offset(0, 4),
                       ),
                     ],
                   ),
@@ -110,7 +110,7 @@ class _GlobalChatWrapperState extends ConsumerState<GlobalChatWrapper> {
 
   void _openChat() {
     appNavigatorKey.currentState?.push(
-      MaterialPageRoute(builder: (_) => const ConversationListScreen()),
+      MaterialPageRoute(builder: (_) => ConversationListScreen()),
     );
   }
 }

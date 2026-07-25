@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/user.dart';
 import '../services/admin_user_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminUserDetailScreen extends StatefulWidget {
   final String userId;
@@ -93,9 +94,9 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
           setState(() {
             _user = updatedUser;
           });
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Profile updated successfully")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.profileUpdatedSuccessfully)));
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Failed to update profile")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToUpdateProfile)));
         }
       }
     } catch (e) {
@@ -117,7 +118,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Change Password"),
+        title: Text(AppLocalizations.of(context)!.changePassword),
         content: Form(
           key: formKey,
           child: Column(
@@ -126,14 +127,14 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
               TextFormField(
                 controller: passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: "New Password", border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.newPassword, border: OutlineInputBorder()),
                 validator: (val) => val == null || val.isEmpty ? "Required" : null,
               ),
               SizedBox(height: 16.h),
               TextFormField(
                 controller: confirmController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: "Confirm Password", border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.confirmPassword, border: OutlineInputBorder()),
                 validator: (val) {
                   if (val == null || val.isEmpty) return "Required";
                   if (val != passwordController.text) return "Passwords do not match";
@@ -144,7 +145,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("CANCEL")),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(context)!.cancel)),
           ElevatedButton(
             onPressed: () {
               if (formKey.currentState!.validate()) {
@@ -152,7 +153,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
               }
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text("SAVE", style: TextStyle(color: Colors.white)),
+            child: Text(AppLocalizations.of(context)!.save, style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -164,9 +165,9 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
         final success = await AdminUserService.changeUserPassword(widget.userId, passwordController.text);
         if (mounted) {
           if (success) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password changed successfully")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.passwordChangedSuccessfully)));
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Failed to change password")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToChangePassword)));
           }
         }
       } catch (e) {
@@ -185,13 +186,13 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Delete User?"),
-        content: const Text("This action is irreversible. Are you sure you want to delete this user?"),
+        title: Text(AppLocalizations.of(context)!.deleteUser),
+        content: Text(AppLocalizations.of(context)!.thisActionIsIrreversibleAreYou),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("CANCEL")),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(context)!.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text("DELETE", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+            child: Text(AppLocalizations.of(context)!.delete, style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -203,10 +204,10 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
         final success = await AdminUserService.deleteUser(widget.userId);
         if (mounted) {
           if (success) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("User deleted")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.userDeleted)));
             Navigator.pop(context, true); // Return true to refresh list
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Failed to delete user")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToDeleteUser)));
           }
         }
       } catch (e) {
@@ -226,14 +227,14 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("User Details", style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.userDetails, style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         leading: Padding(
           padding: EdgeInsets.all(8.0.w),
           child: Container(
-            decoration: const BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.sp),
               onPressed: () => Navigator.pop(context),
@@ -243,17 +244,17 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
         actions: [
           if (_user != null)
             IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
+              icon: Icon(Icons.delete, color: Colors.red),
               onPressed: _isSaving ? null : _deleteUser,
             )
         ],
       ),
       body: _isLoading || _isSaving
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : _error != null
-              ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+              ? Center(child: Text(_error!, style: TextStyle(color: Colors.red)))
               : _user == null
-                  ? const Center(child: Text("User not found."))
+                  ? Center(child: Text(AppLocalizations.of(context)!.userNotFound))
                   : SafeArea(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.all(24.0.w),
@@ -296,7 +297,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                               ),
                               SizedBox(height: 32.h),
                               
-                              Text("Full Name", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              Text(AppLocalizations.of(context)!.fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                               SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _nameController,
@@ -305,7 +306,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                               ),
                               SizedBox(height: 24.h),
 
-                              Text("Phone Number", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              Text(AppLocalizations.of(context)!.phoneNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                               SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _phoneController,
@@ -314,7 +315,7 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                               ),
                               SizedBox(height: 24.h),
 
-                              Text("Address", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                              Text(AppLocalizations.of(context)!.address, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                               SizedBox(height: 8.h),
                               TextFormField(
                                 controller: _addressController,
@@ -329,11 +330,10 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                                 child: ElevatedButton(
                                   onPressed: _updateProfile,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF14243A), // Navy blue
+                                    backgroundColor: Color(0xFF14243A), // Navy blue
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                                   ),
-                                  child: Text(
-                                    "SAVE CHANGES",
+                                  child: Text(AppLocalizations.of(context)!.saveChanges,
                                     style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                                   ),
                                 ),
@@ -345,11 +345,10 @@ class _AdminUserDetailScreenState extends State<AdminUserDetailScreen> {
                                 child: OutlinedButton(
                                   onPressed: _changePassword,
                                   style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(color: Color(0xFF14243A)),
+                                    side: BorderSide(color: Color(0xFF14243A)),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                                   ),
-                                  child: Text(
-                                    "CHANGE PASSWORD",
+                                  child: Text(AppLocalizations.of(context)!.changePassword,
                                     style: TextStyle(color: Color(0xFF14243A), fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                                   ),
                                 ),

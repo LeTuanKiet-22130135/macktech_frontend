@@ -10,6 +10,7 @@ import 'admin_promo_codes_screen.dart';
 import 'admin_users_screen.dart';
 import 'login_screen.dart';
 import 'change_password_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminMainLayoutScreen extends ConsumerStatefulWidget {
   const AdminMainLayoutScreen({super.key});
@@ -29,7 +30,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.tertiaryNormal, // Navy blue
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
         title: Row(
           children: [
             // Using placeholder for Macktech Mobiles logo if absent
@@ -40,11 +41,10 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child: const Icon(Icons.rocket_launch, color: Colors.blueAccent), // Fake logo
+              child: Icon(Icons.rocket_launch, color: Colors.blueAccent), // Fake logo
             ),
             SizedBox(width: 8.w),
-            Text(
-              "Macktech Mobiles",
+            Text(AppLocalizations.of(context)!.macktechMobiles,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -58,9 +58,9 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
             padding: EdgeInsets.only(right: 16.0.w),
             child: PopupMenuButton<int>(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-              offset: const Offset(0, 50),
+              offset: Offset(0, 50),
               color: Colors.white,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(Icons.person_outline, color: AppColors.textPrimary),
               ),
@@ -68,14 +68,14 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                 if (value == 1) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const ChangePasswordScreen()),
+                    MaterialPageRoute(builder: (_) => ChangePasswordScreen()),
                   );
                 } else if (value == 2) {
                   await ref.read(authProvider.notifier).logout();
                   if (context.mounted) {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      MaterialPageRoute(builder: (_) => LoginScreen()),
                       (route) => false,
                     );
                   }
@@ -87,8 +87,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   enabled: false,
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 8.0.h, top: 8.0.h),
-                    child: Text(
-                      "Admin",
+                    child: Text(AppLocalizations.of(context)!.admin,
                       style: TextStyle(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
@@ -104,8 +103,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "CHANGE PASSWORD",
+                      Text(AppLocalizations.of(context)!.changePassword,
                         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
                       SizedBox(width: 24.w),
@@ -119,8 +117,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "LOG OUT",
+                      Text(AppLocalizations.of(context)!.logOut,
                         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
                       SizedBox(width: 24.w),
@@ -219,8 +216,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Categories",
+                      Text(AppLocalizations.of(context)!.categories,
                         style: TextStyle(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.bold,

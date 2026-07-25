@@ -8,6 +8,7 @@ import 'main_layout_screen.dart';
 import 'admin_main_layout_screen.dart';
 import 'agent_main_layout_screen.dart';
 import 'password_recovery_methods_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -35,19 +36,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       case 'admin':
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const AdminMainLayoutScreen()),
+          MaterialPageRoute(builder: (_) => AdminMainLayoutScreen()),
         );
         break;
       case 'agent':
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const AgentMainLayoutScreen()),
+          MaterialPageRoute(builder: (_) => AgentMainLayoutScreen()),
         );
         break;
       default: // 'user'
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const MainLayoutScreen()),
+          MaterialPageRoute(builder: (_) => MainLayoutScreen()),
         );
     }
   }
@@ -59,7 +60,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter both email and password.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterBothEmailAndPasswor)),
       );
       return;
     }
@@ -142,8 +143,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   SizedBox(height: size.height * 0.18),
 
                   // "Login" title
-                  Text(
-                    "Login",
+                  Text(AppLocalizations.of(context)!.login,
                     style: TextStyle(
                       fontSize: 36.sp,
                       fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Email field
                   buildAuthPillField(
-                    hintText: "Email",
+                    hintText: AppLocalizations.of(context)!.email,
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
@@ -162,7 +162,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Password field
                   buildAuthPillField(
-                    hintText: "Password",
+                    hintText: AppLocalizations.of(context)!.password,
                     obscure: true,
                     controller: _passwordController,
                   ),
@@ -180,8 +180,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       );
                     },
-                    child: Text(
-                      "Forgot your password?",
+                    child: Text(AppLocalizations.of(context)!.forgotYourPassword,
                       style: TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 15.sp,
@@ -213,8 +212,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 strokeWidth: 2.5,
                               ),
                             )
-                          : Text(
-                              "Next",
+                          : Text(AppLocalizations.of(context)!.next,
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
@@ -228,8 +226,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // "Cancel" text link
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 16.sp,
@@ -244,8 +241,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Expanded(child: Divider(color: Colors.grey.shade300)),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text(
-                          "Or login with",
+                        child: Text(AppLocalizations.of(context)!.orLoginWith,
                           style: TextStyle(
                             color: Colors.grey.shade500,
                             fontSize: 14.sp,
@@ -264,7 +260,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: OutlinedButton.icon(
                           onPressed: _isLoading ? null : _performGoogleLogin,
                           icon: Icon(Icons.g_mobiledata, size: 28.sp),
-                          label: const Text("Google"),
+                          label: Text(AppLocalizations.of(context)!.google),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.black87,
                             side: BorderSide(color: Colors.grey.shade300),
@@ -284,7 +280,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             size: 24.sp,
                             color: Color(0xFF1877F2),
                           ),
-                          label: const Text("Facebook"),
+                          label: Text(AppLocalizations.of(context)!.facebook),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.black87,
                             side: BorderSide(color: Colors.grey.shade300),

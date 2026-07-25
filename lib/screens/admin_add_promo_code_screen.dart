@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../services/promo_code_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminAddPromoCodeScreen extends StatefulWidget {
   const AdminAddPromoCodeScreen({super.key});
@@ -71,7 +72,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
     try {
       await PromoCodeService.createPromoCode(data);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Promo Code Created')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.promoCodeCreated)));
         Navigator.pop(context, true);
       }
     } catch (e) {
@@ -90,14 +91,14 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Create Promo Code", style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.createPromoCode, style: TextStyle(color: Colors.black, fontSize: 18.sp, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         leading: Padding(
           padding: EdgeInsets.all(8.0.w),
           child: Container(
-            decoration: const BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: Color(0xFFF5F6F8), shape: BoxShape.circle),
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.sp),
               onPressed: () => Navigator.pop(context),
@@ -106,7 +107,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
         ),
       ),
       body: _isSaving
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SafeArea(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(24.0.w),
@@ -115,7 +116,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Code String", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      Text(AppLocalizations.of(context)!.codeString, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                       SizedBox(height: 8.h),
                       TextFormField(
                         controller: _codeController,
@@ -129,14 +130,14 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Discount Type", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                Text(AppLocalizations.of(context)!.discountType, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                                 SizedBox(height: 8.h),
                                 DropdownButtonFormField<String>(
-                                  value: _discountType,
+                                  initialValue: _discountType,
                                   decoration: _inputDecoration(),
-                                  items: const [
-                                    DropdownMenuItem(value: 'percentage', child: Text('Percentage')),
-                                    DropdownMenuItem(value: 'fixed_amount', child: Text('Fixed Amount')),
+                                  items: [
+                                    DropdownMenuItem(value: 'percentage', child: Text(AppLocalizations.of(context)!.percentage)),
+                                    DropdownMenuItem(value: 'fixed_amount', child: Text(AppLocalizations.of(context)!.fixedAmount)),
                                   ],
                                   onChanged: (val) {
                                     setState(() => _discountType = val!);
@@ -150,7 +151,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                Text(AppLocalizations.of(context)!.value, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                                 SizedBox(height: 8.h),
                                 TextFormField(
                                   controller: _valueController,
@@ -164,7 +165,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                         ],
                       ),
                       SizedBox(height: 24.h),
-                      Text("Minimum Order Value", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      Text(AppLocalizations.of(context)!.minimumOrderValue, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                       SizedBox(height: 8.h),
                       TextFormField(
                         controller: _minOrderController,
@@ -178,7 +179,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Valid From", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                Text(AppLocalizations.of(context)!.validFrom, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                                 SizedBox(height: 8.h),
                                 InkWell(
                                   onTap: () => _selectDate(context, true),
@@ -203,7 +204,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Valid Until", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                                Text(AppLocalizations.of(context)!.validUntil, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                                 SizedBox(height: 8.h),
                                 InkWell(
                                   onTap: () => _selectDate(context, false),
@@ -226,7 +227,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                         ],
                       ),
                       SizedBox(height: 24.h),
-                      Text("Usage Limit (Optional)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                      Text(AppLocalizations.of(context)!.usageLimitOptional, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                       SizedBox(height: 8.h),
                       TextFormField(
                         controller: _usageLimitController,
@@ -237,7 +238,7 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Is Active", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                          Text(AppLocalizations.of(context)!.isActive, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp)),
                           Switch(
                             value: _isActive,
                             onChanged: (val) {
@@ -254,11 +255,10 @@ class _AdminAddPromoCodeScreenState extends State<AdminAddPromoCodeScreen> {
                         child: ElevatedButton(
                           onPressed: _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF14243A), // Navy blue
+                            backgroundColor: Color(0xFF14243A), // Navy blue
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                           ),
-                          child: Text(
-                            "SAVE PROMO CODE",
+                          child: Text(AppLocalizations.of(context)!.savePromoCode,
                             style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                           ),
                         ),

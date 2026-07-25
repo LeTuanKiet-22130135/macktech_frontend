@@ -5,6 +5,7 @@ import '../providers/cart_provider.dart';
 import '../widgets/custom_image.dart';
 import 'checkout_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({super.key});
@@ -17,8 +18,7 @@ class CartScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          "Cart",
+        title: Text(AppLocalizations.of(context)!.cart,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         centerTitle: true,
@@ -27,7 +27,7 @@ class CartScreen extends ConsumerWidget {
         automaticallyImplyLeading: false,
       ),
       body: cartAsync.when(
-        loading: () => const Center(
+        loading: () => Center(
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
         error: (error, _) => Center(
@@ -36,10 +36,10 @@ class CartScreen extends ConsumerWidget {
             children: [
               Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
               SizedBox(height: 12.h),
-              const Text('Failed to load cart'),
+              Text(AppLocalizations.of(context)!.failedToLoadCart),
               TextButton(
                 onPressed: () => ref.invalidate(cartProvider),
-                child: const Text('Retry'),
+                child: Text(AppLocalizations.of(context)!.retry),
               ),
             ],
           ),
@@ -53,8 +53,7 @@ class CartScreen extends ConsumerWidget {
                   Icon(Icons.shopping_cart_outlined,
                       size: 80.sp, color: Colors.grey.shade300),
                   SizedBox(height: 16.h),
-                  Text(
-                    "Your cart is empty",
+                  Text(AppLocalizations.of(context)!.yourCartIsEmpty,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
@@ -165,7 +164,7 @@ class CartScreen extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         if (item.selectedColor != null) ...[
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text(
                             item.selectedColor!,
                             style: TextStyle(
@@ -269,8 +268,7 @@ class CartScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Order Info",
+          Text(AppLocalizations.of(context)!.orderInfo,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
           ),
           SizedBox(height: 12.h),
@@ -295,7 +293,7 @@ class CartScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const CheckoutScreen(),
+                      builder: (_) => CheckoutScreen(),
                     ),
                   );
                 },
@@ -307,8 +305,7 @@ class CartScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                 ),
-                child: Text(
-                  "Place Order",
+                child: Text(AppLocalizations.of(context)!.placeOrder,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,

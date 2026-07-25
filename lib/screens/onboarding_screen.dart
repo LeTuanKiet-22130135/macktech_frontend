@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'create_account_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -22,7 +23,7 @@ class OnboardingScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const CreateAccountScreen(),
+                        builder: (_) => CreateAccountScreen(),
                       ),
                     );
                   },
@@ -49,8 +50,7 @@ class OnboardingScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Tech Upgrades Made Easy",
+                    Text(AppLocalizations.of(context)!.techUpgradesMadeEasy,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 28.sp,
@@ -59,8 +59,7 @@ class OnboardingScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    Text(
-                      "Shop phones, accessories, and exclusive student deals in a tap !",
+                    Text(AppLocalizations.of(context)!.shopPhonesAccessoriesAndExclus,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.sp,

@@ -5,6 +5,7 @@ import 'password_setup_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 
 import '../providers/auth_provider.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Password Recovery - OTP code entry screen matching designs 168/199.
 /// Shows avatar, masked phone/email, 4-digit code input boxes,
@@ -87,8 +88,7 @@ class _PasswordRecoveryCodeScreenState
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Password Recovery",
+                  Text(AppLocalizations.of(context)!.passwordRecovery,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -133,8 +133,7 @@ class _PasswordRecoveryCodeScreenState
                     onPressed: () {
                       // Resend code
                     },
-                    child: Text(
-                      "Send Again",
+                    child: Text(AppLocalizations.of(context)!.sendAgain,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade600,
@@ -142,7 +141,7 @@ class _PasswordRecoveryCodeScreenState
                     ),
                   ),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Done button
                   SizedBox(
@@ -155,7 +154,7 @@ class _PasswordRecoveryCodeScreenState
                               final otp = _controllers.map((c) => c.text).join();
                               if (otp.length != 4) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please enter a 4-digit code')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterA4digitCode)),
                                 );
                                 return;
                               }
@@ -195,9 +194,8 @@ class _PasswordRecoveryCodeScreenState
                         elevation: 0,
                       ),
                       child: _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                              "Done",
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(AppLocalizations.of(context)!.done,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -211,8 +209,7 @@ class _PasswordRecoveryCodeScreenState
                   // Cancel
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade500,
@@ -240,7 +237,7 @@ class _PasswordRecoveryCodeScreenState
             child: Container(
               width: 400.w,
               height: 280.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(200),

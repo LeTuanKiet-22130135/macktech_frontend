@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'password_recovery_email_screen.dart';
 import 'password_recovery_phone_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Password Recovery - Method selection screen matching designs 166/167/198/199.
 /// Shows avatar, "Password Recovery" heading, SMS/Email radio options,
@@ -64,8 +65,7 @@ class _PasswordRecoveryMethodsScreenState
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Password Recovery",
+                  Text(AppLocalizations.of(context)!.passwordRecovery,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class _PasswordRecoveryMethodsScreenState
                   // Email option
                   _buildMethodOption("Email"),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Next button
                   SizedBox(
@@ -115,7 +115,7 @@ class _PasswordRecoveryMethodsScreenState
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => const PasswordRecoveryPhoneScreen(),
+                                    builder: (_) => PasswordRecoveryPhoneScreen(),
                                   ),
                                 );
                               }
@@ -131,8 +131,7 @@ class _PasswordRecoveryMethodsScreenState
                         ),
                         elevation: 0,
                       ),
-                      child: Text(
-                        "Next",
+                      child: Text(AppLocalizations.of(context)!.next,
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -146,8 +145,7 @@ class _PasswordRecoveryMethodsScreenState
                   // Cancel
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade500,
@@ -176,7 +174,7 @@ class _PasswordRecoveryMethodsScreenState
             child: Container(
               width: 400.w,
               height: 280.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(200),

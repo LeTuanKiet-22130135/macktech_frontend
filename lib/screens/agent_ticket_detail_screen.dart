@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../models/ticket.dart';
 import '../services/ticket_service.dart';
 import 'chatbot_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AgentTicketDetailScreen extends StatefulWidget {
   final Ticket ticket;
@@ -46,7 +47,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -64,8 +65,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Customer Information",
+            Text(AppLocalizations.of(context)!.customerInformation,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -74,15 +74,14 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
             ),
             SizedBox(height: 16.h),
             _buildFieldLabel("Customer Name"),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             _buildFieldValue("Unknown"), // No customer data in basic Ticket model
             SizedBox(height: 16.h),
             _buildFieldLabel("Email Address"),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             _buildFieldValue("Unknown"), // No customer data in basic Ticket model
             SizedBox(height: 24.h),
-            Text(
-              "Ticket Type / Category",
+            Text(AppLocalizations.of(context)!.ticketTypeCategory,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -92,8 +91,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
             SizedBox(height: 8.h),
             _buildFieldValue(widget.ticket.type),
             SizedBox(height: 24.h),
-            Text(
-              "Issue",
+            Text(AppLocalizations.of(context)!.issue,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -110,8 +108,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
               ),
             ),
             SizedBox(height: 24.h),
-            Text(
-              "Update Status",
+            Text(AppLocalizations.of(context)!.updateStatus,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -126,16 +123,16 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: _isUpdating
-                  ? const Center(child: CircularProgressIndicator(strokeWidth: 2))
+                  ? Center(child: CircularProgressIndicator(strokeWidth: 2))
                   : DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _currentStatus,
                         isExpanded: true,
-                        icon: const Icon(Icons.arrow_drop_down, color: AppColors.textPrimary),
+                        icon: Icon(Icons.arrow_drop_down, color: AppColors.textPrimary),
                         items: _statuses.map((s) {
                           return DropdownMenuItem<String>(
                             value: s,
-                            child: Text(s, style: const TextStyle(fontWeight: FontWeight.w500)),
+                            child: Text(s, style: TextStyle(fontWeight: FontWeight.w500)),
                           );
                         }).toList(),
                         onChanged: (val) async {
@@ -154,7 +151,7 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
                             } catch (e) {
                               if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Error updating status')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.errorUpdatingStatus)),
                                 );
                               }
                             } finally {
@@ -185,9 +182,8 @@ class _AgentTicketDetailScreenState extends State<AgentTicketDetailScreen> {
           );
         },
         backgroundColor: AppColors.tertiaryDarkHover,
-        icon: const Icon(Icons.chat_bubble_outline, color: Colors.white),
-        label: const Text(
-          "Chat with Customer",
+        icon: Icon(Icons.chat_bubble_outline, color: Colors.white),
+        label: Text(AppLocalizations.of(context)!.chatWithCustomer,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),

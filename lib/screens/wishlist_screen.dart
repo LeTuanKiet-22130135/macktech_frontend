@@ -6,6 +6,7 @@ import '../widgets/custom_image.dart';
 import '../providers/cart_provider.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import 'product_details_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class WishlistScreen extends ConsumerWidget {
   const WishlistScreen({super.key});
@@ -17,8 +18,7 @@ class WishlistScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          "Wishlist",
+        title: Text(AppLocalizations.of(context)!.wishlist,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         centerTitle: true,
@@ -27,7 +27,7 @@ class WishlistScreen extends ConsumerWidget {
         automaticallyImplyLeading: false,
       ),
       body: wishlistAsync.when(
-        loading: () => const Center(
+        loading: () => Center(
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
         error: (error, _) => Center(
@@ -36,10 +36,10 @@ class WishlistScreen extends ConsumerWidget {
             children: [
               Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
               SizedBox(height: 12.h),
-              const Text('Failed to load wishlist'),
+              Text(AppLocalizations.of(context)!.failedToLoadWishlist),
               TextButton(
                 onPressed: () => ref.invalidate(wishlistProvider),
-                child: const Text('Retry'),
+                child: Text(AppLocalizations.of(context)!.retry),
               ),
             ],
           ),
@@ -52,8 +52,7 @@ class WishlistScreen extends ConsumerWidget {
                 children: [
                   Icon(Icons.favorite_border, size: 80.sp, color: Colors.grey.shade300),
                   SizedBox(height: 16.h),
-                  Text(
-                    "Your wishlist is empty",
+                  Text(AppLocalizations.of(context)!.yourWishlistIsEmpty,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
@@ -159,14 +158,14 @@ class WishlistScreen extends ConsumerWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("${product.title} added to cart"),
-                              duration: const Duration(seconds: 1),
+                              duration: Duration(seconds: 1),
                             ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.tertiaryDarker,
                           foregroundColor: Colors.white,
-                          minimumSize: const Size(0, 40),
+                          minimumSize: Size(0, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.r),
                           ),
@@ -177,8 +176,7 @@ class WishlistScreen extends ConsumerWidget {
                           Icons.shopping_cart_outlined,
                           size: 16.sp,
                         ),
-                        label: Text(
-                          "Add to Cart",
+                        label: Text(AppLocalizations.of(context)!.addToCart,
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w600,

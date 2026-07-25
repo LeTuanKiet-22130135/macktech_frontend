@@ -200,7 +200,7 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
         backgroundColor: AppColors.tertiaryDarker,
         foregroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: Icon(Icons.close),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -208,7 +208,7 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
         children: [
           WebViewWidget(controller: _controller),
           if (_isLoading)
-            const Center(
+            Center(
               child: CircularProgressIndicator(
                 color: AppColors.tertiaryNormal,
               ),

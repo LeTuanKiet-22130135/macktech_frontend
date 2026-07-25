@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -23,7 +24,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(
+      backgroundColor: Color(
         0xFFF9F9F9,
       ), // Light background to match images
       child: SafeArea(
@@ -39,12 +40,11 @@ class _AppDrawerState extends State<AppDrawer> {
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: ListTile(
-                  leading: const Icon(
+                  leading: Icon(
                     Icons.grid_view_outlined,
                     color: Colors.white,
                   ),
-                  title: Text(
-                    "DASHBOARD",
+                  title: Text(AppLocalizations.of(context)!.dashboard,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.sp,
@@ -61,12 +61,11 @@ class _AppDrawerState extends State<AppDrawer> {
 
               // All Products
               ListTile(
-                leading: const Icon(
+                leading: Icon(
                   Icons.inbox_outlined,
                   color: AppColors.textPrimary,
                 ),
-                title: Text(
-                  "ALL PRODUCTS",
+                title: Text(AppLocalizations.of(context)!.allProducts,
                   style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 16.sp,
@@ -80,12 +79,11 @@ class _AppDrawerState extends State<AppDrawer> {
 
               // Order List
               ListTile(
-                leading: const Icon(
+                leading: Icon(
                   Icons.description_outlined,
                   color: AppColors.textPrimary,
                 ),
-                title: Text(
-                  "ORDER LIST",
+                title: Text(AppLocalizations.of(context)!.orderList,
                   style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 16.sp,
@@ -105,8 +103,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Categories",
+                    Text(AppLocalizations.of(context)!.categories,
                       style: TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 22.sp,

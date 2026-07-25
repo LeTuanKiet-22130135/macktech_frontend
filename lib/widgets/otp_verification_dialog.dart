@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class OTPVerificationDialog extends StatefulWidget {
   final VoidCallback onVerify;
@@ -37,8 +38,7 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "Please enter the OTP (One-Time Password) sent to your registered email/phone number to complete your verification.",
+            Text(AppLocalizations.of(context)!.pleaseEnterTheOtpOnetimePasswo,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.sp,
@@ -58,8 +58,7 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    "Cancel",
+                  child: Text(AppLocalizations.of(context)!.cancel,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16.sp,
@@ -73,13 +72,12 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.tertiaryDarker,
                     foregroundColor: Colors.white,
-                    minimumSize: const Size(0, 56), // Override global infinite width
+                    minimumSize: Size(0, 56), // Override global infinite width
                     padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 16.h),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                     elevation: 0,
                   ),
-                  child: Text(
-                    "Verify",
+                  child: Text(AppLocalizations.of(context)!.verify,
                     style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -114,7 +112,7 @@ class _OTPVerificationDialogState extends State<OTPVerificationDialog> {
             fontWeight: FontWeight.bold,
             color: Colors.grey,
           ),
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             border: InputBorder.none,
             counterText: "",
           ),

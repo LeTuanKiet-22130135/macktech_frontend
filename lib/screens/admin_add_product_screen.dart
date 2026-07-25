@@ -7,6 +7,7 @@ import '../theme/app_colors.dart';
 import '../models/category.dart';
 import '../services/category_service.dart';
 import '../services/product_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminAddProductScreen extends StatefulWidget {
   const AdminAddProductScreen({super.key});
@@ -105,7 +106,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCategoryId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a category')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectACategory)));
       return;
     }
 
@@ -135,7 +136,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
     try {
       await ProductService.createProduct(productData);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product created successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.productCreatedSuccessfully)));
         Navigator.pop(context, true);
       }
     } catch (e) {
@@ -161,7 +162,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
           padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFF5F6F8),
+              color: Color(0xFFF5F6F8),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -170,8 +171,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
             ),
           ),
         ),
-        title: Text(
-          "Add new product",
+        title: Text(AppLocalizations.of(context)!.addNewProduct,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -180,7 +180,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
         ),
       ),
       body: _isSaving
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               child: Form(
@@ -188,8 +188,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Product Information",
+                    Text(AppLocalizations.of(context)!.productInformation,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
@@ -202,11 +201,11 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                     _buildLabel("Category"),
                     SizedBox(height: 8.h),
                     _isLoadingCategories
-                        ? const Center(child: CircularProgressIndicator())
+                        ? Center(child: CircularProgressIndicator())
                         : DropdownButtonFormField<int>(
-                            value: _selectedCategoryId,
-                            hint: Text("Select Category", style: TextStyle(color: Colors.grey.shade400)),
-                            icon: const Icon(Icons.keyboard_arrow_down),
+                            initialValue: _selectedCategoryId,
+                            hint: Text(AppLocalizations.of(context)!.selectCategory, style: TextStyle(color: Colors.grey.shade400)),
+                            icon: Icon(Icons.keyboard_arrow_down),
                             decoration: _inputDecoration(),
                             items: _categories.map((cat) {
                               return DropdownMenuItem<int>(
@@ -270,7 +269,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                         width: 120.w,
                         height: 120.h,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE0E0E0),
+                          color: Color(0xFFE0E0E0),
                           borderRadius: BorderRadius.circular(16.r),
                           image: _imageFile != null
                               ? DecorationImage(image: FileImage(_imageFile!), fit: BoxFit.cover)
@@ -348,7 +347,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.05),
-                offset: const Offset(0, -4),
+                offset: Offset(0, -4),
                 blurRadius: 10,
               ),
             ],
@@ -358,8 +357,7 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
             children: [
               TextButton(
                 onPressed: _isSaving ? null : _clearAll,
-                child: Text(
-                  "Clear All",
+                child: Text(AppLocalizations.of(context)!.clearAll,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16.sp,
@@ -370,19 +368,18 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
               ElevatedButton(
                 onPressed: _isSaving ? null : _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF14243A), // Navy blue
+                  backgroundColor: Color(0xFF14243A), // Navy blue
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(
                     horizontal: 48.w,
                     vertical: 16.h,
                   ),
-                  minimumSize: const Size(120, 56),
+                  minimumSize: Size(120, 56),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                child: Text(
-                  "Done",
+                child: Text(AppLocalizations.of(context)!.done,
                   style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                 ),
               ),

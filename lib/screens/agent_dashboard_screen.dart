@@ -6,6 +6,7 @@ import '../models/ticket.dart';
 import '../services/ticket_service.dart';
 import 'agent_ticket_detail_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AgentDashboardScreen extends ConsumerStatefulWidget {
   const AgentDashboardScreen({super.key});
@@ -60,11 +61,10 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary))
           : _tickets.isEmpty
               ? Center(
-                  child: Text(
-                    "No tickets assigned yet.",
+                  child: Text(AppLocalizations.of(context)!.noTicketsAssignedYet,
                     style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                   ),
                 )
@@ -74,8 +74,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 16.h),
-                      Text(
-                        "All Tickets",
+                      Text(AppLocalizations.of(context)!.allTickets,
                         style: TextStyle(
                           fontSize: 17.sp,
                           fontWeight: FontWeight.bold,
@@ -88,7 +87,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                           onRefresh: _fetchTickets,
                           child: ListView.separated(
                             itemCount: _tickets.length,
-                            separatorBuilder: (_, __) => SizedBox(height: 16.h),
+                            separatorBuilder: (_, _) => SizedBox(height: 16.h),
                             itemBuilder: (context, index) {
                               final ticket = _tickets[index];
                               return _buildAgentTicketCard(
@@ -166,8 +165,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
               children: [
                 SizedBox(
                   width: 100.w,
-                  child: Text(
-                    "Status",
+                  child: Text(AppLocalizations.of(context)!.status,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey.shade400,

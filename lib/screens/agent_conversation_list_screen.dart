@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'chatbot_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AgentConversationListScreen extends StatelessWidget {
   const AgentConversationListScreen({super.key});
@@ -16,8 +17,7 @@ class AgentConversationListScreen extends StatelessWidget {
         // I don't need a nested AppBar if it's in the main layout tab. Let's return just the body.
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(
-          "Customer Messages",
+        title: Text(AppLocalizations.of(context)!.customerMessages,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -37,7 +37,7 @@ class AgentConversationListScreen extends StatelessWidget {
             time: "09:50",
             icon: Icons.person,
           ),
-          const Divider(height: 1),
+          Divider(height: 1),
           _buildConversationTile(
             context: context,
             targetProviderId: 'ticket_00002',

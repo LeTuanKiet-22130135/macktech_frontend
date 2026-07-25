@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../models/payment_card.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PaymentCardWidget extends StatelessWidget {
   final PaymentCard card;
@@ -24,7 +25,7 @@ class PaymentCardWidget extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 15,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -35,7 +36,7 @@ class PaymentCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(Icons.credit_card, color: Colors.white, size: 30.sp),
-              Text(card.brand.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
+              Text(card.brand.toUpperCase(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
             ],
           ),
           SizedBox(height: 30.h),
@@ -50,15 +51,15 @@ class PaymentCardWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Card Holder", style: TextStyle(color: Colors.white70, fontSize: 10.sp)),
-                  Text(card.cardHolder.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  Text(AppLocalizations.of(context)!.cardHolder, style: TextStyle(color: Colors.white70, fontSize: 10.sp)),
+                  Text(card.cardHolder.toUpperCase(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Expires", style: TextStyle(color: Colors.white70, fontSize: 10.sp)),
-                  Text(card.expiryDate, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  Text(AppLocalizations.of(context)!.expires, style: TextStyle(color: Colors.white70, fontSize: 10.sp)),
+                  Text(card.expiryDate, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ],
               ),
             ],

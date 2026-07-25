@@ -10,6 +10,7 @@ import '../providers/user_profile_provider.dart';
 import '../services/location_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AddressEditingScreen extends ConsumerStatefulWidget {
   final ShippingAddress? address;
@@ -161,7 +162,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
@@ -173,7 +174,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
             ? Padding(padding: EdgeInsets.only(right: 16.w), child: Center(child: SizedBox(width: 20.w, height: 20.h, child: CircularProgressIndicator(strokeWidth: 2))))
             : TextButton(
                 onPressed: _saveAddress,
-                child: Text("Save", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                child: Text(AppLocalizations.of(context)!.save, style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16.sp)),
               )
         ],
       ),
@@ -199,9 +200,9 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
               
               SizedBox(height: 12.h),
               SwitchListTile(
-                title: const Text("Set as Default Address", style: TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(AppLocalizations.of(context)!.setAsDefaultAddress, style: TextStyle(fontWeight: FontWeight.w600)),
                 value: _isDefault,
-                activeColor: AppColors.primary,
+                activeThumbColor: AppColors.primary,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (val) => setState(() => _isDefault = val),
               ),
@@ -211,8 +212,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(
-                      "Pinpoint Location", 
+                    child: Text(AppLocalizations.of(context)!.pinpointLocation, 
                       style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -226,7 +226,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                     : TextButton.icon(
                         onPressed: _selectedLocation == null ? null : _handleCameraIdle,
                         icon: Icon(Icons.location_searching, size: 18.sp),
-                        label: const Text("Use Pin Location"),
+                        label: Text(AppLocalizations.of(context)!.usePinLocation),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                           minimumSize: Size.zero,
@@ -274,7 +274,7 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
                           size: 40.sp,
                           color: AppColors.primary,
                           shadows: [
-                            Shadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4)),
+                            Shadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 8, offset: Offset(0, 4)),
                           ],
                         ),
                       ),
@@ -298,10 +298,10 @@ class _AddressEditingScreenState extends ConsumerState<AddressEditingScreen> {
         keyboardType: isPhone ? TextInputType.phone : TextInputType.text,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.grey),
+          labelStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: const BorderSide(color: AppColors.borderGrey),
+            borderSide: BorderSide(color: AppColors.borderGrey),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),

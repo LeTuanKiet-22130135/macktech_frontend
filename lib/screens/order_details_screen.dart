@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../theme/app_colors.dart';
 import '../services/order_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final String orderId;
@@ -102,8 +103,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Order Details",
+        title: Text(AppLocalizations.of(context)!.orderDetails,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18.sp,
@@ -112,7 +112,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : _error != null
           ? Center(child: Text(_error!))
           : _buildContent(),
@@ -142,7 +142,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         fontSize: 16.sp,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       "Placed on: ${_formatDate(_order!['createdAt'])}",
                       style: TextStyle(color: Colors.grey, fontSize: 13.sp),
@@ -156,8 +156,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           SizedBox(height: 24.h),
 
           // Items
-          Text(
-            "Items",
+          Text(AppLocalizations.of(context)!.items,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
           ),
           SizedBox(height: 12.h),
@@ -179,7 +178,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       color: AppColors.backgroundLightAlt,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: const Icon(Icons.image, color: Colors.grey),
+                    child: Icon(Icons.image, color: Colors.grey),
                   ),
                   SizedBox(width: 12.w),
                   Expanded(
@@ -193,7 +192,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             fontSize: 14.sp,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           "Color: ${item['selectedColor'] ?? 'N/A'}",
                           style: TextStyle(
@@ -201,19 +200,19 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             fontSize: 12.sp,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "₫${(item['productPrice'] ?? 0).toString()}",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               "x${item['quantity'] ?? 1}",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -229,8 +228,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
           SizedBox(height: 24.h),
           // Shipping Info
-          Text(
-            "Shipping Details",
+          Text(AppLocalizations.of(context)!.shippingDetails,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
           ),
           SizedBox(height: 12.h),
@@ -252,12 +250,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     fontSize: 14.sp,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   _order!['shippingPhone'] ?? '',
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 13.sp),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   _order!['shippingAddress'] ?? '',
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 13.sp),
@@ -268,8 +266,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
           SizedBox(height: 24.h),
           // Payment Summary
-          Text(
-            "Payment Summary",
+          Text(AppLocalizations.of(context)!.paymentSummary,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
           ),
           SizedBox(height: 12.h),

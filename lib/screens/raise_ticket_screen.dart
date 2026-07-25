@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import '../services/ticket_service.dart';
 import '../services/session_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Raise a new ticket screen matching design 063.
 /// Form with customer info, ticket type selector (035),
@@ -80,11 +81,10 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Raise a new ticket",
+        title: Text(AppLocalizations.of(context)!.raiseANewTicket,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -102,8 +102,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Customer Information section
-                  Text(
-                    "Customer Information",
+                  Text(AppLocalizations.of(context)!.customerInformation,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -125,8 +124,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                   SizedBox(height: 24.h),
 
                   // Ticket Type / Category
-                  Text(
-                    "Ticket Type / Category",
+                  Text(AppLocalizations.of(context)!.ticketTypeCategory,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -148,8 +146,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                   SizedBox(height: 24.h),
 
                   // Issue
-                  Text(
-                    "Issue",
+                  Text(AppLocalizations.of(context)!.issue,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -166,7 +163,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                       controller: _issueController,
                       maxLines: 6,
                       decoration: InputDecoration(
-                        hintText: "Type here ...",
+                        hintText: AppLocalizations.of(context)!.typeHere,
                         hintStyle: TextStyle(color: Colors.grey.shade400),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(16.w),
@@ -176,8 +173,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                   SizedBox(height: 24.h),
 
                   // Upload Image
-                  Text(
-                    "Upload Image",
+                  Text(AppLocalizations.of(context)!.uploadImage,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -207,7 +203,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                                       setState(() => _attachedImage = null),
                                   child: Container(
                                     padding: EdgeInsets.all(4.w),
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       color: Colors.red,
                                       shape: BoxShape.circle,
                                     ),
@@ -243,8 +239,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                                   color: Colors.grey.shade400,
                                 ),
                                 SizedBox(height: 8.h),
-                                Text(
-                                  "Tap to attach an image",
+                                Text(AppLocalizations.of(context)!.tapToAttachAnImage,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     color: Colors.grey.shade500,
@@ -339,7 +334,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (ctx) {
@@ -394,8 +389,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                   _attachedImage = null;
                 });
               },
-              child: Text(
-                "Remove all answers",
+              child: Text(AppLocalizations.of(context)!.removeAllAnswers,
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.grey.shade500,
@@ -413,7 +407,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.tertiaryDarker,
                 foregroundColor: Colors.white,
-                minimumSize: const Size(0, 52),
+                minimumSize: Size(0, 52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -428,8 +422,7 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                         strokeWidth: 2,
                       ),
                     )
-                  : Text(
-                      "Send",
+                  : Text(AppLocalizations.of(context)!.send,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -446,13 +439,13 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
   Future<void> _submitTicket() async {
     if (_selectedTicketType == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a ticket type')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectATicketType)),
       );
       return;
     }
     if (_issueController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please describe the issue')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseDescribeTheIssue)),
       );
       return;
     }
@@ -472,13 +465,13 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
             true,
           ); // Return true to indicate success and trigger reload on previous screen
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Ticket submitted successfully!")),
+            SnackBar(content: Text(AppLocalizations.of(context)!.ticketSubmittedSuccessfully)),
           );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to submit ticket.")),
+            SnackBar(content: Text(AppLocalizations.of(context)!.failedToSubmitTicket)),
           );
         }
       }

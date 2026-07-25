@@ -7,6 +7,7 @@ import '../providers/auth_provider.dart';
 import '../providers/session_provider.dart';
 import '../providers/navigation_provider.dart';
 import 'login_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class DeleteAccountScreen extends ConsumerStatefulWidget {
   const DeleteAccountScreen({super.key});
@@ -34,17 +35,17 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                 // Top icon
                 Container(
                   padding: EdgeInsets.all(24.w),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.background,
                     shape: BoxShape.circle,
                   ),
                   child: Container(
                     padding: EdgeInsets.all(8.w),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.priority_high, color: Colors.white),
+                    child: Icon(Icons.priority_high, color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 32.h),
@@ -78,15 +79,14 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                       child: ElevatedButton(
                         onPressed: () => Navigator.pop(dialogCtx),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF9FBEE4),
+                          backgroundColor: Color(0xFF9FBEE4),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                           padding: EdgeInsets.symmetric(vertical: 20.h),
                         ),
-                        child: Text(
-                          "Cancel",
+                        child: Text(AppLocalizations.of(context)!.cancel,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.sp,
@@ -103,15 +103,14 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                           _showPasswordVerification();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFC62828),
+                          backgroundColor: Color(0xFFC62828),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                           padding: EdgeInsets.symmetric(vertical: 20.h),
                         ),
-                        child: Text(
-                          "DELETE",
+                        child: Text(AppLocalizations.of(context)!.delete,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.sp,
@@ -167,8 +166,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                     ),
                     SizedBox(height: 24.h),
 
-                    Text(
-                      "Confirm Your Password",
+                    Text(AppLocalizations.of(context)!.confirmYourPassword,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.sp,
@@ -195,7 +193,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                       obscureText: obscurePassword,
                       enabled: !isProcessing,
                       decoration: InputDecoration(
-                        hintText: "Enter your password",
+                        hintText: AppLocalizations.of(context)!.enterYourPassword,
                         hintStyle: TextStyle(color: Colors.grey.shade400),
                         filled: true,
                         fillColor: Colors.grey.shade50,
@@ -253,8 +251,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                                 side: BorderSide(color: Colors.grey.shade300),
                               ),
                             ),
-                            child: Text(
-                              "Cancel",
+                            child: Text(AppLocalizations.of(context)!.cancel,
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: Colors.grey.shade600,
@@ -274,9 +271,8 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                                       ScaffoldMessenger.of(
                                         dialogCtx,
                                       ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Please enter your password',
+                                        SnackBar(
+                                          content: Text(AppLocalizations.of(context)!.pleaseEnterYourPassword,
                                           ),
                                         ),
                                       );
@@ -312,8 +308,8 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                                     }
                                   },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFC62828),
-                              disabledBackgroundColor: const Color(
+                              backgroundColor: Color(0xFFC62828),
+                              disabledBackgroundColor: Color(
                                 0xFFC62828,
                               ).withValues(alpha: 0.5),
                               elevation: 0,
@@ -331,8 +327,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                                       strokeWidth: 2,
                                     ),
                                   )
-                                : Text(
-                                    "Delete",
+                                : Text(AppLocalizations.of(context)!.delete,
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       color: Colors.white,
@@ -388,14 +383,14 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     final messenger = ScaffoldMessenger.of(context);
     nav.popUntil((route) => route.isFirst);
     nav.pushReplacement(
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
+      MaterialPageRoute(builder: (_) => LoginScreen()),
     );
 
     // 7. Now sign out of Firebase (after we've already navigated away)
     await FirebaseAuth.instance.signOut();
 
     messenger.showSnackBar(
-      const SnackBar(content: Text("Account successfully deleted")),
+      SnackBar(content: Text(AppLocalizations.of(context)!.accountSuccessfullyDeleted)),
     );
   }
 
@@ -404,8 +399,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "Delete Account",
+        title: Text(AppLocalizations.of(context)!.deleteAccount,
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -438,19 +432,20 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
               Row(
                 children: [
                   Text("⚠️ ", style: TextStyle(fontSize: 18.sp)),
-                  Text(
-                    "Delete Your Account",
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                  Expanded(
+                    child: Text(AppLocalizations.of(context)!.deleteYourAccount,
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 16.h),
               Text(
-                "This will permanently erase your profile, order history, and saved payment methods. You'll lose access to all MACKTECH MOBILES app benefits.",
+                AppLocalizations.of(context)!.deleteAccountWarningMsg,
                 style: TextStyle(
                   fontSize: 15.sp,
                   color: AppColors.textPrimary,
@@ -463,15 +458,14 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                 child: ElevatedButton(
                   onPressed: () => _showDeleteConfirmation(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF9FBEE4),
+                    backgroundColor: Color(0xFF9FBEE4),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     padding: EdgeInsets.symmetric(vertical: 16.h),
                   ),
-                  child: Text(
-                    "I understand",
+                  child: Text(AppLocalizations.of(context)!.iUnderstand,
                     style: TextStyle(color: Colors.white, fontSize: 15.sp),
                   ),
                 ),

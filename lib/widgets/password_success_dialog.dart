@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../widgets/custom_button.dart';
 import '../screens/login_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 void showPasswordSuccessDialog(BuildContext context) {
   showDialog(
@@ -48,12 +49,12 @@ Widget _buildDialogContent(BuildContext context) {
             ),
             SizedBox(height: 32.h),
             CustomButton(
-              text: "OK",
+              text: AppLocalizations.of(context)!.ok,
               onPressed: () {
                 // Navigate back to login screen on success
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  MaterialPageRoute(builder: (_) => LoginScreen()),
                   (route) => false,
                 );
               },

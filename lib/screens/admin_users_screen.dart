@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../models/user.dart';
 import '../services/admin_user_service.dart';
 import 'admin_user_detail_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminUsersScreen extends StatefulWidget {
   const AdminUsersScreen({super.key});
@@ -50,30 +51,28 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: Color(0xFFF9F9F9),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(24.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "User Management",
+              Text(AppLocalizations.of(context)!.userManagement,
                 style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
               ),
               SizedBox(height: 8.h),
-              Text(
-                "View and manage customer and admin accounts.",
+              Text(AppLocalizations.of(context)!.viewAndManageCustomerAndAdminA,
                 style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
               ),
               SizedBox(height: 24.h),
               Expanded(
                 child: _isLoading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? Center(child: CircularProgressIndicator())
                     : _error != null
-                        ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+                        ? Center(child: Text(_error!, style: TextStyle(color: Colors.red)))
                         : _users.isEmpty
-                            ? const Center(child: Text("No users found."))
+                            ? Center(child: Text(AppLocalizations.of(context)!.noUsersFound))
                             : ListView.builder(
                                 itemCount: _users.length,
                                 itemBuilder: (context, index) {
@@ -117,7 +116,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -140,7 +139,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                   user.name,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp, color: AppColors.textPrimary),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   user.email,
                   style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),

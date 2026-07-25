@@ -14,6 +14,7 @@ import '../services/shipping_service.dart';
 import '../services/order_service.dart';
 import 'payment_webview_screen.dart';
 import 'customer_detail_editing_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Checkout / Place Order screen matching design 143.
 /// Displays customer details, order items, payment method, and order info.
@@ -197,8 +198,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Card Owner
-                    Text(
-                      "Card Owner",
+                    Text(AppLocalizations.of(context)!.cardOwner,
                       style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
                     SizedBox(height: 8.h),
@@ -209,8 +209,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     SizedBox(height: 20.h),
 
                     // Card Number
-                    Text(
-                      "Card Number",
+                    Text(AppLocalizations.of(context)!.cardNumber,
                       style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
                     SizedBox(height: 8.h),
@@ -228,8 +227,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "EXP",
+                              Text(AppLocalizations.of(context)!.exp,
                                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                               ),
                               SizedBox(height: 8.h),
@@ -245,8 +243,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "CVV",
+                              Text(AppLocalizations.of(context)!.cvv,
                                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
                               ),
                               SizedBox(height: 8.h),
@@ -265,8 +262,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Save card info",
+                        Text(AppLocalizations.of(context)!.saveCardInfo,
                           style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
                         ),
                         Switch(
@@ -286,8 +282,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         Expanded(
                           child: TextButton(
                             onPressed: () => Navigator.pop(ctx),
-                            child: Text(
-                              "Cancel",
+                            child: Text(AppLocalizations.of(context)!.cancel,
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 color: Colors.grey.shade500,
@@ -307,7 +302,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                 setState(() {
                                   _savedCards.add({
                                     'label': display,
-                                    'holder': ownerController.text.isNotEmpty ? ownerController.text : 'Card Holder',
+                                    'holder': ownerController.text.isNotEmpty ? ownerController.text: AppLocalizations.of(context)!.cardHolder,
                                   });
                                   _selectedCard = display;
                                 });
@@ -317,14 +312,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.tertiaryDarker,
                               foregroundColor: Colors.white,
-                              minimumSize: const Size(0, 52),
+                              minimumSize: Size(0, 52),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.r),
                               ),
                               elevation: 0,
                             ),
-                            child: Text(
-                              "Save Card",
+                            child: Text(AppLocalizations.of(context)!.saveCard,
                               style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -389,8 +383,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Place Order",
+        title: Text(AppLocalizations.of(context)!.placeOrder,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
         ),
         centerTitle: true,
@@ -432,8 +425,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           Icon(Icons.warning_amber_rounded, color: Colors.orange.shade700, size: 20.sp),
                           SizedBox(width: 8.w),
                           Expanded(
-                            child: Text(
-                              'Please add your phone number in your profile before checking out.',
+                            child: Text(AppLocalizations.of(context)!.pleaseAddYourPhoneNumberInYour,
                               style: TextStyle(fontSize: 13.sp, color: Colors.orange.shade900),
                             ),
                           ),
@@ -463,7 +455,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   if (districtId == null) {
                     setState(() => _isCheckingOut = false);
                     if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to resolve district ID.')));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToResolveDistrictId)));
                     }
                     return;
                   }
@@ -472,7 +464,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   if (wardCode == null) {
                     setState(() => _isCheckingOut = false);
                     if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to resolve ward code.')));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToResolveWardCode)));
                     }
                     return;
                   }
@@ -522,14 +514,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           if (mounted) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const OrderSuccessScreen()),
+                              MaterialPageRoute(builder: (_) => OrderSuccessScreen()),
                             );
                           }
                         } else if (success == false) {
                           // Web payment failed (caught by webview URL intercept)
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Payment failed or cancelled.')),
+                              SnackBar(content: Text(AppLocalizations.of(context)!.paymentFailedOrCancelled)),
                             );
                           }
                         }
@@ -543,14 +535,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       if (mounted) {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => const OrderSuccessScreen()),
+                          MaterialPageRoute(builder: (_) => OrderSuccessScreen()),
                         );
                       }
                     }
                   } else {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Failed to create order.')),
+                        SnackBar(content: Text(AppLocalizations.of(context)!.failedToCreateOrder)),
                       );
                     }
                   }
@@ -568,8 +560,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       height: 24.h, 
                       child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)
                     )
-                  : Text(
-                      "Checkout",
+                  : Text(AppLocalizations.of(context)!.checkout,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -607,8 +598,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Customer details",
+              Text(AppLocalizations.of(context)!.customerDetails,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
               ),
               GestureDetector(
@@ -616,7 +606,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   final result = await Navigator.push<ShippingAddress>(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const CustomerDetailEditingScreen(),
+                      builder: (_) => CustomerDetailEditingScreen(),
                     ),
                   );
                   if (result != null && mounted) {
@@ -626,8 +616,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     _calculateShippingFee(result);
                   }
                 },
-                child: Text(
-                  "Edit",
+                child: Text(AppLocalizations.of(context)!.edit,
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
                 ),
               ),
@@ -638,7 +627,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             TextSpan(
               children: [
                 TextSpan(
-                  text: "Name : ",
+                  text: AppLocalizations.of(context)!.name,
                   style: TextStyle(color: Colors.grey, fontSize: 14.sp),
                 ),
                 TextSpan(
@@ -649,11 +638,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
           ),
           SizedBox(height: 6.h),
-          Text(
-            "Contact information",
+          Text(AppLocalizations.of(context)!.contactInformation,
             style: TextStyle(color: Colors.grey, fontSize: 14.sp),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Padding(
             padding: EdgeInsets.only(left: 12.w),
             child: Column(
@@ -663,7 +651,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: "Number : ",
+                        text: AppLocalizations.of(context)!.number,
                         style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                       ),
                       TextSpan(
@@ -673,12 +661,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: "Email address : ",
+                        text: AppLocalizations.of(context)!.emailAddress,
                         style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                       ),
                       TextSpan(
@@ -692,11 +680,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
           ),
           SizedBox(height: 12.h),
-          Text(
-            "Shipping address",
+          Text(AppLocalizations.of(context)!.shippingAddress,
             style: TextStyle(color: Colors.grey, fontSize: 14.sp),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Padding(
             padding: EdgeInsets.only(left: 12.w),
             child: _selectedAddress != null
@@ -704,7 +691,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   _selectedAddress!.fullAddress,
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 )
-              : Text("No address selected", style: TextStyle(color: Colors.redAccent, fontSize: 13.sp)),
+              : Text(AppLocalizations.of(context)!.noAddressSelected, style: TextStyle(color: Colors.redAccent, fontSize: 13.sp)),
           ),
         ],
       ),
@@ -723,8 +710,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Items",
+          Text(AppLocalizations.of(context)!.items,
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
           ),
           SizedBox(height: 12.h),
@@ -769,7 +755,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Text(
                           product.brand,
                           style: TextStyle(
@@ -777,9 +763,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             fontSize: 12.sp,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Color: Blue  ·  Storage: 512 GB",
+                        SizedBox(height: 4),
+                        Text(AppLocalizations.of(context)!.colorBlueStorage512Gb,
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: Colors.grey.shade600,
@@ -793,7 +778,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             color: Colors.grey.shade700,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -838,8 +823,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Payment Method",
+                  Text(AppLocalizations.of(context)!.paymentMethod,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
                   ),
                   Row(
@@ -854,7 +838,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       SizedBox(width: 4.w),
                       AnimatedRotation(
                         turns: _paymentExpanded ? 0.5 : 0,
-                        duration: const Duration(milliseconds: 200),
+                        duration: Duration(milliseconds: 200),
                         child: Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 22.sp),
                       ),
                     ],
@@ -871,7 +855,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             crossFadeState: _paymentExpanded
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 250),
+            duration: Duration(milliseconds: 250),
           ),
         ],
       ),
@@ -941,7 +925,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       if (isVisa)
                         AnimatedRotation(
                           turns: _visaExpanded ? 0.5 : 0,
-                          duration: const Duration(milliseconds: 200),
+                          duration: Duration(milliseconds: 200),
                           child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade400, size: 20.sp),
                         )
                       else if (isSelected)
@@ -957,7 +941,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ],
           );
         }),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
       ],
     );
   }
@@ -1032,8 +1016,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     child: Icon(Icons.add, size: 16.sp, color: AppColors.tertiaryNormal),
                   ),
                   SizedBox(width: 12.w),
-                  Text(
-                    "Add Card",
+                  Text(AppLocalizations.of(context)!.addCard,
                     style: TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w600,
@@ -1044,7 +1027,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
         ],
       ),
     );
@@ -1062,8 +1045,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Discount Code",
+          Text(AppLocalizations.of(context)!.discountCode,
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
           ),
           SizedBox(height: 12.h),
@@ -1073,7 +1055,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 child: TextField(
                   controller: _discountController,
                   decoration: InputDecoration(
-                    hintText: "Enter code (e.g. SAVE10)",
+                    hintText: AppLocalizations.of(context)!.enterCodeEgSave10,
                     hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14.sp),
                     filled: true,
                     fillColor: Colors.grey.shade100,
@@ -1091,7 +1073,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.tertiaryDarker,
                   foregroundColor: Colors.white,
-                  minimumSize: const Size(80, 48),
+                  minimumSize: Size(80, 48),
                   elevation: 0,
                   padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
                   shape: RoundedRectangleBorder(
@@ -1107,8 +1089,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : Text(
-                        "Apply",
+                    : Text(AppLocalizations.of(context)!.apply,
                         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
                       ),
               ),
@@ -1124,7 +1105,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   "Code '$_appliedDiscountCode' applied",
                   style: TextStyle(color: AppColors.success, fontSize: 13.sp),
                 ),
-                const Spacer(),
+                Spacer(),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -1133,8 +1114,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       _appliedDiscountCode = null;
                     });
                   },
-                  child: Text(
-                    "Remove",
+                  child: Text(AppLocalizations.of(context)!.remove,
                     style: TextStyle(
                       color: Colors.redAccent,
                       fontSize: 13.sp,
@@ -1162,8 +1142,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Order Info",
+          Text(AppLocalizations.of(context)!.orderInfo,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp),
           ),
           SizedBox(height: 14.h),

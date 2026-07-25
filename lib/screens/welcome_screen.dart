@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'onboarding_screen.dart';
 import 'login_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Welcome/splash screen matching design 140.
 /// Uses a dark textured background (full-104) with the Macktech logo
@@ -45,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 32.0.w),
               child: Column(
                 children: [
-                  const Spacer(flex: 3),
+                  Spacer(flex: 3),
 
                   // Logo image (logohomecscreen.png)
                   Image.asset(
@@ -54,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
 
-                  const Spacer(flex: 4),
+                  Spacer(flex: 4),
 
                   // "Let's get started" button
                   SizedBox(
@@ -65,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const OnboardingScreen(),
+                            builder: (_) => OnboardingScreen(),
                           ),
                         );
                       },
@@ -95,15 +96,14 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const LoginScreen(),
+                          builder: (_) => LoginScreen(),
                         ),
                       );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "I already have an account",
+                        Text(AppLocalizations.of(context)!.iAlreadyHaveAnAccount,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.sp,

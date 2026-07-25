@@ -4,6 +4,7 @@ import '../widgets/custom_button.dart';
 import '../theme/app_colors.dart';
 import '../models/review.dart';
 import '../services/review_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AddReviewScreen extends StatefulWidget {
   final String productId;
@@ -37,11 +38,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
   Future<void> _submitReview() async {
     if (_rating == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a rating.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectARating)));
       return;
     }
     if (_contentController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please write a review.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.pleaseWriteAReview)));
       return;
     }
 
@@ -59,12 +60,12 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         if (result != null) {
           Navigator.pop(context);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to submit review. You may have already reviewed this product.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToSubmitReviewYouMayHave)));
         }
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('An error occurred.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.anErrorOccurred)));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -76,7 +77,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     final isEditing = widget.existingReview != null;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
         title: Text(isEditing ? "Edit Review" : "Add Review"),
       ),
       body: Padding(
@@ -88,17 +89,17 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               controller: _contentController,
               maxLines: 5,
               decoration: InputDecoration(
-                hintText: "How was your experience?",
+                hintText: AppLocalizations.of(context)!.howWasYourExperience,
                 filled: true,
                 fillColor: AppColors.surface,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: const BorderSide(color: AppColors.border)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: const BorderSide(color: AppColors.border)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: BorderSide(color: AppColors.border)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: BorderSide(color: AppColors.border)),
               ),
             ),
             SizedBox(height: 32.h),
             Row(
               children: [
-                Text("Rating", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                Text(AppLocalizations.of(context)!.rating, style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
                 SizedBox(width: 12.w),
                 Text(
                   "${_rating.toInt()}/5",
@@ -122,9 +123,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 );
               }),
             ),
-            const Spacer(),
+            Spacer(),
             _isLoading 
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(child: CircularProgressIndicator())
               : CustomButton(
                   text: isEditing ? "Save Changes" : "Submit Review",
                   onPressed: _submitReview,

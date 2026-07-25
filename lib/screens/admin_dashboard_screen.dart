@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../theme/app_colors.dart';
 import '../services/admin_dashboard_service.dart';
 import '../services/order_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -146,8 +147,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Revenue Analytics",
+              Text(AppLocalizations.of(context)!.revenueAnalytics,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
@@ -183,21 +183,20 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   )
                 ]),
             child: _isLoadingChart
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: CircularProgressIndicator())
                 : _chartData == null || (_chartData!['data'] as List).isEmpty
-                    ? const Center(child: Text("No chart data available."))
+                    ? Center(child: Text(AppLocalizations.of(context)!.noChartDataAvailable))
                     : _buildRevenueChart(),
           ),
 
           SizedBox(height: 32.h),
 
           // 4. Previews (Orders and Products)
-          Text(
-            "Recent Orders",
+          Text(AppLocalizations.of(context)!.recentOrders,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -208,7 +207,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           _isLoadingOrders
               ? SizedBox(height: 100.h, child: Center(child: CircularProgressIndicator()))
               : _recentOrders.isEmpty
-                  ? const Center(child: Text("No recent orders."))
+                  ? Center(child: Text(AppLocalizations.of(context)!.noRecentOrders))
                   : Column(
                       children: _recentOrders.map((order) {
                         final userName = order['user']?['name'] ?? order['shippingName'] ?? 'Unknown';
@@ -221,8 +220,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     ),
 
           SizedBox(height: 32.h),
-          Text(
-            "Top Selling Products",
+          Text(AppLocalizations.of(context)!.topSellingProducts,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -233,7 +231,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           _isLoadingProducts
               ? SizedBox(height: 150.h, child: Center(child: CircularProgressIndicator()))
               : _topProducts.isEmpty
-                  ? const Center(child: Text("No top products."))
+                  ? Center(child: Text(AppLocalizations.of(context)!.noTopProducts))
                   : SizedBox(
                       height: 240.h, // Height for horizontal product strip
                       child: ListView(
@@ -257,7 +255,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return GestureDetector(
       onTap: () => _onTimeframeChanged(title),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: Duration(milliseconds: 300),
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.tertiaryNormal : Colors.transparent,
@@ -285,7 +283,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 8,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             )
           ]),
       child: Column(
@@ -310,7 +308,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2),
           Text(
             title,
             style: TextStyle(
@@ -367,7 +365,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               return BarTooltipItem(
                 '₫${rod.toY.round()}',
-                const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               );
             },
           ),
@@ -387,11 +385,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               },
             ),
           ),
-          leftTitles: const AxisTitles(
+          leftTitles: AxisTitles(
             sideTitles: SideTitles(showTitles: false), // Clean look, hide Y axis
           ),
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
         ),
         gridData: FlGridData(
           show: true,
@@ -408,7 +406,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         borderData: FlBorderData(show: false),
         barGroups: mockData,
       ),
-      duration: const Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 500),
       curve: Curves.easeInOutBack,
     );
   }
@@ -429,7 +427,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             backgroundColor: AppColors.backgroundLight,
             radius: 20,
             child: Text(name.isNotEmpty ? name[0].toUpperCase() : '?',
-                style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -445,7 +443,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(price, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp)),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(status, style: TextStyle(color: statusColor, fontSize: 12.sp, fontWeight: FontWeight.bold)),
             ],
           )

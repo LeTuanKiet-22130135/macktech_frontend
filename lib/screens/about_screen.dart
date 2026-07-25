@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// About screen matching designs 060 and 102.
 /// Shows the Macktech Mobiles dark circle logo, "About Shoppe" heading,
@@ -16,11 +17,10 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "User Profile",
+        title: Text(AppLocalizations.of(context)!.userProfile,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -41,7 +41,7 @@ class AboutScreen extends StatelessWidget {
               child: Container(
                 width: 180.w,
                 height: 180.h,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                 ),
                 child: ClipOval(
@@ -66,8 +66,7 @@ class AboutScreen extends StatelessWidget {
             SizedBox(height: 36.h),
 
             // "About Shoppe" heading
-            Text(
-              "About Shoppe",
+            Text(AppLocalizations.of(context)!.aboutShoppe,
               style: TextStyle(
                 fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
@@ -88,8 +87,7 @@ class AboutScreen extends StatelessWidget {
             SizedBox(height: 28.h),
 
             // Contact note
-            Text(
-              "If you need help or you have any questions, feel free to contact me by email.",
+            Text(AppLocalizations.of(context)!.ifYouNeedHelpOrYouHaveAnyQuest,
               style: TextStyle(
                 fontSize: 16.sp,
                 color: Colors.grey.shade700,

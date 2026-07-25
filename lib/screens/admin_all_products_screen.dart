@@ -6,6 +6,7 @@ import 'admin_add_product_screen.dart';
 import 'admin_edit_product_screen.dart';
 import '../models/product.dart';
 import '../services/product_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminAllProductsScreen extends StatefulWidget {
   const AdminAllProductsScreen({super.key});
@@ -95,14 +96,14 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                   onPressed: () async {
                     final result = await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const AdminAddProductScreen()),
+                      MaterialPageRoute(builder: (_) => AdminAddProductScreen()),
                     );
                     if (result == true) {
                       _fetchProducts();
                     }
                   },
                   icon: Icon(Icons.add, size: 18.sp),
-                  label: Text("Add new product", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                  label: Text(AppLocalizations.of(context)!.addNewProduct, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.overlayDark, // Dark navy blue matching 022 button
                     foregroundColor: Colors.white,
@@ -118,12 +119,12 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
               TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: "Search products...",
+                  hintText: AppLocalizations.of(context)!.searchProducts,
                   hintStyle: TextStyle(color: Colors.grey.shade400),
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
                   suffixIcon: _searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: const Icon(Icons.clear, color: Colors.grey),
+                          icon: Icon(Icons.clear, color: Colors.grey),
                           onPressed: () {
                             _searchController.clear();
                             setState(() {
@@ -135,7 +136,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                         )
                       : null,
                   filled: true,
-                  fillColor: const Color(0xFFF5F6F8),
+                  fillColor: Color(0xFFF5F6F8),
                   contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.r),
@@ -157,14 +158,14 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
         // Product Grid
         Expanded(
           child: _isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(child: CircularProgressIndicator())
               : _error != null
-                  ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+                  ? Center(child: Text(_error!, style: TextStyle(color: Colors.red)))
                   : _products.isEmpty
-                      ? const Center(child: Text("No products found."))
+                      ? Center(child: Text(AppLocalizations.of(context)!.noProductsFound))
                       : GridView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: 0.65, // Adjust to fit image and text comfortably
                             crossAxisSpacing: 16,
@@ -212,7 +213,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          icon: const Icon(Icons.chevron_left),
+          icon: Icon(Icons.chevron_left),
           onPressed: _currentPage > 0 ? () => _goToPage(_currentPage - 1) : null,
           color: _currentPage > 0 ? AppColors.textPrimary : Colors.grey.shade300,
         ),
@@ -241,7 +242,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
             ),
           ),
         IconButton(
-          icon: const Icon(Icons.chevron_right),
+          icon: Icon(Icons.chevron_right),
           onPressed: _currentPage < _totalPages - 1 ? () => _goToPage(_currentPage + 1) : null,
           color: _currentPage < _totalPages - 1 ? AppColors.textPrimary : Colors.grey.shade300,
         ),
@@ -259,7 +260,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -321,7 +322,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
               ],
             ),
           ),

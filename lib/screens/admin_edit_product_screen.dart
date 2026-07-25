@@ -8,6 +8,7 @@ import '../models/product.dart';
 import '../models/category.dart';
 import '../services/category_service.dart';
 import '../services/product_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminEditProductScreen extends StatefulWidget {
   final Product product;
@@ -138,7 +139,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     if (_selectedCategoryId == null) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Please select a category')));
+      ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.pleaseSelectACategory)));
       return;
     }
 
@@ -170,7 +171,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
       await ProductService.updateProduct(widget.product.id, productData);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Product updated successfully')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.productUpdatedSuccessfully)),
         );
         Navigator.pop(context, true);
       }
@@ -191,16 +192,16 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Product'),
-        content: const Text('Are you sure you want to delete this product?'),
+        title: Text(AppLocalizations.of(context)!.deleteProduct),
+        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToDeleteThisP),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(AppLocalizations.of(context)!.delete, style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -213,7 +214,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
         if (mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text('Product deleted')));
+          ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.productDeleted)));
           Navigator.pop(context, true);
         }
       } catch (e) {
@@ -242,7 +243,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
           padding: EdgeInsets.all(8.0.w),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFF5F6F8),
+              color: Color(0xFFF5F6F8),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -251,8 +252,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
             ),
           ),
         ),
-        title: Text(
-          "Edit Product",
+        title: Text(AppLocalizations.of(context)!.editProduct,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -261,7 +261,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
         ),
       ),
       body: _isLoading || _isSaving
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               child: Form(
@@ -269,8 +269,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Product Information",
+                    Text(AppLocalizations.of(context)!.productInformation,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
@@ -283,12 +282,11 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                     _buildLabel("Category"),
                     SizedBox(height: 8.h),
                     DropdownButtonFormField<int>(
-                      value: _selectedCategoryId,
-                      hint: Text(
-                        "Select Category",
+                      initialValue: _selectedCategoryId,
+                      hint: Text(AppLocalizations.of(context)!.selectCategory,
                         style: TextStyle(color: Colors.grey.shade400),
                       ),
-                      icon: const Icon(Icons.keyboard_arrow_down),
+                      icon: Icon(Icons.keyboard_arrow_down),
                       decoration: _inputDecoration(),
                       items: _categories.map((cat) {
                         return DropdownMenuItem<int>(
@@ -358,7 +356,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                         width: 120.w,
                         height: 120.h,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF1F5F9), // Light blueish grey
+                          color: Color(0xFFF1F5F9), // Light blueish grey
                           borderRadius: BorderRadius.circular(16.r),
                           image: _newImageFile != null
                               ? DecorationImage(
@@ -384,8 +382,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                                       color: Colors.grey,
                                     ),
                                     SizedBox(height: 4),
-                                    Text(
-                                      "Change",
+                                    Text(AppLocalizations.of(context)!.change,
                                       style: TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 12.sp,
@@ -465,7 +462,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.05),
-                offset: const Offset(0, -4),
+                offset: Offset(0, -4),
                 blurRadius: 10,
               ),
             ],
@@ -475,9 +472,8 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
             children: [
               TextButton.icon(
                 onPressed: _isLoading || _isSaving ? null : _deleteProduct,
-                icon: const Icon(Icons.delete_outline, color: Colors.red),
-                label: Text(
-                  "Delete Product",
+                icon: Icon(Icons.delete_outline, color: Colors.red),
+                label: Text(AppLocalizations.of(context)!.deleteProduct,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 16.sp,
@@ -488,19 +484,18 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
               ElevatedButton(
                 onPressed: _isLoading || _isSaving ? null : _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF14243A), // Navy blue
+                  backgroundColor: Color(0xFF14243A), // Navy blue
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(
                     horizontal: 48.w,
                     vertical: 16.h,
                   ),
-                  minimumSize: const Size(120, 56),
+                  minimumSize: Size(120, 56),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                child: Text(
-                  "Update",
+                child: Text(AppLocalizations.of(context)!.update,
                   style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                 ),
               ),

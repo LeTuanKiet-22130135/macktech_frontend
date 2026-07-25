@@ -5,6 +5,7 @@ import '../services/review_service.dart';
 import '../widgets/review_card.dart';
 import '../theme/app_colors.dart';
 import 'add_review_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ReviewsScreen extends StatefulWidget {
   final String productId;
@@ -46,11 +47,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
-        title: const Text("Reviews"),
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
+        title: Text(AppLocalizations.of(context)!.reviews),
       ),
       body: _isLoading 
-        ? const Center(child: CircularProgressIndicator())
+        ? Center(child: CircularProgressIndicator())
         : Column(
             children: [
               Padding(
@@ -79,11 +80,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                         ).then((_) => _fetchReviews());
                       },
                       icon: Icon(Icons.edit, size: 16.sp),
-                      label: const Text("Add Review"),
+                      label: Text(AppLocalizations.of(context)!.addReview),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.secondary,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-                        minimumSize: const Size(120, 40),
+                        minimumSize: Size(120, 40),
                       ),
                     ),
                   ],
@@ -91,7 +92,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               ),
               Expanded(
                 child: _reviews.isEmpty
-                    ? const Center(child: Text("No reviews yet. Be the first to review!"))
+                    ? Center(child: Text(AppLocalizations.of(context)!.noReviewsYetBeTheFirstToReview))
                     : ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 24.w),
                         itemCount: _reviews.length,

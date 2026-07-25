@@ -6,6 +6,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import '../providers/auth_provider.dart';
 import 'password_recovery_sms_code_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PasswordRecoveryPhoneScreen extends ConsumerStatefulWidget {
   const PasswordRecoveryPhoneScreen({super.key});
@@ -23,7 +24,7 @@ class _PasswordRecoveryPhoneScreenState
   Future<void> _handleNext() async {
     if (_completePhoneNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your phone number')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterYourPhoneNumber)),
       );
       return;
     }
@@ -37,8 +38,8 @@ class _PasswordRecoveryPhoneScreenState
       if (!exists) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Phone number not found in our records.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.phoneNumberNotFoundInOurRecord),
           ),
         );
         setState(() => _isLoading = false);
@@ -90,7 +91,7 @@ class _PasswordRecoveryPhoneScreenState
     return Container(
       width: double.infinity,
       height: 120.h,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.tertiaryDarker,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
@@ -105,7 +106,7 @@ class _PasswordRecoveryPhoneScreenState
               left: 16.w,
               top: 16.h,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -158,8 +159,7 @@ class _PasswordRecoveryPhoneScreenState
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Password Recovery",
+                  Text(AppLocalizations.of(context)!.passwordRecovery,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -194,8 +194,8 @@ class _PasswordRecoveryPhoneScreenState
                       initialCountryCode: 'VN',
                       disableLengthCheck: true,
                       showDropdownIcon: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your phone number',
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.enterYourPhoneNumber,
                         border: InputBorder.none,
                         counterText: '',
                       ),
@@ -205,7 +205,7 @@ class _PasswordRecoveryPhoneScreenState
                     ),
                   ),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Next button
                   SizedBox(
@@ -232,8 +232,7 @@ class _PasswordRecoveryPhoneScreenState
                                 color: Colors.white,
                               ),
                             )
-                          : Text(
-                              "Next",
+                          : Text(AppLocalizations.of(context)!.next,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -247,8 +246,7 @@ class _PasswordRecoveryPhoneScreenState
                   // Cancel
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade500,

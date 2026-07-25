@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class SecurityPrivacyScreen extends StatelessWidget {
   const SecurityPrivacyScreen({super.key});
@@ -10,12 +11,12 @@ class SecurityPrivacyScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Security and Privacy", style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context)!.securityAndPrivacy, style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -68,14 +69,14 @@ class SecurityPrivacyScreen extends StatelessWidget {
             SizedBox(height: 8.h),
             Row(
               children: [
-                Text("✉️ ", style: TextStyle(fontSize: 16.sp)),
+                Text("• ", style: TextStyle(fontSize: 16.sp)),
                 Expanded(child: _buildParagraph("Email: privacy@macktech.com", paddingBottom: 0)),
               ],
             ),
             SizedBox(height: 8.h),
             Row(
               children: [
-                Text("📍 ", style: TextStyle(fontSize: 16.sp)),
+                Text("• ", style: TextStyle(fontSize: 16.sp)),
                 Expanded(child: _buildParagraph("Address: 162 Kaduwela Rd, Malabe .", paddingBottom: 0)),
               ],
             ),

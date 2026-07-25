@@ -15,6 +15,7 @@ import '../services/recombee_tracking_service.dart';
 import '../services/product_service.dart';
 import '../widgets/product_card.dart';
 import '../widgets/custom_image.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   final Product product;
@@ -131,7 +132,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             ),
           ),
         ),
-        const Expanded(
+        Expanded(
           child: Center(
             child: CircularProgressIndicator(color: AppColors.primary),
           ),
@@ -170,8 +171,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                 Icon(Icons.error_outline,
                     color: Colors.redAccent, size: 48.sp),
                 SizedBox(height: 16.h),
-                Text(
-                  'Failed to load product details',
+                Text(AppLocalizations.of(context)!.failedToLoadProductDetails,
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 15.sp),
                 ),
                 SizedBox(height: 16.h),
@@ -179,7 +179,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   onPressed: () => ref.invalidate(
                       productDetailProvider(widget.product.id)),
                   icon: Icon(Icons.refresh, size: 18.sp),
-                  label: Text('Retry'),
+                  label: Text(AppLocalizations.of(context)!.retry),
                 ),
               ],
             ),
@@ -215,7 +215,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                             Text(
                               detail.title,
                               style: TextStyle(
-                                fontSize: 24.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 height: 1.3,
                                 color: AppColors.tertiaryDarker,
@@ -263,8 +263,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Total Price',
+                      Text(AppLocalizations.of(context)!.totalPrice,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -384,7 +383,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             child: GestureDetector(
               onTap: () {
                 _imagePageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
               },
@@ -408,7 +407,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             child: GestureDetector(
               onTap: () {
                 _imagePageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 );
               },
@@ -467,8 +466,8 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
           ),
           child: Text(
             detail.inStock
-                ? 'In Stock (${detail.stockQuantity})'
-                : 'Out of Stock',
+                ? '${AppLocalizations.of(context)!.inStock} (${detail.stockQuantity})'
+                : AppLocalizations.of(context)!.outOfStock,
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
@@ -479,7 +478,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
         if (detail.sku.isNotEmpty) ...[
           SizedBox(width: 12.w),
           Text(
-            'SKU: ${detail.sku}',
+            '${AppLocalizations.of(context)!.sku} ${detail.sku}',
             style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade400),
           ),
         ],
@@ -493,8 +492,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Available Colors',
+        Text(AppLocalizations.of(context)!.availableColors,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
@@ -550,8 +548,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Key Features',
+        Text(AppLocalizations.of(context)!.keyFeatures,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.bold,
@@ -570,7 +567,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   child: Container(
                     width: 5.w,
                     height: 5,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.tertiaryDarker,
                       shape: BoxShape.circle,
                     ),
@@ -654,7 +651,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               backgroundColor: AppColors.tertiaryDarker,
               disabledBackgroundColor: Colors.grey.shade300,
               foregroundColor: Colors.white,
-              minimumSize: const Size(0, 52),
+              minimumSize: Size(0, 52),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(26.r),
               ),
@@ -688,7 +685,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(isWished ? "Removed from wishlist" : "Added to wishlist"),
-                    duration: const Duration(seconds: 1),
+                    duration: Duration(seconds: 1),
                   ),
                 );
               },
@@ -703,7 +700,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 8,
-                      offset: const Offset(0, 4),
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
@@ -732,8 +729,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Description',
+        Text(AppLocalizations.of(context)!.description,
           style: TextStyle(
             fontSize: 15.sp,
             fontWeight: FontWeight.bold,
@@ -791,8 +787,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
           children: [
             Row(
               children: [
-                Text(
-                  'Reviews',
+                Text(AppLocalizations.of(context)!.reviews,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -815,8 +810,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   MaterialPageRoute(builder: (_) => ReviewsScreen(productId: widget.product.id)),
                 ).then((_) => _fetchReviews()); // Refresh when coming back
               },
-              child: Text(
-                'View All',
+              child: Text(AppLocalizations.of(context)!.viewAll,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -836,8 +830,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
         else if (_recentReviews.isEmpty)
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h),
-            child: Text(
-              "No reviews yet.",
+            child: Text(AppLocalizations.of(context)!.noReviewsYet,
               style: TextStyle(color: Colors.grey.shade600),
             ),
           )
@@ -892,8 +885,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Text(
-            "Similar Products",
+          child: Text(AppLocalizations.of(context)!.similarProducts,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -963,8 +955,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   ),
                 ),
                 SizedBox(height: 28.h),
-                Text(
-                  'Added to cart !',
+                Text(AppLocalizations.of(context)!.addedToCart,
                   style: TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.bold,

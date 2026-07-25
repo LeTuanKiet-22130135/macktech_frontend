@@ -2,29 +2,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
+import '../providers/locale_provider.dart';
+
 import 'delete_account_screen.dart';
 import 'security_privacy_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Settings",
+        title: Text(
+          AppLocalizations.of(context)?.settings ?? "Settings",
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -37,8 +41,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Your account is protected",
+                  Text(AppLocalizations.of(context)!.yourAccountIsProtected,
                     style: TextStyle(
                       color: AppColors.success,
                       fontSize: 20.sp,
@@ -46,8 +49,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.h),
-                  Text(
-                    "Macktech mobile app protects your personal information and keeps it private , safe and secure .",
+                  Text(AppLocalizations.of(context)!.macktechMobileAppProtectsYourP,
                     style: TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 14.sp,
@@ -59,15 +61,15 @@ class SettingsScreen extends StatelessWidget {
                   // 2x2 Grid for the green features
                   Row(
                     children: [
-                      Expanded(child: _buildGreenItem(Icons.account_circle_outlined, "Account security")),
-                      Expanded(child: _buildGreenItem(Icons.lock_outline, "Privacy")),
+                      Expanded(child: _buildGreenItem(Icons.account_circle_outlined, AppLocalizations.of(context)!.accountSecurity)),
+                      Expanded(child: _buildGreenItem(Icons.lock_outline, AppLocalizations.of(context)!.privacy)),
                     ],
                   ),
                   SizedBox(height: 16.h),
                   Row(
                     children: [
-                      Expanded(child: _buildGreenItem(Icons.key, "Permissions")),
-                      Expanded(child: _buildGreenItem(Icons.check_circle_outline, "Safety center")),
+                      Expanded(child: _buildGreenItem(Icons.key, AppLocalizations.of(context)!.permissions)),
+                      Expanded(child: _buildGreenItem(Icons.check_circle_outline, AppLocalizations.of(context)!.safetyCenter)),
                     ],
                   ),
                 ],
@@ -78,18 +80,20 @@ class SettingsScreen extends StatelessWidget {
             
             // List Items matching 027.png
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(top: BorderSide(color: AppColors.border)),
               ),
               child: Column(
                 children: [
-                  _buildListTile("Delete Account", subtitle: "Bạn đang có một đơn hàng", onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const DeleteAccountScreen()));
+                  _buildListTile(AppLocalizations.of(context)!.deleteAccount, subtitle: AppLocalizations.of(context)!.youHaveAnOngoingOrder, onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => DeleteAccountScreen()));
                   }),
                   _buildDivider(),
-                  _buildListTile("Security and Privacy", onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const SecurityPrivacyScreen()));
+                  _buildListTile(AppLocalizations.of(context)!.securityAndPrivacy, onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => SecurityPrivacyScreen()));
                   }),
+                  _buildDivider(),
+                  _buildLanguageListTile(context, ref),
                   _buildDivider(),
                 ],
               ),
@@ -144,6 +148,32 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _buildDivider() {
-    return const Divider(height: 1, thickness: 1, color: AppColors.border);
+    return Divider(height: 1, thickness: 1, color: AppColors.border);
+  }
+
+  Widget _buildLanguageListTile(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(localeProvider);
+    final loc = AppLocalizations.of(context);
+
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 4.h),
+      title: Text(
+        loc?.language ?? "Language",
+        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+      ),
+      trailing: DropdownButton<String>(
+        value: currentLocale.languageCode,
+        underline: SizedBox(),
+        items: [
+          DropdownMenuItem(value: 'vi', child: Text(loc?.vietnamese ?? "Vietnamese")),
+          DropdownMenuItem(value: 'en', child: Text(loc?.english ?? "English")),
+        ],
+        onChanged: (val) {
+          if (val != null) {
+            ref.read(localeProvider.notifier).setLocale(Locale(val));
+          }
+        },
+      ),
+    );
   }
 }

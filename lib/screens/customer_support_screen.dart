@@ -6,6 +6,7 @@ import 'package:app_frontend/theme/app_colors.dart';
 import '../models/ticket.dart';
 import '../services/ticket_service.dart';
 import 'package:intl/intl.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class CustomerSupportScreen extends StatefulWidget {
   const CustomerSupportScreen({super.key});
@@ -58,11 +59,10 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Customer Support",
+        title: Text(AppLocalizations.of(context)!.customerSupport,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -79,8 +79,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             SizedBox(height: 16.h),
 
             // Section title
-            Text(
-              "Raised ticket history",
+            Text(AppLocalizations.of(context)!.raisedTicketHistory,
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
@@ -92,17 +91,16 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             // Ticket cards
             Expanded(
               child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(child: CircularProgressIndicator())
                   : _tickets.isEmpty
                       ? Center(
-                          child: Text(
-                            "No tickets raised yet.",
+                          child: Text(AppLocalizations.of(context)!.noTicketsRaisedYet,
                             style: TextStyle(color: Colors.grey.shade500),
                           ),
                         )
                       : ListView.separated(
                           itemCount: _tickets.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 16.h),
+                          separatorBuilder: (_, _) => SizedBox(height: 16.h),
                           itemBuilder: (context, index) {
                             final t = _tickets[index];
                             final dateStr = DateFormat('dd-MM-yyyy').format(t.createdAt);
@@ -136,7 +134,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const RaiseTicketScreen(),
+                          builder: (_) => RaiseTicketScreen(),
                         ),
                       ).then((didSubmit) {
                         if (didSubmit == true) {
@@ -153,8 +151,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                       ),
                     ),
                     icon: Icon(Icons.add, size: 20.sp),
-                    label: Text(
-                      "Raise a new ticket",
+                    label: Text(AppLocalizations.of(context)!.raiseANewTicket,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -206,14 +203,18 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Ticket no. $ticketNo",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                    color: AppColors.tertiaryDarker,
+                Expanded(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.ticketNo} $ticketNo",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                      color: AppColors.tertiaryDarker,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                SizedBox(width: 8.w),
                 Text(
                   date,
                   style: TextStyle(
@@ -226,11 +227,11 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             SizedBox(height: 14.h),
 
             // Type / category
-            _buildDetailRow("Ticket type /\ncategory", category),
+            _buildDetailRow(AppLocalizations.of(context)!.ticketTypeCategory, category),
             SizedBox(height: 12.h),
 
             // Description
-            _buildDetailRow("Description", description),
+            _buildDetailRow(AppLocalizations.of(context)!.description, description),
             SizedBox(height: 12.h),
 
             // Status
@@ -239,8 +240,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               children: [
                 SizedBox(
                   width: 120.w,
-                  child: Text(
-                    "Status",
+                  child: Text(AppLocalizations.of(context)!.status,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey.shade400,
@@ -249,7 +249,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                 ),
                 Expanded(
                   child: Text(
-                    status,
+                    _getLocalizedStatus(context, status),
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -291,5 +291,20 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
         ),
       ],
     );
+  }
+
+  String _getLocalizedStatus(BuildContext context, String status) {
+    switch (status.toLowerCase()) {
+      case 'open':
+        return AppLocalizations.of(context)!.statusOpen;
+      case 'closed':
+        return AppLocalizations.of(context)!.statusClosed;
+      case 'resolved':
+        return AppLocalizations.of(context)!.statusResolved;
+      case 'in progress':
+        return AppLocalizations.of(context)!.statusInProgress;
+      default:
+        return status;
+    }
   }
 }

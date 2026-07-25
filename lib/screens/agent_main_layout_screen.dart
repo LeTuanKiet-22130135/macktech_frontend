@@ -7,6 +7,7 @@ import 'agent_dashboard_screen.dart';
 import 'agent_conversation_list_screen.dart';
 import 'login_screen.dart';
 import 'change_password_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AgentMainLayoutScreen extends ConsumerStatefulWidget {
   const AgentMainLayoutScreen({super.key});
@@ -25,7 +26,7 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.tertiaryNormal,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
         title: Row(
           children: [
             Container(
@@ -35,11 +36,10 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child: const Icon(Icons.rocket_launch, color: Colors.blueAccent),
+              child: Icon(Icons.rocket_launch, color: Colors.blueAccent),
             ),
             SizedBox(width: 8.w),
-            Text(
-              "Support Agent Portal",
+            Text(AppLocalizations.of(context)!.supportAgentPortal,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -53,9 +53,9 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
             padding: EdgeInsets.only(right: 16.0.w),
             child: PopupMenuButton<int>(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-              offset: const Offset(0, 50),
+              offset: Offset(0, 50),
               color: Colors.white,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(Icons.support_agent, color: AppColors.textPrimary),
               ),
@@ -63,14 +63,14 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
                 if (value == 1) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const ChangePasswordScreen()),
+                    MaterialPageRoute(builder: (_) => ChangePasswordScreen()),
                   );
                 } else if (value == 2) {
                   await ref.read(authProvider.notifier).logout();
                   if (!context.mounted) return;
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
                     (route) => false,
                   );
                 }
@@ -80,8 +80,7 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
                   enabled: false,
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                    child: Text(
-                      "Agent",
+                    child: Text(AppLocalizations.of(context)!.agent,
                       style: TextStyle(
                         fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
@@ -96,8 +95,7 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "CHANGE PASSWORD",
+                      Text(AppLocalizations.of(context)!.changePassword,
                         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
                       SizedBox(width: 24.w),
@@ -110,8 +108,7 @@ class _AgentMainLayoutScreenState extends ConsumerState<AgentMainLayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "LOG OUT",
+                      Text(AppLocalizations.of(context)!.logOut,
                         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
                       SizedBox(width: 24.w),

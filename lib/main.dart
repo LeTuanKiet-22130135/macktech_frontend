@@ -12,6 +12,9 @@ import 'providers/session_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/cart_provider.dart';
 import 'providers/notification_provider.dart';
+import 'providers/locale_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 import 'screens/main_layout_screen.dart';
 import 'screens/admin_main_layout_screen.dart';
@@ -150,6 +153,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final sessionAsync = ref.watch(sessionProvider);
+    final locale = ref.watch(localeProvider);
 
     return ScreenUtilInit(
       designSize: const Size(375, 812), // standard design size
@@ -160,6 +164,17 @@ class _MyAppState extends ConsumerState<MyApp> {
           title: 'Macktech Mobiles',
           theme: AppTheme.lightTheme,
           navigatorKey: appNavigatorKey,
+          locale: locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('vi'),
+          ],
           builder: (context, widget) {
             return GlobalChatWrapper(child: widget!);
           },
@@ -175,7 +190,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             loading: () => const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             ),
-            error: (_, __) => const WelcomeScreen(),
+            error: (_, _) => const WelcomeScreen(),
           ),
           debugShowCheckedModeBanner: false,
         );

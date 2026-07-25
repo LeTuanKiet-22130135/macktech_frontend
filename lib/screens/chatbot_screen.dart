@@ -9,6 +9,7 @@ import '../services/stomp_chat_service.dart';
 import '../services/session_service.dart';
 import '../providers/navigation_provider.dart';
 import '../theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ChatbotScreen extends ConsumerStatefulWidget {
   final String? ticketId;
@@ -243,11 +244,11 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
   }
 
   void _scrollToBottom() {
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -340,7 +341,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
         ),
       ),
       body: _isLoadingHistory
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(color: AppColors.tertiaryDarker),
             )
           : Column(
@@ -457,7 +458,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
@@ -552,7 +553,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: Offset(0, -2),
           ),
         ],
       ),
@@ -571,7 +572,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
                   textInputAction: TextInputAction.send,
                   onSubmitted: (_) => _sendMessage(),
                   decoration: InputDecoration(
-                    hintText: "Type a message...",
+                    hintText: AppLocalizations.of(context)!.typeAMessage,
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 14.sp),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(

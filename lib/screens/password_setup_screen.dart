@@ -7,6 +7,7 @@ import 'package:app_frontend/theme/app_colors.dart';
 import 'login_screen.dart';
 
 import '../providers/auth_provider.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Setup New Password screen matching design 169.
 /// Shows avatar, "Setup New Password" heading, New Password / Repeat Password
@@ -83,8 +84,7 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Setup New Password",
+                  Text(AppLocalizations.of(context)!.setupNewPassword,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -112,7 +112,7 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                   // Repeat Password field
                   _buildPasswordField("Repeat Password", _repeatPasswordController),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Save button
                   SizedBox(
@@ -127,21 +127,21 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
 
                               if (newPassword.isEmpty || repeatPassword.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please fill all fields')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.pleaseFillAllFields)),
                                 );
                                 return;
                               }
 
                               if (newPassword.length < 6) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Password must be at least 6 characters')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.passwordMustBeAtLeast6Characte)),
                                 );
                                 return;
                               }
 
                               if (newPassword != repeatPassword) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Passwords do not match')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.passwordsDoNotMatch)),
                                 );
                                 return;
                               }
@@ -155,14 +155,14 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                                   
                                   if (!mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Password updated successfully. Please login.')),
+                                    SnackBar(content: Text(AppLocalizations.of(context)!.passwordUpdatedSuccessfullyPle)),
                                   );
                                   
                                   // Use popUntil to clear stack safely then pushReplacement
                                   Navigator.popUntil(context, (route) => route.isFirst);
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+                                    MaterialPageRoute(builder: (_) => LoginScreen()),
                                   );
                                 } else {
                                   await ref.read(authProvider.notifier).resetPassword(
@@ -192,9 +192,8 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
                         elevation: 0,
                       ),
                       child: _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                              "Save",
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(AppLocalizations.of(context)!.save,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -224,7 +223,7 @@ class _PasswordSetupScreenState extends ConsumerState<PasswordSetupScreen> {
             child: Container(
               width: 400.w,
               height: 280.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(200),

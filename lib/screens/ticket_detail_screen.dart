@@ -9,6 +9,7 @@ import 'chatbot_screen.dart';
 /// number, and status.
 import '../models/ticket.dart';
 import '../services/session_service.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class TicketDetailScreen extends StatefulWidget {
   final Ticket ticket;
@@ -54,11 +55,11 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "Ticket no.${widget.ticket.ticketNumber}",
+          "${AppLocalizations.of(context)!.ticketNo} ${widget.ticket.ticketNumber}",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
@@ -68,15 +69,14 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         centerTitle: true,
       ),
       body: _isLoadingUser
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Customer Information header
-                  Text(
-                    "Customer Information",
+                  Text(AppLocalizations.of(context)!.customerInformation,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -86,20 +86,19 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                   SizedBox(height: 16.h),
 
                   // Customer Name
-                  _buildFieldLabel("Customer Name"),
-                  const SizedBox(height: 4),
+                  _buildFieldLabel(AppLocalizations.of(context)!.customerName),
+                  SizedBox(height: 4),
                   _buildFieldValue(_customerName),
                   SizedBox(height: 16.h),
 
                   // Email Address
-                  _buildFieldLabel("Email Address"),
-                  const SizedBox(height: 4),
+                  _buildFieldLabel(AppLocalizations.of(context)!.emailAddress),
+                  SizedBox(height: 4),
                   _buildFieldValue(_email),
                   SizedBox(height: 24.h),
 
                   // Ticket Type / Category
-                  Text(
-                    "Ticket Type / Category",
+                  Text(AppLocalizations.of(context)!.ticketTypeCategory,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -111,8 +110,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                   SizedBox(height: 24.h),
 
                   // Issue
-                  Text(
-                    "Issue",
+                  Text(AppLocalizations.of(context)!.issue,
                     style: TextStyle(
                       fontSize: 17.sp,
                       fontWeight: FontWeight.bold,
@@ -132,8 +130,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
 
                   // Attachments
                   if (widget.ticket.attachments.isNotEmpty) ...[
-                    Text(
-                      "Attachments",
+                    Text(AppLocalizations.of(context)!.attachments,
                       style: TextStyle(
                         fontSize: 17.sp,
                         fontWeight: FontWeight.bold,
@@ -170,8 +167,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                             ),
                             SizedBox(width: 10.w),
                             Expanded(
-                              child: Text(
-                                "Image attached",
+                              child: Text(AppLocalizations.of(context)!.imageAttached,
                                 style: TextStyle(
                                   fontSize: 13.sp,
                                   color: Colors.grey.shade500,
@@ -189,8 +185,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                   // Status row
                   Row(
                     children: [
-                      Text(
-                        "Status",
+                      Text(AppLocalizations.of(context)!.status,
                         style: TextStyle(
                           fontSize: 17.sp,
                           fontWeight: FontWeight.bold,
@@ -199,7 +194,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                       ),
                       SizedBox(width: 24.w),
                       Text(
-                        widget.ticket.status,
+                        _getLocalizedStatus(context, widget.ticket.status),
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -225,9 +220,8 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           );
         },
         backgroundColor: AppColors.tertiaryDarkHover,
-        icon: const Icon(Icons.chat_bubble_outline, color: Colors.white),
-        label: const Text(
-          "Chat with Support",
+        icon: Icon(Icons.chat_bubble_outline, color: Colors.white),
+        label: Text(AppLocalizations.of(context)!.chatWithSupport,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
@@ -250,5 +244,20 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
       value,
       style: TextStyle(fontSize: 15.sp, color: Colors.grey.shade500),
     );
+  }
+
+  String _getLocalizedStatus(BuildContext context, String status) {
+    switch (status.toLowerCase()) {
+      case 'open':
+        return AppLocalizations.of(context)!.statusOpen;
+      case 'closed':
+        return AppLocalizations.of(context)!.statusClosed;
+      case 'resolved':
+        return AppLocalizations.of(context)!.statusResolved;
+      case 'in progress':
+        return AppLocalizations.of(context)!.statusInProgress;
+      default:
+        return status;
+    }
   }
 }

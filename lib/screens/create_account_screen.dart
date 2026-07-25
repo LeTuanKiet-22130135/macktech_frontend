@@ -7,6 +7,7 @@ import '../providers/auth_provider.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth_blob_background.dart';
 import 'login_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class CreateAccountScreen extends ConsumerStatefulWidget {
   const CreateAccountScreen({super.key});
@@ -42,14 +43,14 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
     if (name.isEmpty || phone.isEmpty || email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all required fields.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseFillInAllRequiredFields)),
       );
       return;
     }
 
     if (password.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password must be at least 6 characters long.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.passwordMustBeAtLeast6Characte)),
       );
       return;
     }
@@ -76,15 +77,15 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Check your email for a link to verify your account before logging in.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.checkYourEmailForALinkToVerify),
           duration: Duration(seconds: 5),
         ),
       );
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        MaterialPageRoute(builder: (_) => LoginScreen()),
       );
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
@@ -134,7 +135,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
                   // Name field
                   buildAuthPillField(
-                    hintText: "Name",
+                    hintText: AppLocalizations.of(context)!.name,
                     controller: _nameController,
                   ),
                   SizedBox(height: 12.h),
@@ -147,7 +148,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                     flagsButtonPadding: EdgeInsets.only(left: 16.w),
                     style: TextStyle(fontSize: 16.sp, color: AppColors.primary),
                     decoration: InputDecoration(
-                      hintText: 'Phone Number',
+                      hintText: AppLocalizations.of(context)!.phoneNumber,
                       hintStyle: TextStyle(
                         color: Colors.grey.shade400,
                         fontSize: 16.sp,
@@ -177,7 +178,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
                   // Email field
                   buildAuthPillField(
-                    hintText: "Email",
+                    hintText: AppLocalizations.of(context)!.email,
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
@@ -185,7 +186,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
                   // Password field with visibility toggle
                   buildAuthPillField(
-                    hintText: "Password",
+                    hintText: AppLocalizations.of(context)!.password,
                     obscure: _obscurePassword,
                     controller: _passwordController,
                     suffixIcon: IconButton(
@@ -229,8 +230,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                                 strokeWidth: 2.5,
                               ),
                             )
-                          : Text(
-                              "Done",
+                          : Text(AppLocalizations.of(context)!.done,
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w600,
@@ -245,8 +245,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                   Center(
                     child: TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        "Cancel",
+                      child: Text(AppLocalizations.of(context)!.cancel,
                         style: TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 16.sp,
@@ -254,7 +253,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
 
                   // "Already have an Account?" link
                   Center(
@@ -263,12 +262,11 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const LoginScreen(),
+                            builder: (_) => LoginScreen(),
                           ),
                         );
                       },
-                      child: Text(
-                        "Already have an Account ?",
+                      child: Text(AppLocalizations.of(context)!.alreadyHaveAnAccount,
                         style: TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 14.sp,

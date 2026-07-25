@@ -8,6 +8,7 @@ import '../theme/app_colors.dart';
 import '../providers/recommendation_provider.dart';
 import 'promotion_screen.dart';
 import 'search_result_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +39,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   return ref.refresh(recommendationsProvider(_currentPage - 1).future);
                 },
                 child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(), // Important for RefreshIndicator
+                  physics: AlwaysScrollableScrollPhysics(), // Important for RefreshIndicator
                   padding: EdgeInsets.only(bottom: 100.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,8 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 SizedBox(width: 10.w),
-                Text(
-                  "Macktech Mobiles",
+                Text(AppLocalizations.of(context)!.macktechMobiles,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.sp,
@@ -100,7 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const SearchResultScreen()),
+                  MaterialPageRoute(builder: (_) => SearchResultScreen()),
                 );
               },
               child: Container(
@@ -111,10 +111,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.search, color: Colors.grey),
+                    Icon(Icons.search, color: Colors.grey),
                     SizedBox(width: 8.w),
-                    Text(
-                      "Search any Product..",
+                    Text(AppLocalizations.of(context)!.searchAnyProduct,
                       style: TextStyle(color: Colors.grey.shade500, fontSize: 14.sp),
                     ),
                   ],
@@ -133,8 +132,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Latest Promotions",
+          Text(AppLocalizations.of(context)!.latestPromotions,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -152,12 +150,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const PromotionScreen()),
+                  MaterialPageRoute(builder: (_) => PromotionScreen()),
                 );
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black,
-                side: const BorderSide(color: Colors.black),
+                side: BorderSide(color: Colors.black),
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                 minimumSize: Size.zero,
@@ -166,7 +164,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("View all promotions", style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text(AppLocalizations.of(context)!.viewAllPromotions, style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(width: 4.w),
                   Icon(Icons.arrow_forward, size: 16.sp),
                 ],
@@ -185,8 +183,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            "Suggested for You",
+          Text(AppLocalizations.of(context)!.suggestedForYou,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -197,7 +194,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const SearchResultScreen()),
+                MaterialPageRoute(builder: (_) => SearchResultScreen()),
               );
             },
             style: TextButton.styleFrom(
@@ -205,8 +202,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: Text(
-              "View All",
+            child: Text(AppLocalizations.of(context)!.viewAll,
               style: TextStyle(
                 color: AppColors.tertiaryNormal,
                 fontWeight: FontWeight.w600,
@@ -235,15 +231,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               Icon(Icons.error_outline, color: Colors.redAccent, size: 40.sp),
               SizedBox(height: 12.h),
-              Text(
-                'Failed to load recommendations',
+              Text(AppLocalizations.of(context)!.failedToLoadRecommendations,
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
               ),
               SizedBox(height: 12.h),
               OutlinedButton.icon(
                 onPressed: () => ref.invalidate(recommendationsProvider(_currentPage - 1)),
                 icon: Icon(Icons.refresh, size: 18.sp),
-                label: const Text("Retry"),
+                label: Text(AppLocalizations.of(context)!.retry),
               ),
             ],
           ),
@@ -266,8 +261,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 40.h),
             child: Center(
-              child: Text(
-                'No recommendations available',
+              child: Text(AppLocalizations.of(context)!.noRecommendationsAvailable,
                 style: TextStyle(color: Colors.grey, fontSize: 14.sp),
               ),
             ),
@@ -282,9 +276,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
@@ -334,8 +328,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               onPressed: _currentPage > 1
                   ? () => setState(() => _currentPage--)
                   : null,
-              child: Text(
-                "Back",
+              child: Text(AppLocalizations.of(context)!.back,
                 style: TextStyle(
                   color: _currentPage > 1
                       ? AppColors.textPrimary
@@ -375,8 +368,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               onPressed: _currentPage < totalPages
                   ? () => setState(() => _currentPage++)
                   : null,
-              child: Text(
-                "Next",
+              child: Text(AppLocalizations.of(context)!.next,
                 style: TextStyle(
                   color: _currentPage < totalPages
                       ? AppColors.tertiaryNormal
@@ -447,7 +439,7 @@ class _PromoCarouselState extends State<_PromoCarousel> {
                         Text(
                           "Image missing: \n${imagePath.split('/').last}",
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.grey),
+                          style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),

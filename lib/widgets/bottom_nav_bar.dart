@@ -37,7 +37,7 @@ class BottomNavBar extends ConsumerWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.15),
               blurRadius: 20,
-              offset: const Offset(0, 10),
+              offset: Offset(0, 10),
             ),
           ],
         ),

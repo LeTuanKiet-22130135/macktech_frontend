@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_frontend/theme/app_colors.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 /// Result returned when the user applies a filter.
 class FilterResult {
@@ -116,8 +117,7 @@ class _FilterScreenState extends State<FilterScreen> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "Filter",
+            Text(AppLocalizations.of(context)!.filter,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -148,8 +148,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   _buildSectionTitle("Category"),
                   SizedBox(height: 16.h),
                   widget.availableCategories.isEmpty
-                      ? Text(
-                          "No categories available",
+                      ? Text(AppLocalizations.of(context)!.noCategoriesAvailable,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: Colors.grey.shade500,
@@ -162,8 +161,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   _buildSectionTitle("Brand"),
                   SizedBox(height: 16.h),
                   widget.availableBrands.isEmpty
-                      ? Text(
-                          "No brands available",
+                      ? Text(AppLocalizations.of(context)!.noBrandsAvailable,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: Colors.grey.shade500,
@@ -194,8 +192,8 @@ class _FilterScreenState extends State<FilterScreen> {
             color: AppColors.tertiaryDarker,
           ),
         ),
-        const SizedBox(height: 4),
-        const Divider(height: 1),
+        SizedBox(height: 4),
+        Divider(height: 1),
       ],
     );
   }
@@ -224,7 +222,7 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Text("–", style: TextStyle(fontSize: 20.sp, color: Colors.grey.shade400)),
+              child: Text("-", style: TextStyle(fontSize: 20.sp, color: Colors.grey.shade400)),
             ),
             Expanded(
               child: _buildPriceField(
@@ -253,7 +251,7 @@ class _FilterScreenState extends State<FilterScreen> {
             thumbColor: AppColors.tertiaryDarker,
             overlayColor: AppColors.tertiaryDarker.withValues(alpha: 0.1),
             trackHeight: 3,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10),
           ),
           child: RangeSlider(
             values: _priceRange,
@@ -523,14 +521,13 @@ class _FilterScreenState extends State<FilterScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.tertiaryDarker,
                 foregroundColor: Colors.white,
-                minimumSize: const Size(0, 56),
+                minimumSize: Size(0, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),
                 ),
                 elevation: 0,
               ),
-              child: Text(
-                "Filter",
+              child: Text(AppLocalizations.of(context)!.filter,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,

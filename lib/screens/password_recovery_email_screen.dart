@@ -5,6 +5,7 @@ import 'package:app_frontend/theme/app_colors.dart';
 import 'password_recovery_code_screen.dart';
 import '../widgets/custom_text_field.dart';
 import '../providers/auth_provider.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PasswordRecoveryEmailScreen extends ConsumerStatefulWidget {
   final String initialEmail;
@@ -78,8 +79,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Password Recovery",
+                  Text(AppLocalizations.of(context)!.passwordRecovery,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -102,12 +102,12 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
 
                   // Email Input Field
                   CustomTextField(
-                    hintText: "Email",
+                    hintText: AppLocalizations.of(context)!.email,
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                   ),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Next button
                   SizedBox(
@@ -120,7 +120,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                               final email = _emailController.text.trim();
                               if (email.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please enter an email')),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterAnEmail)),
                                 );
                                 return;
                               }
@@ -156,9 +156,8 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                         elevation: 0,
                       ),
                       child: _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                              "Next",
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(AppLocalizations.of(context)!.next,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -172,8 +171,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
                   // Cancel
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade500,
@@ -202,7 +200,7 @@ class _PasswordRecoveryEmailScreenState extends ConsumerState<PasswordRecoveryEm
             child: Container(
               width: 400.w,
               height: 280.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.tertiaryDarker,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(200),

@@ -23,8 +23,8 @@ class OrderService {
           'paymentMethod': paymentMethod.toUpperCase(),
           'finalCost': finalCost,
           'itemNames': itemNames,
-          if (promoCode != null) 'promoCode': promoCode,
-          if (paymentCardId != null) 'paymentCardId': paymentCardId,
+          'promoCode': ?promoCode,
+          'paymentCardId': ?paymentCardId,
         },
       );
       return response.data as Map<String, dynamic>;

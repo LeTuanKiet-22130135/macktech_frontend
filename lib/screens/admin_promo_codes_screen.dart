@@ -5,6 +5,7 @@ import '../models/promo_code.dart';
 import '../services/promo_code_service.dart';
 import 'admin_add_promo_code_screen.dart';
 import 'admin_edit_promo_code_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class AdminPromoCodesScreen extends StatefulWidget {
   const AdminPromoCodesScreen({super.key});
@@ -62,30 +63,28 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: Color(0xFFF9F9F9),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(24.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Discount Codes",
+              Text(AppLocalizations.of(context)!.discountCodes,
                 style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
               ),
               SizedBox(height: 8.h),
-              Text(
-                "Manage promotions and product-specific limits.",
+              Text(AppLocalizations.of(context)!.managePromotionsAndProductspec,
                 style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
               ),
               SizedBox(height: 24.h),
               Expanded(
                 child: _isLoading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? Center(child: CircularProgressIndicator())
                     : _error != null
-                        ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+                        ? Center(child: Text(_error!, style: TextStyle(color: Colors.red)))
                         : _promoCodes.isEmpty
-                            ? const Center(child: Text("No promo codes found."))
+                            ? Center(child: Text(AppLocalizations.of(context)!.noPromoCodesFound))
                             : ListView.builder(
                                 itemCount: _promoCodes.length,
                                 itemBuilder: (context, index) {
@@ -118,15 +117,15 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const AdminAddPromoCodeScreen()),
+            MaterialPageRoute(builder: (_) => AdminAddPromoCodeScreen()),
           );
           if (result == true) {
             _fetchPromoCodes();
           }
         },
         backgroundColor: AppColors.primary,
-        icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text("New Code", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        icon: Icon(Icons.add, color: Colors.white),
+        label: Text(AppLocalizations.of(context)!.newCode, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -149,7 +148,7 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -192,7 +191,7 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
             style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
           ),
           if (promo.validUntil != null) ...[
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Text(
               "Expires: ${promo.validUntil!.toLocal().toString().split(' ')[0]}",
               style: TextStyle(color: Colors.red.shade400, fontSize: 12.sp),

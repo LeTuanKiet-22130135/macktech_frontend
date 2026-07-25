@@ -6,6 +6,7 @@ import '../providers/user_profile_provider.dart';
 import '../theme/app_colors.dart';
 import '../models/shipping_address.dart';
 import 'address_editing_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class CustomerDetailEditingScreen extends ConsumerStatefulWidget {
   final ShippingAddress? currentSelection;
@@ -58,8 +59,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          "Customer details",
+        title: Text(AppLocalizations.of(context)!.customerDetails,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -86,8 +86,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                 }
               }
             },
-            child: Text(
-              "Done",
+            child: Text(AppLocalizations.of(context)!.done,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
@@ -107,8 +106,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
             SizedBox(height: 24.h),
             
             // Contact Information Group
-            Text(
-              "Contact information",
+            Text(AppLocalizations.of(context)!.contactInformation,
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
@@ -125,8 +123,7 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Shipping Address",
+                Text(AppLocalizations.of(context)!.shippingAddress,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -135,9 +132,9 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const AddressEditingScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => AddressEditingScreen()));
                   },
-                  child: const Text("Add New", style: TextStyle(color: AppColors.primary)),
+                  child: Text(AppLocalizations.of(context)!.addNew, style: TextStyle(color: AppColors.primary)),
                 ),
               ],
             ),
@@ -195,21 +192,21 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
   Widget _buildAddressList() {
     final addressState = ref.watch(addressProvider);
     return addressState.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text("Error: $e")),
       data: (addresses) {
         if (addresses.isEmpty) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h),
-            child: Text("No addresses found. Please add a new address."),
+            child: Text(AppLocalizations.of(context)!.noAddressesFoundPleaseAddANewA),
           );
         }
 
         return ListView.separated(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: addresses.length,
-          separatorBuilder: (_, __) => SizedBox(height: 12.h),
+          separatorBuilder: (_, _) => SizedBox(height: 12.h),
           itemBuilder: (context, index) {
             final addr = addresses[index];
             final isSelected = _selectedAddress?.id == addr.id;
@@ -254,17 +251,17 @@ class _CustomerDetailEditingScreenState extends ConsumerState<CustomerDetailEdit
                                     color: AppColors.primary.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(4.r),
                                   ),
-                                  child: Text("Default", style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold)),
+                                  child: Text(AppLocalizations.of(context)!.defaultText, style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold)),
                                 ),
                               ]
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text(
                             "${addr.recipientName}  |  ${addr.phoneNumber}",
                             style: TextStyle(color: Colors.black87, fontSize: 13.sp),
                           ),
-                          const SizedBox(height: 2),
+                          SizedBox(height: 2),
                           Text(
                             addr.fullAddress,
                             style: TextStyle(color: Colors.grey, fontSize: 13.sp),

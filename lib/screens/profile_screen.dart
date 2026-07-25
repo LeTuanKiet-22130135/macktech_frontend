@@ -18,6 +18,7 @@ import 'about_screen.dart';
 import 'customer_support_screen.dart';
 import 'address_list_screen.dart';
 import 'welcome_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -71,7 +72,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       if (mounted) {
         setState(() => _isUploadingAvatar = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Avatar updated successfully')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.avatarUpdatedSuccessfully)),
         );
       }
     } catch (e) {
@@ -92,7 +93,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: profileAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('Error loading profile: $e')),
         data: (profile) {
           final notificationsEnabled = notificationsAsync.value ?? false;
@@ -109,7 +110,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       child: IconButton(
                         icon: Icon(Icons.settings_outlined, color: AppColors.textPrimary, size: 28.sp),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsScreen()));
                         },
                       ),
                     ),
@@ -120,33 +121,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           
                 // Options List matching 010.png
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(color: AppColors.border),
                     ),
                   ),
                   child: Column(
                     children: [
-                      _buildListTile("Personal Details", onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const PersonalDetailsScreen()));
+                      _buildListTile(AppLocalizations.of(context)!.personalDetails, onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => PersonalDetailsScreen()));
                       }),
                       _buildDivider(),
                       
-                      _buildListTile("Shipping Addresses", onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const AddressListScreen()));
+                      _buildListTile(AppLocalizations.of(context)!.shippingAddresses, onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => AddressListScreen()));
                       }),
                       _buildDivider(),
                       
-                      _buildListTile("Purchase History", onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const PurchaseHistoryScreen()));
+                      _buildListTile(AppLocalizations.of(context)!.purchaseHistory, onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => PurchaseHistoryScreen()));
                       }),
                       _buildDivider(),
                       
                       _buildListTile(
-                        "Get Customer Support", 
-                        subtitle: "Raise any concerns about a product/s",
+                        AppLocalizations.of(context)!.getCustomerSupport, 
+                        subtitle: AppLocalizations.of(context)!.raiseAnyConcerns,
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const CustomerSupportScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerSupportScreen()));
                         },
                       ),
                       _buildDivider(),
@@ -154,8 +155,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       _buildNotificationTile(notificationsEnabled),
                       _buildDivider(),
                       
-                      _buildListTile("About", onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()));
+                      _buildListTile(AppLocalizations.of(context)!.about, onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => AboutScreen()));
                       }),
                       _buildDivider(),
                       
@@ -201,11 +202,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Container(
                   width: 110.w,
                   height: 110.h,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.black54,
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
+                  child: Center(
                     child: CircularProgressIndicator(color: Colors.white),
                   ),
                 ),
@@ -215,7 +216,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   right: 0.w,
                   child: Container(
                     padding: EdgeInsets.all(8.w),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
@@ -238,7 +239,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             color: AppColors.textPrimary,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Text(
           profile.email,
           style: TextStyle(color: AppColors.textSecondary, fontSize: 16.sp),
@@ -270,8 +271,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget _buildNotificationTile(bool notificationsEnabled) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
-      title: Text(
-        "Notifications",
+      title: Text(AppLocalizations.of(context)!.notifications,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 16.sp,
@@ -291,9 +291,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget _buildLogoutTile() {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
-      leading: const Icon(Icons.logout, color: Colors.redAccent),
-      title: Text(
-        "Logout",
+      leading: Icon(Icons.logout, color: Colors.redAccent),
+      title: Text(AppLocalizations.of(context)!.logout,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 16.sp,
@@ -338,8 +337,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 SizedBox(height: 28.h),
 
                 // Title text
-                Text(
-                  "Sure you want to Log-out ?",
+                Text(AppLocalizations.of(context)!.sureYouWantToLogout,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22.sp,
@@ -356,8 +354,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     Expanded(
                       child: TextButton(
                         onPressed: () => Navigator.pop(ctx),
-                        child: Text(
-                          "Cancel",
+                        child: Text(AppLocalizations.of(context)!.cancel,
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.grey.shade500,
@@ -382,20 +379,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           final nav = Navigator.of(context, rootNavigator: true);
                           nav.popUntil((route) => route.isFirst);
                           nav.pushReplacement(
-                            MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+                            MaterialPageRoute(builder: (_) => WelcomeScreen()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
-                          minimumSize: const Size(0, 52),
+                          minimumSize: Size(0, 52),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           elevation: 0,
                         ),
-                        child: Text(
-                          "Yes",
+                        child: Text(AppLocalizations.of(context)!.yes,
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
@@ -415,6 +411,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget _buildDivider() {
-    return const Divider(height: 1, thickness: 1, color: AppColors.border);
+    return Divider(height: 1, thickness: 1, color: AppColors.border);
   }
 }

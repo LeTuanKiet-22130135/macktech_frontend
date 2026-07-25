@@ -25,7 +25,7 @@ class MainLayoutScreen extends ConsumerWidget {
     // Ensure chat FAB is handled properly elsewhere, removed redundant build-phase modification
 
     return Scaffold(
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: Stack(
         children: [
           IndexedStack(

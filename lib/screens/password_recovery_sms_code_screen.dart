@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import 'password_setup_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PasswordRecoverySmsCodeScreen extends StatefulWidget {
   final String phone;
@@ -43,7 +44,7 @@ class _PasswordRecoverySmsCodeScreenState
     final code = _controllers.map((c) => c.text).join();
     if (code.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter the 6-digit code')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.pleaseEnterThe6digitCode)),
       );
       return;
     }
@@ -91,7 +92,7 @@ class _PasswordRecoverySmsCodeScreenState
     return Container(
       width: double.infinity,
       height: 120.h,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.tertiaryDarker,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
@@ -106,7 +107,7 @@ class _PasswordRecoverySmsCodeScreenState
               left: 16.w,
               top: 16.h,
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -140,7 +141,7 @@ class _PasswordRecoverySmsCodeScreenState
           fontWeight: FontWeight.bold,
           color: AppColors.tertiaryDarker,
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero,
         ),
@@ -206,8 +207,7 @@ class _PasswordRecoverySmsCodeScreenState
                   SizedBox(height: 24.h),
 
                   // Title
-                  Text(
-                    "Password Recovery",
+                  Text(AppLocalizations.of(context)!.passwordRecovery,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -252,8 +252,7 @@ class _PasswordRecoverySmsCodeScreenState
                     onPressed: () {
                       // Optionally handle resend here
                     },
-                    child: Text(
-                      "Send Again",
+                    child: Text(AppLocalizations.of(context)!.sendAgain,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade600,
@@ -261,7 +260,7 @@ class _PasswordRecoverySmsCodeScreenState
                     ),
                   ),
 
-                  const Spacer(),
+                  Spacer(),
 
                   // Done button
                   SizedBox(
@@ -288,8 +287,7 @@ class _PasswordRecoverySmsCodeScreenState
                                 color: Colors.white,
                               ),
                             )
-                          : Text(
-                              "Done",
+                          : Text(AppLocalizations.of(context)!.done,
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,
@@ -303,8 +301,7 @@ class _PasswordRecoverySmsCodeScreenState
                   // Cancel
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
+                    child: Text(AppLocalizations.of(context)!.cancel,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: Colors.grey.shade500,

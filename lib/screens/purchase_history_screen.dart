@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../services/order_service.dart';
 import '../widgets/custom_image.dart';
 import 'order_details_screen.dart';
+import 'package:app_frontend/l10n/app_localizations.dart';
 
 class PurchaseHistoryScreen extends StatefulWidget {
   const PurchaseHistoryScreen({super.key});
@@ -55,11 +56,11 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Cancel Order"),
-        content: const Text("Are you sure you want to cancel this order? This action cannot be undone."),
+        title: Text(AppLocalizations.of(context)!.cancelOrder),
+        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToCancelThisO),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("No", style: TextStyle(color: Colors.grey))),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text("Yes, Cancel", style: TextStyle(color: Colors.red))),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(context)!.no, style: TextStyle(color: Colors.grey))),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(AppLocalizations.of(context)!.yesCancel, style: TextStyle(color: Colors.red))),
         ],
       ),
     );
@@ -71,7 +72,7 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => Center(child: CircularProgressIndicator()),
     );
 
     final success = await OrderService.cancelOrder(orderId);
@@ -80,10 +81,10 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
     Navigator.pop(context); // Close loading indicator
 
     if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Order cancelled successfully.")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.orderCancelledSuccessfully)));
       _fetchOrders(); // Refresh lists
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Failed to cancel order."), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.failedToCancelOrder), backgroundColor: Colors.red));
     }
   }
 
@@ -100,7 +101,7 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
             icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text("Purchase History", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, color: Colors.black)),
+          title: Text(AppLocalizations.of(context)!.purchaseHistory, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp, color: Colors.black)),
           centerTitle: true,
           bottom: TabBar(
             labelColor: Colors.black,
@@ -108,14 +109,14 @@ class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
             indicatorColor: AppColors.primary,
             labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
             tabs: [
-              Tab(text: "Ongoing"),
-              Tab(text: "Completed"),
-              Tab(text: "Canceled"),
+              Tab(text: AppLocalizations.of(context)!.ongoing),
+              Tab(text: AppLocalizations.of(context)!.completed),
+              Tab(text: AppLocalizations.of(context)!.canceled),
             ],
           ),
         ),
         body: _isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(child: CircularProgressIndicator())
             : TabBarView(
                 children: [
                   _OrderListView(orders: _ongoingOrders, onCancel: _cancelOrder, onRefresh: _fetchOrders),
@@ -151,11 +152,11 @@ class _OrderListView extends StatelessWidget {
       return RefreshIndicator(
         onRefresh: onRefresh,
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: AlwaysScrollableScrollPhysics(),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.7,
             alignment: Alignment.center,
-            child: const Text("No orders found."),
+            child: Text(AppLocalizations.of(context)!.noOrdersFound),
           ),
         ),
       );
@@ -192,7 +193,7 @@ class _OrderListView extends StatelessWidget {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.03),
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   ),
                 ],
               ),
@@ -231,7 +232,7 @@ class _OrderListView extends StatelessWidget {
                         ),
                         child: firstItem != null && firstItem['imageUrl'] != null
                             ? CustomImage(imageUrl: firstItem['imageUrl'] as String, fit: BoxFit.contain)
-                            : const Icon(Icons.image, color: Colors.grey),
+                            : Icon(Icons.image, color: Colors.grey),
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
@@ -244,7 +245,7 @@ class _OrderListView extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             if (totalItems > 1)
                               Text("and ${totalItems - 1} more item(s)", style: TextStyle(color: Colors.grey.shade600, fontSize: 12.sp)),
                           ],
@@ -262,8 +263,8 @@ class _OrderListView extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Total Payment", style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
-                          const SizedBox(height: 2),
+                          Text(AppLocalizations.of(context)!.totalPayment, style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
+                          SizedBox(height: 2),
                           Text(
                             "₫${(order['total'] ?? 0).toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
@@ -281,7 +282,7 @@ class _OrderListView extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                           ),
-                          child: const Text("Cancel Order", style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text(AppLocalizations.of(context)!.cancelOrder, style: TextStyle(fontWeight: FontWeight.bold)),
                         )
                       else
                         Text(
