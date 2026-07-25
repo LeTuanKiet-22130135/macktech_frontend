@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/product.dart';
 import '../theme/app_colors.dart';
-import '../screens/product_details_screen.dart';
+import '../screens/user/product/product_details_screen.dart';
 import '../providers/wishlist_provider.dart';
 
 import 'custom_image.dart';

@@ -4,7 +4,7 @@ import '../models/review.dart';
 import '../theme/app_colors.dart';
 import '../services/session_service.dart';
 import '../services/review_service.dart';
-import '../screens/add_review_screen.dart';
+import '../screens/user/product/add_review_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
 
 class ReviewCard extends StatefulWidget {
@@ -55,14 +55,14 @@ class _ReviewCardState extends State<ReviewCard> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.deleteReview),
-        content: Text(AppLocalizations.of(context)!.areYouSureYouWantToDeleteThisR),
+        title: Text(AppLocalizations.of(ctx)!.deleteReview),
+        content: Text(AppLocalizations.of(ctx)!.areYouSureYouWantToDeleteThisR),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(context)!.cancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(ctx)!.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(AppLocalizations.of(context)!.delete),
+            child: Text(AppLocalizations.of(ctx)!.delete),
           ),
         ],
       ),

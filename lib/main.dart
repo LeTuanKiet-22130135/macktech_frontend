@@ -16,11 +16,11 @@ import 'providers/locale_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
 
-import 'screens/main_layout_screen.dart';
-import 'screens/admin_main_layout_screen.dart';
-import 'screens/agent_main_layout_screen.dart';
-import 'screens/welcome_screen.dart';
-import 'screens/order_success_screen.dart';
+import 'screens/user/main/main_layout_screen.dart';
+import 'screens/admin/dashboard/admin_main_layout_screen.dart';
+import 'screens/customer_agent/dashboard/agent_main_layout_screen.dart';
+import 'screens/user/auth/welcome_screen.dart';
+import 'screens/user/checkout/order_success_screen.dart';
 import 'widgets/global_chat_wrapper.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:io';

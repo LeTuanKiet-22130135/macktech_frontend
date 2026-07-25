@@ -1,8 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-import '../widgets/custom_button.dart';
-import '../screens/login_screen.dart';
+import 'custom_button.dart';
+import '../screens/user/auth/login_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
 
 void showPasswordSuccessDialog(BuildContext context) {
