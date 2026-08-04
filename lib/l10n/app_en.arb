@@ -299,5 +299,9 @@
   "statusOpen": "Open",
   "statusClosed": "Closed",
   "statusResolved": "Resolved",
-  "statusInProgress": "In Progress"
+  "statusInProgress": "In Progress",
+  "promotions": "Promotions",
+  "revenue": "Revenue",
+  "orders": "Orders",
+  "products": "Products"
 }

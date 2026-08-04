@@ -121,21 +121,21 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   children: [
                     Expanded(
                         child: _buildMetricCard(
-                            "Revenue",
+                            AppLocalizations.of(context)!.revenue,
                             "₫${((_metrics?['totalRevenue'] as num?) ?? 0).toStringAsFixed(0)}",
                             Icons.attach_money,
                             AppColors.success)),
                     SizedBox(width: 12.w),
                     Expanded(
                         child: _buildMetricCard(
-                            "Orders",
+                            AppLocalizations.of(context)!.orders,
                             "${_metrics?['totalOrders'] ?? 0}",
                             Icons.shopping_bag_outlined,
                             Colors.blue)),
                     SizedBox(width: 12.w),
                     Expanded(
                         child: _buildMetricCard(
-                            "Products",
+                            AppLocalizations.of(context)!.products,
                             "${_metrics?['totalProducts'] ?? 0}",
                             Icons.inventory_2_outlined,
                             Colors.orange)),

@@ -391,7 +391,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ),
                           elevation: 0,
                         ),
-                        child: Text(AppLocalizations.of(context)!.yes,
+                        child: Text(AppLocalizations.of(ctx)!.yes,
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,

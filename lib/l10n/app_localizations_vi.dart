@@ -932,4 +932,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get statusInProgress => 'Đang xử lý';
+
+  @override
+  String get promotions => 'Khuyến mãi';
+
+  @override
+  String get revenue => 'Doanh thu';
+
+  @override
+  String get orders => 'Đơn hàng';
+
+  @override
+  String get products => 'Sản phẩm';
 }

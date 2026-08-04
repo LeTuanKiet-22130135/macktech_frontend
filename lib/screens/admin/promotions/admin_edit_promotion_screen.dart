@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../models/promotion.dart';
 import '../../../services/promotion_service.dart';
 import '../../../theme/app_colors.dart';
@@ -19,13 +21,14 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
   
   late TextEditingController _titleController;
   late TextEditingController _bannerUrlController;
-  late TextEditingController _linkedProductIdController;
+  late TextEditingController _skuController;
   
   late DateTime _startDate;
   late DateTime _endDate;
   late bool _isActive;
 
   bool _isSaving = false;
+  File? _selectedImage;
 
   @override
   void initState() {
@@ -33,8 +36,8 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
     final promo = widget.promotion;
     _titleController = TextEditingController(text: promo?.title ?? '');
     _bannerUrlController = TextEditingController(text: promo?.bannerImageUrl ?? '');
-    _linkedProductIdController = TextEditingController(
-        text: promo?.linkedProductId != null ? promo!.linkedProductId.toString() : '');
+    _skuController = TextEditingController(
+        text: promo?.sku ?? '');
     
     _startDate = promo?.startDate ?? DateTime.now();
     _endDate = promo?.endDate ?? DateTime.now().add(Duration(days: 30));
@@ -45,7 +48,7 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
   void dispose() {
     _titleController.dispose();
     _bannerUrlController.dispose();
-    _linkedProductIdController.dispose();
+    _skuController.dispose();
     super.dispose();
   }
 
@@ -78,6 +81,16 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
     }
   }
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
+      });
+    }
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     
@@ -88,14 +101,21 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
         id: widget.promotion?.id,
         title: _titleController.text.trim(),
         bannerImageUrl: _bannerUrlController.text.trim(),
-        linkedProductId: int.tryParse(_linkedProductIdController.text.trim()),
+        sku: _skuController.text.trim().isEmpty ? null : _skuController.text.trim(),
         startDate: _startDate,
         endDate: _endDate,
         isActive: _isActive,
       );
 
       if (widget.promotion == null) {
-        await PromotionService.createPromotion(newPromo);
+        if (_selectedImage == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please select an image for the promotion.')),
+          );
+          setState(() => _isSaving = false);
+          return;
+        }
+        await PromotionService.createPromotion(newPromo, _selectedImage!);
       } else {
         await PromotionService.updatePromotion(widget.promotion!.id!, newPromo);
       }
@@ -154,20 +174,53 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
                     validator: (v) => v == null || v.isEmpty ? 'Required' : null,
                   ),
                   SizedBox(height: 16.h),
-                  TextFormField(
-                    controller: _bannerUrlController,
-                    decoration: InputDecoration(
-                      labelText: 'Banner Image URL',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+                  if (isEdit)
+                    TextFormField(
+                      controller: _bannerUrlController,
+                      decoration: InputDecoration(
+                        labelText: 'Banner Image URL',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+                      ),
+                      validator: (val) => val!.trim().isEmpty ? 'Please enter a banner image URL' : null,
+                    )
+                  else
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Banner Image", style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700)),
+                        SizedBox(height: 8.h),
+                        GestureDetector(
+                          onTap: _pickImage,
+                          child: Container(
+                            height: 150.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+                            child: _selectedImage != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    child: Image.file(_selectedImage!, fit: BoxFit.cover),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.add_photo_alternate, size: 40.sp, color: Colors.grey),
+                                      SizedBox(height: 8.h),
+                                      Text("Tap to select image", style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      ],
                     ),
-                    validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                  ),
                   SizedBox(height: 16.h),
                   TextFormField(
-                    controller: _linkedProductIdController,
-                    keyboardType: TextInputType.number,
+                    controller: _skuController,
                     decoration: InputDecoration(
-                      labelText: 'Linked Product ID (Optional)',
+                      labelText: 'SKU (Optional)',
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
                     ),
                   ),

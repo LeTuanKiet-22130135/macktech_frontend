@@ -12,6 +12,7 @@ import '../promotions/admin_promotions_screen.dart';
 import '../../user/auth/login_screen.dart';
 import '../../user/profile/change_password_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import '../../../providers/locale_provider.dart';
 
 class AdminMainLayoutScreen extends ConsumerStatefulWidget {
   const AdminMainLayoutScreen({super.key});
@@ -22,10 +23,10 @@ class AdminMainLayoutScreen extends ConsumerStatefulWidget {
 
 class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
   int _selectedIndex = 0; // 0 for All Products, 1 for Order List
-  bool _categoriesExpanded = true;
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = ref.watch(localeProvider);
     return Scaffold(
       backgroundColor: AppColors.background, // light background for body
       appBar: AppBar(
@@ -80,6 +81,9 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                       (route) => false,
                     );
                   }
+                } else if (value == 3) {
+                  final next = currentLocale.languageCode == 'vi' ? 'en' : 'vi';
+                  ref.read(localeProvider.notifier).setLocale(Locale(next));
                 }
               },
               itemBuilder: (context) => [
@@ -109,6 +113,23 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
                       ),
                       SizedBox(width: 24.w),
                       Icon(Icons.arrow_forward_ios, size: 16.sp, color: AppColors.textPrimary),
+                    ],
+                  ),
+                ),
+                // Language
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(AppLocalizations.of(context)!.language.toUpperCase(),
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                      ),
+                      SizedBox(width: 24.w),
+                      Text(
+                        currentLocale.languageCode == 'vi' ? 'VI' : 'EN',
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold, color: AppColors.primary),
+                      ),
                     ],
                   ),
                 ),
@@ -157,7 +178,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
             children: [
               _buildDrawerItem(
                 icon: Icons.dashboard_outlined,
-                title: "DASHBOARD",
+                title: AppLocalizations.of(context)!.dashboard.toUpperCase(),
                 isSelected: _selectedIndex == 0,
                 onTap: () {
                   setState(() => _selectedIndex = 0);
@@ -167,7 +188,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
               SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.inventory_2_outlined,
-                title: "ALL PRODUCTS",
+                title: AppLocalizations.of(context)!.allProducts.toUpperCase(),
                 isSelected: _selectedIndex == 1,
                 onTap: () {
                   setState(() => _selectedIndex = 1);
@@ -177,7 +198,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
               SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.receipt_long_outlined,
-                title: "ORDER LIST",
+                title: AppLocalizations.of(context)!.orderList.toUpperCase(),
                 isSelected: _selectedIndex == 2,
                 onTap: () {
                   setState(() => _selectedIndex = 2);
@@ -187,7 +208,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
               SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.local_offer_outlined,
-                title: "DISCOUNT CODES",
+                title: AppLocalizations.of(context)!.discountCodes.toUpperCase(),
                 isSelected: _selectedIndex == 3,
                 onTap: () {
                   setState(() => _selectedIndex = 3);
@@ -197,7 +218,7 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
               SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.people_outline,
-                title: "USER MANAGEMENT",
+                title: AppLocalizations.of(context)!.userManagement.toUpperCase(),
                 isSelected: _selectedIndex == 4,
                 onTap: () {
                   setState(() => _selectedIndex = 4);
@@ -207,51 +228,14 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
               SizedBox(height: 12.h),
               _buildDrawerItem(
                 icon: Icons.campaign_outlined,
-                title: "PROMOTIONS",
+                title: AppLocalizations.of(context)!.promotions.toUpperCase(),
                 isSelected: _selectedIndex == 5,
                 onTap: () {
                   setState(() => _selectedIndex = 5);
                   Navigator.pop(context); // Close drawer
                 },
               ),
-              SizedBox(height: 32.h),
-              
-              // Categories Section
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _categoriesExpanded = !_categoriesExpanded;
-                  });
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.categories,
-                        style: TextStyle(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      Icon(
-                        _categoriesExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                        color: AppColors.textPrimary,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              
-              if (_categoriesExpanded) ...[
-                _buildCategoryItem("Phones", "21", isSelected: false),
-                _buildCategoryItem("Audio", "06", isSelected: true), // Matches img 015 Audio active state styling
-                _buildCategoryItem("Cases", "06", isSelected: false),
-                _buildCategoryItem("Storage", "06", isSelected: false),
-                _buildCategoryItem("Other", "06", isSelected: false),
-              ]
+
             ],
           ),
         ),
@@ -288,40 +272,5 @@ class _AdminMainLayoutScreenState extends ConsumerState<AdminMainLayoutScreen> {
     );
   }
 
-  Widget _buildCategoryItem(String title, String count, {required bool isSelected}) {
-    final bgColor = isSelected ? AppColors.tertiaryDarkHover : AppColors.borderGrey;
-    final fgColor = isSelected ? Colors.white : AppColors.textPrimary;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16.0.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              color: bgColor,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Text(
-              count,
-              style: TextStyle(
-                color: fgColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import '../models/promotion.dart';
 import 'dio_client.dart';
 
@@ -8,6 +12,12 @@ class PromotionService {
     return data.map((json) => Promotion.fromJson(json as Map<String, dynamic>)).toList();
   }
 
+  static Future<List<String>> fetchPromotionBanners() async {
+    final response = await DioClient.instance.get('/api/promotions/banners');
+    final data = response.data as List<dynamic>? ?? [];
+    return data.map((item) => item.toString()).toList();
+  }
+
   // Admin APIs
   static Future<List<Promotion>> fetchAdminPromotions() async {
     final response = await DioClient.instance.get('/api/admin/promotions');
@@ -15,10 +25,18 @@ class PromotionService {
     return data.map((json) => Promotion.fromJson(json as Map<String, dynamic>)).toList();
   }
 
-  static Future<Promotion> createPromotion(Promotion promotion) async {
+  static Future<Promotion> createPromotion(Promotion promotion, File imageFile) async {
+    final formData = FormData.fromMap({
+      'promotion': MultipartFile.fromString(
+        jsonEncode(promotion.toJson()),
+        contentType: MediaType('application', 'json'),
+      ),
+      'image': await MultipartFile.fromFile(imageFile.path),
+    });
+
     final response = await DioClient.instance.post(
       '/api/admin/promotions',
-      data: promotion.toJson(),
+      data: formData,
     );
     return Promotion.fromJson(response.data as Map<String, dynamic>);
   }

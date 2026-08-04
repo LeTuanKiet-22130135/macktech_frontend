@@ -101,22 +101,6 @@ class _AdminPromotionsScreenState extends State<AdminPromotionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          "Manage Promotions",
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator(color: AppColors.primary))
           : _promotions.isEmpty
@@ -198,10 +182,10 @@ class _AdminPromotionsScreenState extends State<AdminPromotionsScreen> {
                   "Dates: ${_formatDate(promo.startDate)} - ${_formatDate(promo.endDate)}",
                   style: TextStyle(fontSize: 13.sp, color: Colors.grey.shade600),
                 ),
-                if (promo.linkedProductId != null) ...[
+                if (promo.sku != null && promo.sku!.isNotEmpty) ...[
                   SizedBox(height: 4.h),
                   Text(
-                    "Linked Product ID: ${promo.linkedProductId}",
+                    "SKU: ${promo.sku}",
                     style: TextStyle(fontSize: 13.sp, color: Colors.grey.shade600),
                   ),
                 ],

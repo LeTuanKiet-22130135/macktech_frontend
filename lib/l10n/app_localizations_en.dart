@@ -928,4 +928,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusInProgress => 'In Progress';
+
+  @override
+  String get promotions => 'Promotions';
+
+  @override
+  String get revenue => 'Revenue';
+
+  @override
+  String get orders => 'Orders';
+
+  @override
+  String get products => 'Products';
 }

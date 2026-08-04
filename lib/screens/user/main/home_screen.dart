@@ -9,6 +9,8 @@ import '../../../providers/recommendation_provider.dart';
 import 'promotion_screen.dart';
 import 'search_result_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import '../../../widgets/custom_image.dart';
+import '../../../providers/promotion_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -385,21 +387,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-class _PromoCarousel extends StatefulWidget {
+class _PromoCarousel extends ConsumerStatefulWidget {
   const _PromoCarousel();
 
   @override
-  State<_PromoCarousel> createState() => _PromoCarouselState();
+  ConsumerState<_PromoCarousel> createState() => _PromoCarouselState();
 }
 
-class _PromoCarouselState extends State<_PromoCarousel> {
+class _PromoCarouselState extends ConsumerState<_PromoCarousel> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-
-  final List<String> _promoImages = [
-    'assets/images/banner.jpg',
-    'assets/images/084.png',
-  ];
 
   @override
   void dispose() {
@@ -409,64 +406,97 @@ class _PromoCarouselState extends State<_PromoCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: ClipRRect(
+    final bannersAsync = ref.watch(promotionBannersProvider);
+
+    return bannersAsync.when(
+      loading: () => AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
             borderRadius: BorderRadius.circular(16.r),
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              itemCount: _promoImages.length,
-              itemBuilder: (context, index) {
-                final imagePath = _promoImages[index];
-                return Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    color: Colors.grey.shade200,
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.image, size: 40.sp, color: Colors.grey),
-                        SizedBox(height: 8.h),
-                        Text(
-                          "Image missing: \n${imagePath.split('/').last}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
           ),
+          alignment: Alignment.center,
+          child: CircularProgressIndicator(color: AppColors.primary),
         ),
-        SizedBox(height: 12.h),
-        // Dots indicator
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(
-            _promoImages.length,
-            (index) => Container(
-              margin: EdgeInsets.symmetric(horizontal: 2.w),
-              width: 8.w,
-              height: 8.h,
+      ),
+      error: (_, _) => AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          alignment: Alignment.center,
+          child: Text("No promotions available", style: TextStyle(color: Colors.grey)),
+        ),
+      ),
+      data: (banners) {
+        if (banners.isEmpty) {
+          return AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Container(
               decoration: BoxDecoration(
-                color: _currentPage == index ? AppColors.primary : Colors.grey.shade400,
-                shape: BoxShape.circle,
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              alignment: Alignment.center,
+              child: Text("No active promotions", style: TextStyle(color: Colors.grey)),
+            ),
+          );
+        }
+        return Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16.r),
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  itemCount: banners.length,
+                  itemBuilder: (context, index) {
+                    final imageUrl = banners[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const PromotionScreen()),
+                        );
+                      },
+                      child: CustomImage(
+                        imageUrl: imageUrl,
+                        fit: BoxFit.contain,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+            SizedBox(height: 12.h),
+            // Dots indicator
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                banners.length,
+                (index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2.w),
+                  width: 8.w,
+                  height: 8.h,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index ? AppColors.primary : Colors.grey.shade400,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -3,54 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../providers/promotion_provider.dart';
 import '../../../models/promotion.dart';
-import '../../../models/product.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/custom_image.dart';
-import '../../../services/product_service.dart';
-import '../product/product_details_screen.dart';
+import 'promotion_detail_screen.dart';
 
 class PromotionScreen extends ConsumerWidget {
   const PromotionScreen({super.key});
 
-  void _onPromotionTapped(BuildContext context, Promotion promotion) async {
-    if (promotion.linkedProductId == null) return;
-    
-    // Show a loading dialog while fetching product details
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => Center(child: CircularProgressIndicator()),
+  void _onPromotionTapped(BuildContext context, Promotion promotion) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PromotionDetailScreen(promotion: promotion),
+      ),
     );
-
-    try {
-      final detail = await ProductService.fetchProductDetail(promotion.linkedProductId.toString());
-      if (context.mounted) {
-        Navigator.pop(context); // Close loading dialog
-        // Create a basic Product object to pass to details screen
-        final product = Product(
-          id: detail.id,
-          title: detail.title,
-          brand: detail.brand,
-          price: detail.price,
-          imageUrl: detail.imageUrls.isNotEmpty ? detail.imageUrls.first : '',
-          colors: detail.colors,
-        );
-        
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetailsScreen(product: product),
-          ),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        Navigator.pop(context); // Close loading dialog
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load product details.')),
-        );
-      }
-    }
   }
 
   @override
@@ -135,11 +101,14 @@ class PromotionScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Banner Image
-            SizedBox(
-              height: 180.h,
-              child: CustomImage(
-                imageUrl: promo.bannerImageUrl,
-                fit: BoxFit.cover,
+            Hero(
+              tag: 'promo_${promo.id ?? promo.title}',
+              child: SizedBox(
+                height: 180.h,
+                child: CustomImage(
+                  imageUrl: promo.bannerImageUrl,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             
@@ -171,7 +140,7 @@ class PromotionScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  if (promo.linkedProductId != null) ...[
+                  if (promo.sku != null && promo.sku!.isNotEmpty) ...[
                     SizedBox(height: 12.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

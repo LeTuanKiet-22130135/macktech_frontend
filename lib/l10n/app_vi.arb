@@ -299,5 +299,9 @@
   "statusOpen": "Mở",
   "statusClosed": "Đã đóng",
   "statusResolved": "Đã giải quyết",
-  "statusInProgress": "Đang xử lý"
+  "statusInProgress": "Đang xử lý",
+  "promotions": "Khuyến mãi",
+  "revenue": "Doanh thu",
+  "orders": "Đơn hàng",
+  "products": "Sản phẩm"
 }
