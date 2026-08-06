@@ -5,6 +5,7 @@ import '../models/product.dart';
 import '../theme/app_colors.dart';
 import '../screens/user/product/product_details_screen.dart';
 import '../providers/wishlist_provider.dart';
+import '../providers/cart_provider.dart';
 
 import 'custom_image.dart';
 
@@ -109,12 +110,52 @@ class ProductCard extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        "₫${product.price.toStringAsFixed(0)}",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (product.subText.isNotEmpty)
+                              Text(
+                                "₫${product.subText}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 10.sp,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                            Text(
+                              "₫${product.price.toStringAsFixed(0)}",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp, color: AppColors.primary),
+                            ),
+                          ],
+                        ),
                       ),
-                      Icon(Icons.shopping_cart_outlined, size: 18.sp),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          return GestureDetector(
+                            onTap: () {
+                              ref.read(cartProvider.notifier).addItem(product);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Added to cart"),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(6.w),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.shopping_cart_outlined, size: 16.sp, color: AppColors.primary),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

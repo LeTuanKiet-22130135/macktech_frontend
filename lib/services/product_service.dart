@@ -1,7 +1,7 @@
 import '../models/product_detail.dart';
 import '../models/product.dart';
+import '../models/category.dart';
 import 'dio_client.dart';
-
 /// Service to fetch individual product details from the backend.
 class ProductService {
   /// Fetch full product details from GET /api/products/{id}.
@@ -22,7 +22,15 @@ class ProductService {
     return productsList.map((json) => Product.fromJson(json as Map<String, dynamic>)).toList();
   }
 
-  static Future<({List<Product> products, int totalPages, int totalElements})> fetchAllProducts({int page = 0, int size = 20}) async {
+  static Future<({
+    List<Product> products, 
+    int totalPages, 
+    int totalElements,
+    List<String> availableBrands,
+    List<Category> availableCategories,
+    double minPrice,
+    double maxPrice,
+  })> fetchAllProducts({int page = 0, int size = 20}) async {
     final response = await DioClient.instance.get(
       '/api/products',
       queryParameters: {'page': page, 'size': size},
@@ -34,13 +42,31 @@ class ProductService {
     final totalPages = mapData['totalPages'] as int? ?? 0;
     final totalElements = mapData['totalElements'] as int? ?? 0;
     
-    return (products: products, totalPages: totalPages, totalElements: totalElements);
+    final availableBrands = (mapData['availableBrands'] as List<dynamic>?)
+        ?.map((e) => e.toString())
+        .toList() ?? [];
+    final availableCategories = (mapData['availableCategories'] as List<dynamic>?)
+        ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+        .toList() ?? [];
+    final minPrice = (mapData['minPrice'] as num?)?.toDouble() ?? 0.0;
+    final maxPrice = (mapData['maxPrice'] as num?)?.toDouble() ?? 0.0;
+
+    return (
+      products: products, 
+      totalPages: totalPages, 
+      totalElements: totalElements,
+      availableBrands: availableBrands,
+      availableCategories: availableCategories,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    );
   }
   static Future<({
     List<Product> products,
     int totalPages,
     int totalElements,
     List<String> availableBrands,
+    List<Category> availableCategories,
     double minPrice,
     double maxPrice,
   })> searchProducts({
@@ -80,6 +106,9 @@ class ProductService {
     final availableBrands = (mapData['availableBrands'] as List<dynamic>?)
         ?.map((e) => e.toString())
         .toList() ?? [];
+    final availableCategories = (mapData['availableCategories'] as List<dynamic>?)
+        ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+        .toList() ?? [];
     final respMinPrice = (mapData['minPrice'] as num?)?.toDouble() ?? 0.0;
     final respMaxPrice = (mapData['maxPrice'] as num?)?.toDouble() ?? 0.0;
     
@@ -88,6 +117,7 @@ class ProductService {
       totalPages: totalPages,
       totalElements: totalElements,
       availableBrands: availableBrands,
+      availableCategories: availableCategories,
       minPrice: respMinPrice,
       maxPrice: respMaxPrice,
     );

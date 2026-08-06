@@ -182,10 +182,10 @@ class _AdminPromotionsScreenState extends State<AdminPromotionsScreen> {
                   "Dates: ${_formatDate(promo.startDate)} - ${_formatDate(promo.endDate)}",
                   style: TextStyle(fontSize: 13.sp, color: Colors.grey.shade600),
                 ),
-                if (promo.sku != null && promo.sku!.isNotEmpty) ...[
+                if (promo.products.isNotEmpty) ...[
                   SizedBox(height: 4.h),
                   Text(
-                    "SKU: ${promo.sku}",
+                    "Products: ${promo.products.length}",
                     style: TextStyle(fontSize: 13.sp, color: Colors.grey.shade600),
                   ),
                 ],

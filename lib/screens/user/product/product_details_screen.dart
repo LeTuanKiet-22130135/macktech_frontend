@@ -16,7 +16,7 @@ import '../../../services/product_service.dart';
 import '../../../widgets/product_card.dart';
 import '../../../widgets/custom_image.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
-
+import 'package:flutter_markdown/flutter_markdown.dart';
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   final Product product;
   final String? recommId;
@@ -232,16 +232,31 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                 ),
                               ),
                             ],
-                            if (detail.subText.isNotEmpty) ...[
-                              SizedBox(height: 4),
-                              Text(
-                                detail.subText,
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: Colors.grey.shade400,
+                            SizedBox(height: 8.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                if (detail.subText.isNotEmpty) ...[
+                                  Text(
+                                    "₫${detail.subText}",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: Colors.grey.shade400,
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                ],
+                                Text(
+                                  "₫${detail.price.toStringAsFixed(0)}",
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -737,12 +752,14 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
           ),
         ),
         SizedBox(height: 8.h),
-        Text(
-          displayText,
-          style: TextStyle(
-            fontSize: 13.sp,
-            color: Colors.grey.shade600,
-            height: 1.6,
+        MarkdownBody(
+          data: displayText,
+          styleSheet: MarkdownStyleSheet(
+            p: TextStyle(
+              fontSize: 13.sp,
+              color: Colors.grey.shade600,
+              height: 1.6,
+            ),
           ),
         ),
         if (isLong) ...[

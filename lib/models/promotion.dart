@@ -1,8 +1,36 @@
+class PromotionProduct {
+  final String sku;
+  final String? productTitle;
+  final double? discountPercentage;
+
+  PromotionProduct({
+    required this.sku,
+    this.productTitle,
+    this.discountPercentage,
+  });
+
+  factory PromotionProduct.fromJson(Map<String, dynamic> json) {
+    return PromotionProduct(
+      sku: json['sku']?.toString() ?? '',
+      productTitle: json['productTitle']?.toString(),
+      discountPercentage: (json['discountPercentage'] as num?)?.toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'sku': sku,
+      if (productTitle != null) 'productTitle': productTitle,
+      if (discountPercentage != null) 'discountPercentage': discountPercentage,
+    };
+  }
+}
+
 class Promotion {
   final String? id;
   final String title;
   final String bannerImageUrl;
-  final String? sku;
+  final List<PromotionProduct> products;
   final DateTime startDate;
   final DateTime endDate;
   final bool isActive;
@@ -12,7 +40,7 @@ class Promotion {
     this.id,
     required this.title,
     required this.bannerImageUrl,
-    this.sku,
+    this.products = const [],
     required this.startDate,
     required this.endDate,
     required this.isActive,
@@ -24,7 +52,10 @@ class Promotion {
       id: json['id']?.toString(),
       title: json['title'] as String? ?? '',
       bannerImageUrl: json['bannerImageUrl'] as String? ?? '',
-      sku: json['sku']?.toString(),
+      products: (json['products'] as List<dynamic>?)
+              ?.map((p) => PromotionProduct.fromJson(p as Map<String, dynamic>))
+              .toList() ??
+          [],
       startDate: DateTime.tryParse(json['startDate'] ?? '') ?? DateTime.now(),
       endDate: DateTime.tryParse(json['endDate'] ?? '') ?? DateTime.now(),
       isActive: json['isActive'] as bool? ?? false,
@@ -37,7 +68,7 @@ class Promotion {
       if (id != null) 'id': id,
       'title': title,
       'bannerImageUrl': bannerImageUrl,
-      'sku': sku,
+      'products': products.map((p) => p.toJson()).toList(),
       'startDate': startDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
       'isActive': isActive,

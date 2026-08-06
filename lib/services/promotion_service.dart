@@ -41,10 +41,23 @@ class PromotionService {
     return Promotion.fromJson(response.data as Map<String, dynamic>);
   }
 
-  static Future<Promotion> updatePromotion(String id, Promotion promotion) async {
+  static Future<Promotion> updatePromotion(String id, Promotion promotion, {File? imageFile}) async {
+    final formDataMap = <String, dynamic>{
+      'promotion': MultipartFile.fromString(
+        jsonEncode(promotion.toJson()),
+        contentType: MediaType('application', 'json'),
+      ),
+    };
+    
+    if (imageFile != null) {
+      formDataMap['image'] = await MultipartFile.fromFile(imageFile.path);
+    }
+    
+    final formData = FormData.fromMap(formDataMap);
+
     final response = await DioClient.instance.put(
       '/api/admin/promotions/$id',
-      data: promotion.toJson(),
+      data: formData,
     );
     return Promotion.fromJson(response.data as Map<String, dynamic>);
   }

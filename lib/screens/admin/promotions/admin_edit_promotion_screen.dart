@@ -6,6 +6,7 @@ import '../../../models/promotion.dart';
 import '../../../services/promotion_service.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_image.dart';
 
 class AdminEditPromotionScreen extends StatefulWidget {
   final Promotion? promotion; // If null, it's a create form
@@ -20,13 +21,12 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
   final _formKey = GlobalKey<FormState>();
   
   late TextEditingController _titleController;
-  late TextEditingController _bannerUrlController;
-  late TextEditingController _skuController;
   
   late DateTime _startDate;
   late DateTime _endDate;
   late bool _isActive;
 
+  List<PromotionProduct> _products = [];
   bool _isSaving = false;
   File? _selectedImage;
 
@@ -35,20 +35,16 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
     super.initState();
     final promo = widget.promotion;
     _titleController = TextEditingController(text: promo?.title ?? '');
-    _bannerUrlController = TextEditingController(text: promo?.bannerImageUrl ?? '');
-    _skuController = TextEditingController(
-        text: promo?.sku ?? '');
     
     _startDate = promo?.startDate ?? DateTime.now();
-    _endDate = promo?.endDate ?? DateTime.now().add(Duration(days: 30));
+    _endDate = promo?.endDate ?? DateTime.now().add(const Duration(days: 30));
     _isActive = promo?.isActive ?? true;
+    _products = promo != null ? List.from(promo.products) : [];
   }
 
   @override
   void dispose() {
     _titleController.dispose();
-    _bannerUrlController.dispose();
-    _skuController.dispose();
     super.dispose();
   }
 
@@ -91,6 +87,56 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
     }
   }
 
+  void _addProduct() {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        final skuController = TextEditingController();
+        final discountController = TextEditingController();
+        return AlertDialog(
+          title: const Text("Add Product"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: skuController,
+                decoration: const InputDecoration(labelText: "SKU"),
+              ),
+              SizedBox(height: 16.h),
+              TextField(
+                controller: discountController,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                decoration: const InputDecoration(labelText: "Discount % (Optional)"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                final sku = skuController.text.trim();
+                if (sku.isNotEmpty) {
+                  final discount = double.tryParse(discountController.text.trim());
+                  setState(() {
+                    _products.add(PromotionProduct(
+                      sku: sku,
+                      discountPercentage: discount,
+                    ));
+                  });
+                  Navigator.pop(ctx);
+                }
+              },
+              child: const Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     
@@ -100,8 +146,8 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
       final newPromo = Promotion(
         id: widget.promotion?.id,
         title: _titleController.text.trim(),
-        bannerImageUrl: _bannerUrlController.text.trim(),
-        sku: _skuController.text.trim().isEmpty ? null : _skuController.text.trim(),
+        bannerImageUrl: widget.promotion?.bannerImageUrl ?? '',
+        products: _products,
         startDate: _startDate,
         endDate: _endDate,
         isActive: _isActive,
@@ -117,20 +163,20 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
         }
         await PromotionService.createPromotion(newPromo, _selectedImage!);
       } else {
-        await PromotionService.updatePromotion(widget.promotion!.id!, newPromo);
+        await PromotionService.updatePromotion(widget.promotion!.id!, newPromo, imageFile: _selectedImage);
       }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Promotion saved successfully')),
+          const SnackBar(content: Text('Promotion saved successfully')),
         );
-        Navigator.pop(context, true); // Return true to trigger refresh
+        Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
         setState(() => _isSaving = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save promotion')),
+          const SnackBar(content: Text('Failed to save promotion')),
         );
       }
     }
@@ -154,12 +200,12 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: _isSaving
-          ? Center(child: CircularProgressIndicator(color: AppColors.primary))
+          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
           : Form(
               key: _formKey,
               child: ListView(
@@ -174,56 +220,89 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
                     validator: (v) => v == null || v.isEmpty ? 'Required' : null,
                   ),
                   SizedBox(height: 16.h),
-                  if (isEdit)
-                    TextFormField(
-                      controller: _bannerUrlController,
-                      decoration: InputDecoration(
-                        labelText: 'Banner Image URL',
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-                      ),
-                      validator: (val) => val!.trim().isEmpty ? 'Please enter a banner image URL' : null,
-                    )
-                  else
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Banner Image", style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700)),
-                        SizedBox(height: 8.h),
-                        GestureDetector(
-                          onTap: _pickImage,
-                          child: Container(
-                            height: 150.h,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(color: Colors.grey.shade300),
-                            ),
-                            child: _selectedImage != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    child: Image.file(_selectedImage!, fit: BoxFit.cover),
-                                  )
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.add_photo_alternate, size: 40.sp, color: Colors.grey),
-                                      SizedBox(height: 8.h),
-                                      Text("Tap to select image", style: TextStyle(color: Colors.grey)),
-                                    ],
-                                  ),
+                  
+                  // Image picker
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Banner Image", style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade700)),
+                      SizedBox(height: 8.h),
+                      GestureDetector(
+                        onTap: _pickImage,
+                        child: Container(
+                          height: 150.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(color: Colors.grey.shade300),
                           ),
+                          child: _selectedImage != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  child: Image.file(_selectedImage!, fit: BoxFit.cover),
+                                )
+                              : (isEdit && widget.promotion!.bannerImageUrl.isNotEmpty)
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.r),
+                                      child: CustomImage(
+                                        imageUrl: widget.promotion!.bannerImageUrl,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.add_photo_alternate, size: 40.sp, color: Colors.grey),
+                                        SizedBox(height: 8.h),
+                                        const Text("Tap to select image", style: TextStyle(color: Colors.grey)),
+                                      ],
+                                    ),
                         ),
-                      ],
-                    ),
-                  SizedBox(height: 16.h),
-                  TextFormField(
-                    controller: _skuController,
-                    decoration: InputDecoration(
-                      labelText: 'SKU (Optional)',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-                    ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 24.h),
+                  
+                  // Products List
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Included Products", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+                      TextButton.icon(
+                        onPressed: _addProduct,
+                        icon: const Icon(Icons.add, size: 18),
+                        label: const Text("Add SKU"),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 8.h),
+                  if (_products.isEmpty)
+                    Text("No products added yet.", style: TextStyle(color: Colors.grey.shade500))
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _products.length,
+                      itemBuilder: (ctx, i) {
+                        final p = _products[i];
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text("SKU: ${p.sku}"),
+                          subtitle: p.discountPercentage != null
+                              ? Text("Discount: ${p.discountPercentage}%")
+                              : null,
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                _products.removeAt(i);
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   SizedBox(height: 24.h),
                   
                   // Date Pickers

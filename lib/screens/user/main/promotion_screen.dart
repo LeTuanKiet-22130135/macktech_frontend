@@ -140,7 +140,7 @@ class PromotionScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  if (promo.sku != null && promo.sku!.isNotEmpty) ...[
+                  if (promo.products.isNotEmpty) ...[
                     SizedBox(height: 12.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

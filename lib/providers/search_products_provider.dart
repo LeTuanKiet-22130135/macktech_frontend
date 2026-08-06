@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/product.dart';
+import '../models/category.dart';
 import '../services/product_service.dart';
 
 class SearchQuery {
@@ -44,6 +45,7 @@ typedef SearchResult = ({
   int totalPages,
   int totalElements,
   List<String> availableBrands,
+  List<Category> availableCategories,
   double minPrice,
   double maxPrice,
 });

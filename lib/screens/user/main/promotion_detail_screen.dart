@@ -4,8 +4,8 @@ import '../../../models/promotion.dart';
 import '../../../models/product.dart';
 import '../../../theme/app_colors.dart';
 import '../../../widgets/custom_image.dart';
+import '../../../widgets/product_card.dart';
 import '../../../services/product_service.dart';
-import '../product/product_details_screen.dart';
 
 class PromotionDetailScreen extends StatefulWidget {
   final Promotion promotion;
@@ -17,54 +17,71 @@ class PromotionDetailScreen extends StatefulWidget {
 }
 
 class _PromotionDetailScreenState extends State<PromotionDetailScreen> {
-  bool _isLoading = false;
+  List<Product>? _fullProducts;
+  bool _isLoadingProducts = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProducts();
+  }
+
+  Future<void> _loadProducts() async {
+    if (widget.promotion.products.isEmpty) {
+      if (mounted) {
+        setState(() {
+          _fullProducts = [];
+          _isLoadingProducts = false;
+        });
+      }
+      return;
+    }
+    
+    try {
+      final List<Product> loaded = [];
+      for (final p in widget.promotion.products) {
+        final detail = await ProductService.fetchProductDetail(p.sku);
+        
+        double finalPrice = detail.price;
+        String finalSubText = detail.subText;
+        
+        if (p.discountPercentage != null && p.discountPercentage! > 0) {
+          finalPrice = detail.price * (1 - p.discountPercentage! / 100);
+          finalSubText = detail.price.toStringAsFixed(0);
+        }
+
+        loaded.add(Product(
+          id: detail.id,
+          title: detail.title,
+          brand: detail.brand,
+          subText: finalSubText,
+          price: finalPrice,
+          imageUrl: detail.imageUrls.isNotEmpty ? detail.imageUrls.first : '',
+          colors: detail.colors,
+        ));
+      }
+      if (mounted) {
+        setState(() {
+          _fullProducts = loaded;
+          _isLoadingProducts = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoadingProducts = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Could not load promotional products")),
+        );
+      }
+    }
+  }
 
   String _formatDateRange(DateTime start, DateTime end) {
     final startStr = "${start.day}/${start.month}/${start.year}";
     final endStr = "${end.day}/${end.month}/${end.year}";
     return "$startStr - $endStr";
-  }
-
-  Future<void> _onShopNowTapped() async {
-    if (widget.promotion.sku == null || widget.promotion.sku!.isEmpty) return;
-    
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final detail = await ProductService.fetchProductDetail(widget.promotion.sku!);
-      if (mounted) {
-        final product = Product(
-          id: detail.id,
-          title: detail.title,
-          brand: detail.brand,
-          subText: detail.subText,
-          price: detail.price,
-          imageUrl: detail.imageUrls.isNotEmpty ? detail.imageUrls.first : '',
-          colors: detail.colors,
-        );
-        
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetailsScreen(product: product),
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Could not load product details")),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
   }
 
   @override
@@ -117,35 +134,52 @@ class _PromotionDetailScreenState extends State<PromotionDetailScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 32.h),
-                  if (promo.sku != null && promo.sku!.isNotEmpty)
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _isLoading ? null : _onShopNowTapped,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          padding: EdgeInsets.symmetric(vertical: 16.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
+                  SizedBox(height: 24.h),
+                  
+                  if (promo.products.isNotEmpty) ...[
+                    Text(
+                      "Included Products",
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 12.h),
+                    if (_isLoadingProducts)
+                      const Padding(
+                        padding: EdgeInsets.all(32.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (_fullProducts != null && _fullProducts!.isNotEmpty)
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12.w,
+                          mainAxisSpacing: 12.h,
+                          childAspectRatio: 0.62,
+                        ),
+                        itemCount: _fullProducts!.length,
+                        itemBuilder: (context, index) {
+                          return ProductCard(product: _fullProducts![index]);
+                        },
+                      )
+                    else
+                      Padding(
+                        padding: EdgeInsets.all(32.0),
+                        child: Center(
+                          child: Text(
+                            "Failed to load products",
+                            style: TextStyle(color: Colors.grey.shade500),
                           ),
                         ),
-                        child: _isLoading 
-                            ? SizedBox(
-                                width: 24.w,
-                                height: 24.h,
-                                child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                              )
-                            : Text(
-                                "Shop Now",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
                       ),
-                    ),
+                  ] else ...[
+                    Center(
+                      child: Text(
+                        "No specific products linked to this promotion.",
+                        style: TextStyle(color: Colors.grey.shade500),
+                      ),
+                    )
+                  ],
                 ],
               ),
             ),
