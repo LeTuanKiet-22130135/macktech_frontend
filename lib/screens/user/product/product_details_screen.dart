@@ -17,6 +17,7 @@ import '../../../widgets/product_card.dart';
 import '../../../widgets/custom_image.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   final Product product;
   final String? recommId;
@@ -248,7 +249,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                   SizedBox(width: 8.w),
                                 ],
                                 Text(
-                                  "₫${detail.price.toStringAsFixed(0)}",
+                                  "₫${detail.price.toPrice()}",
                                   style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
@@ -286,7 +287,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         ),
                       ),
                       Text(
-                        '₫${(detail.price * quantity).toStringAsFixed(0)}',
+                        '₫${(detail.price * quantity).toPrice()}',
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,

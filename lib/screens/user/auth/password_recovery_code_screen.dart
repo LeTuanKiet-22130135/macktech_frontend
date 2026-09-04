@@ -53,10 +53,14 @@ class _PasswordRecoveryCodeScreenState
 
           // Content
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32.w),
-              child: Column(
-                children: [
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.w),
+                    child: Column(
+                      children: [
                   SizedBox(height: 32.h),
 
                   // Avatar
@@ -221,6 +225,9 @@ class _PasswordRecoveryCodeScreenState
               ),
             ),
           ),
+        ],
+      ),
+    ),
         ],
       ),
     );

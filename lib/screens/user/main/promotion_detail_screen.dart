@@ -6,6 +6,7 @@ import '../../../theme/app_colors.dart';
 import '../../../widgets/custom_image.dart';
 import '../../../widgets/product_card.dart';
 import '../../../services/product_service.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class PromotionDetailScreen extends StatefulWidget {
   final Promotion promotion;
@@ -47,7 +48,7 @@ class _PromotionDetailScreenState extends State<PromotionDetailScreen> {
         
         if (p.discountPercentage != null && p.discountPercentage! > 0) {
           finalPrice = detail.price * (1 - p.discountPercentage! / 100);
-          finalSubText = detail.price.toStringAsFixed(0);
+          finalSubText = detail.price.toPrice();
         }
 
         loaded.add(Product(
@@ -134,6 +135,17 @@ class _PromotionDetailScreenState extends State<PromotionDetailScreen> {
                       ),
                     ],
                   ),
+                  if (promo.description != null && promo.description!.isNotEmpty) ...[
+                    SizedBox(height: 16.h),
+                    Text(
+                      promo.description!,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.grey.shade800,
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
                   SizedBox(height: 24.h),
                   
                   if (promo.products.isNotEmpty) ...[

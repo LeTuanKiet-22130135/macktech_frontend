@@ -1915,6 +1915,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Products'**
   String get products;
+
+  /// No description provided for @orderSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order has been placed.\nOrder will be ready for pick-up.\nThank you for choosing our app!'**
+  String get orderSuccessMessage;
 }
 
 class _AppLocalizationsDelegate

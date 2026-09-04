@@ -8,6 +8,7 @@ import '../providers/wishlist_provider.dart';
 import '../providers/cart_provider.dart';
 
 import 'custom_image.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -127,7 +128,7 @@ class ProductCard extends StatelessWidget {
                                 ),
                               ),
                             Text(
-                              "₫${product.price.toStringAsFixed(0)}",
+                              "₫${product.price.toPrice()}",
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp, color: AppColors.primary),
                             ),
                           ],

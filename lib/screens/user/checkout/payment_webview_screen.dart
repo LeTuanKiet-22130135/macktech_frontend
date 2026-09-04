@@ -40,8 +40,12 @@ class _PaymentWebviewScreenState extends State<PaymentWebviewScreen> {
             // Also check the finished URL for callback params
             _checkUrlForCallback(url);
           },
+          onWebResourceError: (error) {
+            debugPrint('WebView Error: ${error.description}, URL: ${error.url}');
+          },
           onNavigationRequest: (request) {
             final url = request.url;
+            debugPrint('WebView Navigation Request: $url');
 
             // Intercept the VNPAY callback URL
             if (url.contains('/api/payment/vnpay-callback')) {

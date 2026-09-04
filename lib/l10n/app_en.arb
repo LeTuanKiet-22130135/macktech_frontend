@@ -303,5 +303,6 @@
   "promotions": "Promotions",
   "revenue": "Revenue",
   "orders": "Orders",
-  "products": "Products"
+  "products": "Products",
+  "orderSuccessMessage": "Your order has been placed.\nOrder will be ready for pick-up.\nThank you for choosing our app!"
 }

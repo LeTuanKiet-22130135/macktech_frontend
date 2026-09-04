@@ -5,6 +5,7 @@ import '../../../theme/app_colors.dart';
 import '../../../services/admin_dashboard_service.dart';
 import '../../../services/order_service.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -122,7 +123,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     Expanded(
                         child: _buildMetricCard(
                             AppLocalizations.of(context)!.revenue,
-                            "₫${((_metrics?['totalRevenue'] as num?) ?? 0).toStringAsFixed(0)}",
+                            "₫${((_metrics?['totalRevenue'] as num?) ?? 0).toPrice()}",
                             Icons.attach_money,
                             AppColors.success)),
                     SizedBox(width: 12.w),
@@ -217,7 +218,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         final total = order['total'] ?? 0.0;
                         final status = order['status'] ?? 'Pending';
                         return _buildRecentOrderTile(
-                            userName, date, "₫${total.toStringAsFixed(0)}", status);
+                            userName, date, "₫${(total as num).toPrice()}", status);
                       }).toList(),
                     ),
 
@@ -242,7 +243,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           final title = p['title'] ?? 'Unknown';
                           final price = p['price'] ?? 0.0;
                           final image = p['imageUrl'];
-                          return _buildProductTile(title, "₫${price.toStringAsFixed(0)}", image);
+                          return _buildProductTile(title, "₫${(price as num).toPrice()}", image);
                         }).toList(),
                       ),
                     ),

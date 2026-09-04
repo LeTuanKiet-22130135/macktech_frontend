@@ -6,6 +6,7 @@ import '../../../widgets/custom_image.dart';
 import 'checkout_screen.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({super.key});
@@ -175,7 +176,7 @@ class CartScreen extends ConsumerWidget {
                         ],
                         SizedBox(height: 6.h),
                         Text(
-                          "₫${product.price.toStringAsFixed(0)}.",
+                          "₫${product.price.toPrice()}.",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 13.sp,
@@ -272,13 +273,13 @@ class CartScreen extends ConsumerWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
           ),
           SizedBox(height: 12.h),
-          _buildInfoRow("Subtotal", "₫${subtotal.toStringAsFixed(0)}"),
+          _buildInfoRow("Subtotal", "₫${subtotal.toPrice()}"),
           SizedBox(height: 6.h),
           _buildInfoRow("Discount", "₫0"),
           SizedBox(height: 6.h),
           _buildInfoRow(
             "Total",
-            "₫${subtotal.toStringAsFixed(0)}",
+            "₫${subtotal.toPrice()}",
             isBold: true,
           ),
           SizedBox(height: 20.h),

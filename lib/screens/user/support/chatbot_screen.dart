@@ -313,29 +313,35 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen> {
               child: Icon(_headerIcon, color: Colors.white, size: 20.sp),
             ),
             SizedBox(width: 12.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _headerTitle,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _headerTitle,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  _isBotTyping ? 'Typing...' : _headerSubtitle,
-                  style: TextStyle(
-                    color: _isBotTyping
-                        ? Colors.white70
-                        : (widget.activeRole == 'agent'
-                              ? Colors.white70
-                              : Colors.greenAccent),
-                    fontSize: 12.sp,
+                  Text(
+                    _isBotTyping ? 'Typing...' : _headerSubtitle,
+                    style: TextStyle(
+                      color: _isBotTyping
+                          ? Colors.white70
+                          : (widget.activeRole == 'agent'
+                                ? Colors.white70
+                                : Colors.greenAccent),
+                      fontSize: 12.sp,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

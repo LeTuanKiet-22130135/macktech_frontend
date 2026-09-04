@@ -69,7 +69,7 @@ class OrderSuccessScreen extends StatelessWidget {
 
               // Subtitle messages
               Text(
-                "Your order has been placed.\nOrder will be ready for pick-up.\nThank you for choosing our app!",
+                AppLocalizations.of(context)!.orderSuccessMessage,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.sp,

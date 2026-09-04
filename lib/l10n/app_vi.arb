@@ -303,5 +303,6 @@
   "promotions": "Khuyến mãi",
   "revenue": "Doanh thu",
   "orders": "Đơn hàng",
-  "products": "Sản phẩm"
+  "products": "Sản phẩm",
+  "orderSuccessMessage": "Đơn hàng của bạn đã được đặt.\nĐơn hàng sẽ sớm được chuẩn bị để giao.\nCảm ơn bạn đã lựa chọn ứng dụng của chúng tôi!"
 }

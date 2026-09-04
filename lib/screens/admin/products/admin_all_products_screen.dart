@@ -7,6 +7,7 @@ import 'admin_edit_product_screen.dart';
 import '../../../models/product.dart';
 import '../../../services/product_service.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class AdminAllProductsScreen extends StatefulWidget {
   const AdminAllProductsScreen({super.key});
@@ -315,7 +316,7 @@ class _AdminAllProductsScreenState extends State<AdminAllProductsScreen> {
                 ),
                 SizedBox(height: 8.h),
                 Text(
-                  '₫${product.price.toStringAsFixed(0)}', // Format price
+                  '₫${product.price.toPrice()}', // Format price
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,

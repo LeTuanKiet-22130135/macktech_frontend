@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 import '../../../services/order_service.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class AdminOrderListScreen extends StatefulWidget {
   const AdminOrderListScreen({super.key});
@@ -203,7 +204,7 @@ class _AdminOrderListScreenState extends State<AdminOrderListScreen> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    "₫${total.toStringAsFixed(0)}",
+                    "₫${(total as num).toPrice()}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
                   ),
                 ],

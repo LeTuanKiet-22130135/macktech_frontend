@@ -8,6 +8,7 @@ import '../../../providers/notification_provider.dart';
 import '../../../providers/cart_provider.dart';
 import '../../../providers/user_profile_provider.dart';
 import '../../../providers/address_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../models/shipping_address.dart';
 import '../../../services/dio_client.dart';
 import '../../../services/shipping_service.dart';
@@ -30,7 +31,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String? _selectedCard;
   ShippingAddress? _selectedAddress;
   bool _paymentExpanded = false;
-  bool _visaExpanded = false;
 
   final TextEditingController _discountController = TextEditingController();
   double _appliedDiscount = 0.0;
@@ -41,14 +41,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   bool _isCalculatingShipping = false;
   bool _isCheckingOut = false;
 
-  final List<Map<String, dynamic>> _savedCards = [
-    {'label': '**** **** **** 7690', 'holder': 'Joyce Maxwell'},
-    {'label': '**** **** **** 1122', 'holder': 'Maxwell'},
-  ];
-
   final List<Map<String, dynamic>> _paymentMethods = [
     {'name': 'Cash on Delivery', 'icon': Icons.money, 'color': Colors.green},
-    {'name': 'Visa Payment', 'icon': Icons.credit_card, 'color': Colors.blue},
     {'name': 'MoMo', 'icon': Icons.account_balance_wallet, 'color': Colors.pink},
     {'name': 'VnPAY', 'icon': Icons.payment, 'color': Colors.deepOrange},
   ];
@@ -73,8 +67,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     switch (_selectedPayment) {
       case 'Cash on Delivery':
         return 'cod';
-      case 'Visa Payment':
-        return 'visa';
       case 'MoMo':
         return 'momo';
       case 'VnPAY':
@@ -173,180 +165,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   void dispose() {
     _discountController.dispose();
     super.dispose();
-  }
-
-  void _showAddCardDialog() {
-    final ownerController = TextEditingController();
-    final numberController = TextEditingController();
-    final expController = TextEditingController();
-    final cvvController = TextEditingController();
-    bool saveCardInfo = true;
-
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (ctx, setDialogState) {
-            return Dialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-              insetPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(24.w),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Card Owner
-                    Text(AppLocalizations.of(context)!.cardOwner,
-                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
-                    ),
-                    SizedBox(height: 8.h),
-                    TextField(
-                      controller: ownerController,
-                      decoration: _dialogInputDecoration("Joyce Maxwell"),
-                    ),
-                    SizedBox(height: 20.h),
-
-                    // Card Number
-                    Text(AppLocalizations.of(context)!.cardNumber,
-                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
-                    ),
-                    SizedBox(height: 8.h),
-                    TextField(
-                      controller: numberController,
-                      keyboardType: TextInputType.number,
-                      decoration: _dialogInputDecoration("5254 7634 8734 7690"),
-                    ),
-                    SizedBox(height: 20.h),
-
-                    // EXP & CVV
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(AppLocalizations.of(context)!.exp,
-                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
-                              ),
-                              SizedBox(height: 8.h),
-                              TextField(
-                                controller: expController,
-                                decoration: _dialogInputDecoration("24/24"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 16.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(AppLocalizations.of(context)!.cvv,
-                                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: Colors.black87),
-                              ),
-                              SizedBox(height: 8.h),
-                              TextField(
-                                controller: cvvController,
-                                decoration: _dialogInputDecoration("7763"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.h),
-
-                    // Save card info toggle
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(AppLocalizations.of(context)!.saveCardInfo,
-                          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
-                        ),
-                        Switch(
-                          value: saveCardInfo,
-                          activeThumbColor: AppColors.success,
-                          onChanged: (val) {
-                            setDialogState(() => saveCardInfo = val);
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-
-                    // Cancel & Save Card buttons
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: Text(AppLocalizations.of(context)!.cancel,
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                color: Colors.grey.shade500,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          flex: 2,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (numberController.text.isNotEmpty) {
-                                final lastFour = numberController.text.replaceAll(' ', '');
-                                final display = '**** **** **** ${lastFour.length >= 4 ? lastFour.substring(lastFour.length - 4) : lastFour}';
-                                setState(() {
-                                  _savedCards.add({
-                                    'label': display,
-                                    'holder': ownerController.text.isNotEmpty ? ownerController.text: AppLocalizations.of(context)!.cardHolder,
-                                  });
-                                  _selectedCard = display;
-                                });
-                              }
-                              Navigator.pop(ctx);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.tertiaryDarker,
-                              foregroundColor: Colors.white,
-                              minimumSize: Size(0, 52),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: Text(AppLocalizations.of(context)!.saveCard,
-                              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  InputDecoration _dialogInputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: TextStyle(color: Colors.grey.shade400),
-      filled: true,
-      fillColor: Colors.grey.shade100,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-    );
   }
 
   @override
@@ -499,29 +317,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       // after processing. The app_links listener in main.dart
                       // handles navigation to success/failure screen.
                       if (mounted) {
-                        final paymentTitle = _selectedPayment == 'MoMo' ? 'MoMo Payment' : 'VNPAY Payment';
-                        final success = await Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => PaymentWebviewScreen(paymentUrl: paymentUrl, title: paymentTitle),
-                          ),
-                        );
-                        
-                        if (success == true) {
-                          // Web payment succeeded (caught by webview URL intercept)
-                          _sendOrderNotification();
-                          ref.read(cartProvider.notifier).clearCart();
-                          if (mounted) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (_) => OrderSuccessScreen()),
-                            );
-                          }
-                        } else if (success == false) {
-                          // Web payment failed (caught by webview URL intercept)
+                        // Use external browser instead of in-app WebView to avoid SSL and Intent issues
+                        final Uri url = Uri.parse(paymentUrl);
+                        try {
+                          await launchUrl(url, mode: LaunchMode.externalApplication);
+                        } catch (e) {
+                          debugPrint('Could not launch payment URL: $e');
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(AppLocalizations.of(context)!.paymentFailedOrCancelled)),
+                              const SnackBar(content: Text('Could not open payment gateway.')),
                             );
                           }
                         }
@@ -666,7 +470,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: AppLocalizations.of(context)!.emailAddress,
+                        text: AppLocalizations.of(context)!.emailAddress + ' : ',
                         style: TextStyle(color: Colors.grey, fontSize: 13.sp),
                       ),
                       TextSpan(
@@ -826,22 +630,28 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   Text(AppLocalizations.of(context)!.paymentMethod,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        _selectedPayment == 'Visa Payment' && _selectedCard != null
-                            ? 'Visa $_selectedCard'
-                            : _selectedPayment,
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12.sp),
-                      ),
-                      SizedBox(width: 4.w),
-                      AnimatedRotation(
-                        turns: _paymentExpanded ? 0.5 : 0,
-                        duration: Duration(milliseconds: 200),
-                        child: Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 22.sp),
-                      ),
-                    ],
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            _selectedPayment,
+                            style: TextStyle(color: Colors.grey.shade600, fontSize: 12.sp),
+                            textAlign: TextAlign.right,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(width: 4.w),
+                        AnimatedRotation(
+                          turns: _paymentExpanded ? 0.5 : 0,
+                          duration: Duration(milliseconds: 200),
+                          child: Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 22.sp),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -869,21 +679,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         ..._paymentMethods.map((method) {
           final name = method['name'] as String;
           final isSelected = _selectedPayment == name;
-          final isVisa = name == 'Visa Payment';
-
           return Column(
             children: [
               InkWell(
                 onTap: () {
                   setState(() {
                     _selectedPayment = name;
-                    if (isVisa) {
-                      _visaExpanded = !_visaExpanded;
-                    } else {
-                      _visaExpanded = false;
-                      _selectedCard = null;
-                      _paymentExpanded = false;
-                    }
+                    _selectedCard = null;
+                    _paymentExpanded = false;
                   });
                   if (_selectedAddress != null) {
                     _calculateShippingFee(_selectedAddress!);
@@ -922,114 +725,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           ),
                         ),
                       ),
-                      if (isVisa)
-                        AnimatedRotation(
-                          turns: _visaExpanded ? 0.5 : 0,
-                          duration: Duration(milliseconds: 200),
-                          child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade400, size: 20.sp),
-                        )
-                      else if (isSelected)
+                      if (isSelected)
                         Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 20.sp),
                     ],
                   ),
                 ),
               ),
-
-              // Visa sub-dropdown: saved cards + Add Card
-              if (isVisa && _visaExpanded)
-                _buildVisaSubList(),
             ],
           );
         }),
         SizedBox(height: 4),
       ],
-    );
-  }
-
-  Widget _buildVisaSubList() {
-    return Container(
-      color: Colors.grey.shade50,
-      child: Column(
-        children: [
-          // Saved cards
-          ..._savedCards.map((card) {
-            final label = card['label'] as String;
-            final isCardSelected = _selectedCard == label;
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  _selectedPayment = 'Visa Payment';
-                  _selectedCard = label;
-                  _paymentExpanded = false;
-                });
-                if (_selectedAddress != null) {
-                  _calculateShippingFee(_selectedAddress!);
-                }
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 12.h),
-                child: Row(
-                  children: [
-                    Icon(Icons.credit_card, size: 18.sp, color: Colors.blue.shade400),
-                    SizedBox(width: 12.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            label,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              fontWeight: isCardSelected ? FontWeight.w600 : FontWeight.w400,
-                              color: isCardSelected ? AppColors.tertiaryDark : Colors.black87,
-                            ),
-                          ),
-                          Text(
-                            card['holder'] as String,
-                            style: TextStyle(fontSize: 11.sp, color: Colors.grey.shade500),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (isCardSelected)
-                      Icon(Icons.check_circle, color: AppColors.tertiaryNormal, size: 18.sp),
-                  ],
-                ),
-              ),
-            );
-          }),
-
-          // Add Card button
-          InkWell(
-            onTap: _showAddCardDialog,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 12.h),
-              child: Row(
-                children: [
-                  Container(
-                    width: 24.w,
-                    height: 24.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.r),
-                      border: Border.all(color: AppColors.tertiaryNormal, width: 1.5.w),
-                    ),
-                    child: Icon(Icons.add, size: 16.sp, color: AppColors.tertiaryNormal),
-                  ),
-                  SizedBox(width: 12.w),
-                  Text(AppLocalizations.of(context)!.addCard,
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.tertiaryNormal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 4),
-        ],
-      ),
     );
   }
 

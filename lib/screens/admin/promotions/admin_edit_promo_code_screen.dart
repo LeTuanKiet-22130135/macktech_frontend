@@ -4,6 +4,7 @@ import '../../../theme/app_colors.dart';
 import '../../../models/promo_code.dart';
 import '../../../services/promo_code_service.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class AdminEditPromoCodeScreen extends StatefulWidget {
   final PromoCode promoCode;
@@ -37,8 +38,8 @@ class _AdminEditPromoCodeScreenState extends State<AdminEditPromoCodeScreen> {
     _isActive = widget.promoCode.isActive;
     
     _codeController = TextEditingController(text: widget.promoCode.code);
-    _valueController = TextEditingController(text: widget.promoCode.discountValue.toStringAsFixed(0));
-    _minOrderController = TextEditingController(text: widget.promoCode.minimumOrderValue.toStringAsFixed(0));
+    _valueController = TextEditingController(text: widget.promoCode.discountValue.toPrice());
+    _minOrderController = TextEditingController(text: widget.promoCode.minimumOrderValue.toPrice());
     _usageLimitController = TextEditingController(text: widget.promoCode.usageLimit?.toString() ?? '');
     
     _validFrom = widget.promoCode.validFrom;

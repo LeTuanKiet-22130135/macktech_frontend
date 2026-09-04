@@ -6,6 +6,7 @@ import '../../../services/promo_code_service.dart';
 import 'admin_add_promo_code_screen.dart';
 import 'admin_edit_promo_code_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
 
 class AdminPromoCodesScreen extends StatefulWidget {
   const AdminPromoCodesScreen({super.key});
@@ -133,11 +134,11 @@ class _AdminPromoCodesScreenState extends State<AdminPromoCodesScreen> {
 
   Widget _buildPromoCard(PromoCode promo) {
     String valueText = promo.discountType == 'percentage' 
-        ? "${promo.discountValue.toStringAsFixed(0)}% OFF" 
-        : "₫${promo.discountValue.toStringAsFixed(0)} OFF";
+        ? "${promo.discountValue.toPrice()}% OFF" 
+        : "₫${promo.discountValue.toPrice()} OFF";
         
     String target = promo.minimumOrderValue > 0 
-        ? "Min order ₫${promo.minimumOrderValue.toStringAsFixed(0)}" 
+        ? "Min order ₫${promo.minimumOrderValue.toPrice()}" 
         : "Storewide";
 
     return Container(

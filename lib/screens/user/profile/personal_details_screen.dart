@@ -51,6 +51,23 @@ class _PersonalDetailsScreenState extends ConsumerState<PersonalDetailsScreen> {
   void initState() {
     super.initState();
     _checkProvider();
+    
+    // Immediately load cached profile so screen is not empty
+    final profile = ref.read(userProfileProvider).value;
+    if (profile != null) {
+      _nameController.text = profile.name;
+      _emailController.text = profile.email;
+      _avatarUrl = profile.avatarUrl;
+      final rawPhone = profile.phone;
+      _completePhoneNumber = rawPhone;
+      if (rawPhone.startsWith('+')) {
+        _parseE164PhoneNumber(rawPhone);
+      } else {
+        _initialPhoneNumber = rawPhone;
+      }
+      _isLoading = false;
+    }
+    
     _fetchProfile();
   }
 

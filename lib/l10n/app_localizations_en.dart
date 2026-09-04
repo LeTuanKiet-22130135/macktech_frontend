@@ -940,4 +940,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get products => 'Products';
+
+  @override
+  String get orderSuccessMessage =>
+      'Your order has been placed.\nOrder will be ready for pick-up.\nThank you for choosing our app!';
 }

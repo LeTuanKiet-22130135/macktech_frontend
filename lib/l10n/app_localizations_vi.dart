@@ -944,4 +944,8 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get products => 'Sản phẩm';
+
+  @override
+  String get orderSuccessMessage =>
+      'Đơn hàng của bạn đã được đặt.\nĐơn hàng sẽ sớm được chuẩn bị để giao.\nCảm ơn bạn đã lựa chọn ứng dụng của chúng tôi!';
 }

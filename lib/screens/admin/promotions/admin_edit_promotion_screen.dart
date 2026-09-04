@@ -21,6 +21,7 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
   final _formKey = GlobalKey<FormState>();
   
   late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
   
   late DateTime _startDate;
   late DateTime _endDate;
@@ -35,6 +36,7 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
     super.initState();
     final promo = widget.promotion;
     _titleController = TextEditingController(text: promo?.title ?? '');
+    _descriptionController = TextEditingController(text: promo?.description ?? '');
     
     _startDate = promo?.startDate ?? DateTime.now();
     _endDate = promo?.endDate ?? DateTime.now().add(const Duration(days: 30));
@@ -45,6 +47,7 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
   @override
   void dispose() {
     _titleController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -146,6 +149,7 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
       final newPromo = Promotion(
         id: widget.promotion?.id,
         title: _titleController.text.trim(),
+        description: _descriptionController.text.trim(),
         bannerImageUrl: widget.promotion?.bannerImageUrl ?? '',
         products: _products,
         startDate: _startDate,
@@ -218,6 +222,15 @@ class _AdminEditPromotionScreenState extends State<AdminEditPromotionScreen> {
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
                     ),
                     validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                  ),
+                  SizedBox(height: 16.h),
+                  TextFormField(
+                    controller: _descriptionController,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      labelText: 'Promotion Description',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   

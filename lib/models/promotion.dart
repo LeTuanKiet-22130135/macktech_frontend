@@ -29,6 +29,7 @@ class PromotionProduct {
 class Promotion {
   final String? id;
   final String title;
+  final String? description;
   final String bannerImageUrl;
   final List<PromotionProduct> products;
   final DateTime startDate;
@@ -39,6 +40,7 @@ class Promotion {
   Promotion({
     this.id,
     required this.title,
+    this.description,
     required this.bannerImageUrl,
     this.products = const [],
     required this.startDate,
@@ -51,6 +53,7 @@ class Promotion {
     return Promotion(
       id: json['id']?.toString(),
       title: json['title'] as String? ?? '',
+      description: json['description'] as String?,
       bannerImageUrl: json['bannerImageUrl'] as String? ?? '',
       products: (json['products'] as List<dynamic>?)
               ?.map((p) => PromotionProduct.fromJson(p as Map<String, dynamic>))
@@ -67,6 +70,7 @@ class Promotion {
     return {
       if (id != null) 'id': id,
       'title': title,
+      if (description != null) 'description': description,
       'bannerImageUrl': bannerImageUrl,
       'products': products.map((p) => p.toJson()).toList(),
       'startDate': startDate.toIso8601String(),

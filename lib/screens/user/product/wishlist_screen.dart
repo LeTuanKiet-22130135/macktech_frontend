@@ -7,6 +7,8 @@ import '../../../providers/cart_provider.dart';
 import 'package:app_frontend/theme/app_colors.dart';
 import 'product_details_screen.dart';
 import 'package:app_frontend/l10n/app_localizations.dart';
+import 'package:app_frontend/utils/num_extension.dart';
+import '../../../models/product.dart';
 
 class WishlistScreen extends ConsumerWidget {
   const WishlistScreen({super.key});
@@ -81,7 +83,7 @@ class WishlistScreen extends ConsumerWidget {
   }
 
   Widget _buildWishlistCard(
-      BuildContext context, WidgetRef ref, var product) {
+      BuildContext context, WidgetRef ref, Product product) {
 
     return GestureDetector(
       onTap: () {
@@ -137,7 +139,7 @@ class WishlistScreen extends ConsumerWidget {
                 SizedBox(height: 6.h),
                 // Price row
                 Text(
-                  "₫${product.price.toStringAsFixed(0)}",
+                  "₫${product.price.toPrice()}",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
